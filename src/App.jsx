@@ -69,8 +69,10 @@ function App() {
       <div className="particles"></div>
       {/* Header */}
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <div className="container nav">
-          <div className="logo">CloudBamboo</div>
+        <div className="nav">
+          <div className="logo">
+            <span className="logo-text">CloudBamboo</span>
+          </div>
           <nav className="nav-links">
             <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
             <a href="#watchpoint" className={`nav-link ${activeSection === 'watchpoint' ? 'active' : ''}`}>WatchPoint</a>
@@ -401,7 +403,12 @@ function App() {
           </div>
           
           <div className="watchpoint-cta scroll-reveal">
-            <button className="btn btn-primary">Book a Live Demo of WatchPoint</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => window.open('https://watchpoint.in', '_blank')}
+            >
+              View Demo
+            </button>
             <button className="btn btn-glass">Download Brochure</button>
           </div>
         </div>

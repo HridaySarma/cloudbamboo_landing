@@ -329,18 +329,31 @@ a:hover {
   box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
 }
 
-/* Header Navigation - Enhanced */
+/* Header Navigation - Ultra Enhanced */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-50);
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: var(--transition-all);
-  padding: var(--space-2) 0;
+  padding: var(--space-3) var(--space-8);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 1200px) {
+  .header {
+    padding: var(--space-3) var(--space-16);
+  }
+}
+
+@media (min-width: 1536px) {
+  .header {
+    padding: var(--space-3) var(--space-24);
+  }
 }
 
 .header::before {
@@ -351,63 +364,110 @@ a:hover {
   right: 0;
   height: 100%;
   background: linear-gradient(90deg,
-    rgba(0, 217, 255, 0.05) 0%,
-    rgba(102, 126, 234, 0.05) 50%,
-    rgba(240, 147, 251, 0.05) 100%);
-  opacity: 0;
+    rgba(0, 217, 255, 0.1) 0%,
+    rgba(102, 126, 234, 0.1) 50%,
+    rgba(240, 147, 251, 0.1) 100%);
+  opacity: 0.5;
   transition: opacity 0.3s ease;
 }
 
 .header.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: var(--space-2) var(--space-8);
 }
 
 .header.scrolled::before {
   opacity: 1;
 }
 
+@media (min-width: 1200px) {
+  .header.scrolled {
+    padding: var(--space-2) var(--space-16);
+  }
+}
+
+@media (min-width: 1536px) {
+  .header.scrolled {
+    padding: var(--space-2) var(--space-24);
+  }
+}
+
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-3) 0;
+  padding: var(--space-2) 0;
   position: relative;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 .logo {
   font-size: var(--text-3xl);
   font-weight: 900;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: var(--transition-all);
+  position: relative;
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Logo icon */
+.logo::before {
+  content: '';
+  width: 40px;
+  height: 40px;
+  background: var(--primary-gradient);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 168, 204, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Logo text with gradient */
+.logo-text {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
-  letter-spacing: var(--tracking-tight);
-  cursor: pointer;
-  transition: var(--transition-all);
-  position: relative;
-  padding: var(--space-2) 0;
+  animation: logoGradient 5s ease infinite;
 }
 
+/* Logo underline */
 .logo::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
+  left: var(--space-4);
+  right: var(--space-4);
+  height: 3px;
   background: var(--primary-gradient);
-  transition: width 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  border-radius: 2px;
 }
 
-.logo:hover {
-  transform: scale(1.05);
-  animation: logoGradient 3s ease infinite;
+.logo:hover::before {
+  transform: rotate(360deg) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 168, 204, 0.4);
 }
 
 .logo:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
 }
 
 @keyframes logoGradient {
@@ -491,6 +551,14 @@ a:hover {
   padding: var(--space-3) var(--space-6);
   font-size: var(--text-base);
   box-shadow: 0 4px 15px rgba(0, 168, 204, 0.3);
+  background: var(--primary-gradient);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.nav-cta .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 168, 204, 0.5);
 }
 
 /* Mobile Menu Button */
@@ -1459,13 +1527,9 @@ a:hover {
 
 .mockup-iframe {
   width: 100%;
-  height: 500px;
+  height: 400px;
   border: none;
   display: block;
-  transform: scale(0.4);
-  transform-origin: top left;
-  width: 250%;
-  height: 1250px;
 }
 
 .mockup-dot {
