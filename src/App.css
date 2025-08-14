@@ -1541,11 +1541,28 @@ body.modal-open {
   object-fit: contain;
   transition: all 0.3s ease;
   filter: drop-shadow(0 4px 15px rgba(0, 168, 204, 0.3));
+  z-index: 10;
+  position: relative;
 }
 
 .logo:hover .logo-image {
   transform: scale(1.1);
   filter: drop-shadow(0 8px 25px rgba(0, 168, 204, 0.5));
+}
+
+/* Footer logo image styles */
+.footer-logo-image {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 4px 15px rgba(0, 168, 204, 0.3));
+  margin-right: var(--space-3);
+}
+
+.footer-logo:hover .footer-logo-image {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 20px rgba(0, 168, 204, 0.4));
 }
 
 

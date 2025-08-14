@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { initializeAnimations, initializeCursor } from './utils/animations';
+import logoImage from './assets/logo_gemini.png';
 
 // Enhanced Modal Component
 const JourneyModal = ({ isOpen, onClose }) => {
   const [activePhase, setActivePhase] = useState(0);
-  const [hoveredPhase, setHoveredPhase] = useState(null);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -372,8 +372,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                     key={index}
                     className={`timeline-nav-item ${activePhase === index ? 'active' : ''}`}
                     onClick={() => setActivePhase(index)}
-                    onMouseEnter={() => setHoveredPhase(index)}
-                    onMouseLeave={() => setHoveredPhase(null)}
+
                     style={{ 
                       '--phase-color': phase.color,
                       '--phase-gradient': phase.gradient,
@@ -552,6 +551,7 @@ function App() {
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav">
                     <div className="logo">
+            <img src={logoImage} alt="CloudBamboo" className="logo-image" />
             <div className="logo-text-container">
               <div className="cloud-platform">
                 <div className="cloud-cloud cloud-1"></div>
@@ -1359,9 +1359,10 @@ function App() {
         <div className="container">
           <div className="footer-container">
             <div className="footer-brand">
-              <div className="footer-logo">
-                <span className="footer-logo-text">CloudBamboo</span>
-              </div>
+                          <div className="footer-logo">
+              <img src={logoImage} alt="CloudBamboo" className="footer-logo-image" />
+              <span className="footer-logo-text">CloudBamboo</span>
+            </div>
               <p className="footer-description">
                 Building powerful SaaS solutions that transform how service-based 
                 businesses operate and grow.
