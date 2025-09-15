@@ -177,8 +177,12 @@ const Console = () => {
       <header className="console-header">
         <div className="console-nav">
           <Link to="/" className="console-logo">
-            <img src={logoImage} alt="CloudBamboo" className="logo-image" />
-            <span className="logo-text">CloudBamboo</span>
+            <img src={logoImage} alt="CloudBamboo Digital" className="logo-image" />
+            <span className="logo-text">
+              <span className="brand-cloud">Cloud</span>
+              <span className="brand-bamboo">bamboo</span>
+              <span className="brand-digital">Digital</span>
+            </span>
           </Link>
           <div className="console-user-info">
             <div className="user-avatar">{user.avatar}</div>

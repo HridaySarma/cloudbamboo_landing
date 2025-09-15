@@ -84,7 +84,7 @@ const TermsModal = ({ isOpen, onClose }) => {
               <h3>2. Services Description</h3>
               <h4>2.1 Software as a Service (SaaS)</h4>
               <p>
-                CloudBamboo provides cloud-based software solutions including workforce management systems, 
+                CloudBamboo Digital provides cloud-based software solutions including workforce management systems, 
                 attendance tracking, project management tools, and custom business applications.
               </p>
               
@@ -146,9 +146,9 @@ const TermsModal = ({ isOpen, onClose }) => {
 
             <section className="legal-section">
               <h3>5. Intellectual Property</h3>
-              <h4>5.1 CloudBamboo Property</h4>
+              <h4>5.1 CloudBamboo Digital Property</h4>
               <p>
-                All software, documentation, and related materials provided by CloudBamboo remain our 
+                All software, documentation, and related materials provided by CloudBamboo Digital remain our 
                 intellectual property. Users are granted a limited, non-exclusive license to use our services.
               </p>
               
@@ -191,7 +191,7 @@ const TermsModal = ({ isOpen, onClose }) => {
             <section className="legal-section">
               <h3>8. Limitation of Liability</h3>
               <p>
-                To the maximum extent permitted by law, CloudBamboo's liability for any claims arising from 
+                To the maximum extent permitted by law, CloudBamboo Digital's liability for any claims arising from 
                 or related to these terms or our services shall not exceed the amount paid by the customer 
                 for services in the 12 months preceding the claim.
               </p>
@@ -205,7 +205,7 @@ const TermsModal = ({ isOpen, onClose }) => {
                 the end of the current billing period.
               </p>
               
-              <h4>9.2 Termination by CloudBamboo</h4>
+              <h4>9.2 Termination by CloudBamboo Digital</h4>
               <p>
                 We may terminate services immediately if users violate these terms or for non-payment. 
                 We will provide reasonable notice when possible.
@@ -1145,8 +1145,12 @@ function App() {
       <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
           <div className="brand">
-            <img src={logoImage} alt="CloudBamboo" className="brand-logo" />
-            <span className="brand-name">CloudBamboo</span>
+            <img src={logoImage} alt="CloudBamboo Digital" className="brand-logo" />
+            <span className="brand-name">
+              <span className="brand-cloud">Cloud</span>
+              <span className="brand-bamboo">bamboo</span>
+              <span className="brand-digital">Digital</span>
+            </span>
           </div>
           
           <nav className="navigation">
@@ -1663,7 +1667,7 @@ function App() {
                 <div className="chatbot-header">
                   <div className="chatbot-avatar">🤖</div>
                   <div className="chatbot-info">
-                    <h4>CloudBamboo AI Assistant</h4>
+                    <h4>CloudBamboo Digital AI Assistant</h4>
                     <span className="chatbot-status">● Online</span>
                   </div>
                 </div>
@@ -2007,8 +2011,12 @@ function App() {
           <div className="footer-container">
             <div className="footer-brand">
                           <div className="footer-logo">
-              <img src={logoImage} alt="CloudBamboo" className="footer-logo-image" />
-              <span className="footer-logo-text">CloudBamboo</span>
+              <img src={logoImage} alt="CloudBamboo Digital" className="footer-logo-image" />
+              <span className="footer-logo-text" style={{color: '#FFFFFF'}}>
+                <span className="brand-cloud footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)'}}>Cloud</span>
+                <span className="brand-bamboo footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)', fontStyle: 'italic', transform: 'rotate(-2deg)', display: 'inline-block'}}>bamboo</span>
+                <span className="brand-digital">Digital</span>
+              </span>
             </div>
               <p className="footer-description">
                 Building powerful SaaS solutions that transform how service-based
@@ -2038,12 +2046,6 @@ function App() {
           <div className="footer-bottom">
             <div className="footer-copyright">
               © 2025 CloudBamboo Digital LLP. All rights reserved.
-            </div>
-            <div className="footer-social">
-              <a href="#" className="social-link">f</a>
-              <a href="#" className="social-link">t</a>
-              <a href="#" className="social-link">in</a>
-              <a href="#" className="social-link">ig</a>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-// Advanced animation utilities for CloudBamboo landing page
+// Advanced animation utilities for CloudBamboo Digital landing page
 
 export const initializeAnimations = () => {
   // Parallax effect for hero section
