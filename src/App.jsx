@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { initializeAnimations, initializeCursor } from './utils/animations';
 import logoImage from './assets/logo_gemini.png';
+import WatchPointPlans from './components/WatchPointPlans';
 
 // Enhanced Modal Component
 const JourneyModal = ({ isOpen, onClose }) => {
@@ -32,7 +33,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
   const handleWheel = (e) => {
     e.stopPropagation();
   };
-  
+
   const phases = [
     {
       title: "Ideation & Market Research",
@@ -42,20 +43,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       bgPattern: "radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Problem Identification", 
+        {
+          title: "Problem Identification",
           icon: "🎯",
           details: ["Industry inefficiencies in traditional manual processes", "Data management challenges leading to errors and delays", "Lack of real-time monitoring and reporting capabilities", "Compliance and regulatory challenges in operations"],
           highlights: ["Manual Processes", "Data Errors", "Real-time Monitoring", "Compliance"]
         },
-        { 
-          title: "Market Analysis", 
+        {
+          title: "Market Analysis",
           icon: "📊",
           details: ["Competitor research: Existing solutions vs. market gaps", "Target market: Industry-specific companies and departments", "Market size: Understanding total addressable market", "Gap identification: Unmet needs and opportunities"],
           highlights: ["Competitor Research", "Target Market", "Market Size", "Gap Analysis"]
         },
-        { 
-          title: "Solution Design", 
+        {
+          title: "Solution Design",
           icon: "💡",
           details: ["Core concept: Technology-enabled process automation", "Key features: Real-time monitoring, analytics, multi-role management", "Technology stack: Modern web/mobile technologies", "Business model: SaaS subscription + enterprise licensing"],
           highlights: ["Process Automation", "Real-time Analytics", "Modern Tech Stack", "SaaS Model"]
@@ -70,20 +71,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%)",
       bgPattern: "radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Core Features Development", 
+        {
+          title: "Core Features Development",
           icon: "🚀",
           details: ["User authentication and role management", "Core business logic implementation", "Basic reporting and analytics", "Mobile-responsive web interface"],
           highlights: ["User Auth", "Business Logic", "Analytics", "Mobile UI"]
         },
-        { 
-          title: "Technical Foundation", 
+        {
+          title: "Technical Foundation",
           icon: "🏗️",
           details: ["Backend: Modern API framework with ORM", "Database: Scalable database with proper indexing", "Authentication: Secure token-based system", "File handling: Document and media storage", "Mobile/Web: Cross-platform user interface"],
           highlights: ["Modern API", "Scalable DB", "Secure Auth", "File Storage", "Cross-platform"]
         },
-        { 
-          title: "MVP Testing", 
+        {
+          title: "MVP Testing",
           icon: "🧪",
           details: ["Internal testing: Core functionality validation", "Beta users: 5-10 target companies", "Feedback collection: User experience and feature requests", "Bug fixes: Critical issues resolution"],
           highlights: ["Internal Testing", "Beta Users", "User Feedback", "Bug Fixes"]
@@ -98,20 +99,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #45b7d1 0%, #667eea 100%)",
       bgPattern: "radial-gradient(circle at 40% 60%, rgba(69, 183, 209, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Feature Expansion", 
+        {
+          title: "Feature Expansion",
           icon: "📈",
           details: ["Advanced analytics and reporting", "Integration capabilities", "Custom workflows and automation", "Enhanced user experience features"],
           highlights: ["Advanced Analytics", "Integrations", "Workflows", "Enhanced UX"]
         },
-        { 
-          title: "User Acquisition Strategy", 
+        {
+          title: "User Acquisition Strategy",
           icon: "🎯",
           details: ["Direct sales: Target industry companies", "Partnerships: Complementary software companies", "Referral program: Existing client incentives", "Content marketing: Industry-specific content", "Industry events: Trade shows and conferences"],
           highlights: ["Direct Sales", "Partnerships", "Referral Program", "Content Marketing", "Industry Events"]
         },
-        { 
-          title: "Customer Success", 
+        {
+          title: "Customer Success",
           icon: "🎉",
           details: ["Onboarding process: Step-by-step setup guides", "Training programs: Video tutorials and documentation", "Support system: Multiple support channels", "Success metrics: User adoption and retention rates"],
           highlights: ["Onboarding", "Training", "Support System", "Success Metrics"]
@@ -126,20 +127,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #96ceb4 0%, #4ecdc4 100%)",
       bgPattern: "radial-gradient(circle at 60% 40%, rgba(150, 206, 180, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Technical Scaling", 
+        {
+          title: "Technical Scaling",
           icon: "⚙️",
           details: ["Microservices architecture", "Load balancing and auto-scaling", "CDN implementation for global delivery", "Database sharding and replication"],
           highlights: ["Microservices", "Auto-scaling", "CDN", "Database Sharding"]
         },
-        { 
-          title: "Performance Optimization", 
+        {
+          title: "Performance Optimization",
           icon: "⚡",
           details: ["Database optimization: Query optimization, indexing", "Caching strategy: Redis for frequently accessed data", "API optimization: Rate limiting, pagination", "Background jobs: Automated processing tasks", "Monitoring: Application performance monitoring"],
           highlights: ["DB Optimization", "Redis Caching", "API Optimization", "Background Jobs", "APM"]
         },
-        { 
-          title: "Security Enhancements", 
+        {
+          title: "Security Enhancements",
           icon: "🔒",
           details: ["Data encryption: At rest and in transit", "Access controls: Role-based permissions", "Audit logging: Complete activity tracking", "Compliance: Industry-specific regulations", "Security testing: Regular penetration testing"],
           highlights: ["Data Encryption", "Access Controls", "Audit Logging", "Compliance", "Security Testing"]
@@ -154,20 +155,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #feca57 0%, #ff9ff3 100%)",
       bgPattern: "radial-gradient(circle at 30% 70%, rgba(254, 202, 87, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Revenue Streams", 
+        {
+          title: "Revenue Streams",
           icon: "💎",
           details: ["SaaS subscriptions with tiered pricing", "Enterprise licensing and custom solutions", "Professional services and consulting", "Training and certification programs"],
           highlights: ["SaaS Subscriptions", "Enterprise Licensing", "Professional Services", "Training Programs"]
         },
-        { 
-          title: "Partnership Strategy", 
+        {
+          title: "Partnership Strategy",
           icon: "🤝",
           details: ["B2B licensing: Software companies reselling platform", "White-label solutions: Custom branding for partners", "API marketplace: Third-party integrations", "Channel partners: Industry-specific companies"],
           highlights: ["B2B Licensing", "White-label", "API Marketplace", "Channel Partners"]
         },
-        { 
-          title: "Market Expansion", 
+        {
+          title: "Market Expansion",
           icon: "🌍",
           details: ["Geographic expansion: Multiple regions and countries", "Industry verticals: Related industry segments", "Product extensions: Additional modules and features", "Internationalization: Multi-language support"],
           highlights: ["Geographic Expansion", "Industry Verticals", "Product Extensions", "Internationalization"]
@@ -182,20 +183,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #ff9ff3 0%, #54a0ff 100%)",
       bgPattern: "radial-gradient(circle at 70% 30%, rgba(255, 159, 243, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Advanced Capabilities", 
+        {
+          title: "Advanced Capabilities",
           icon: "🔮",
           details: ["Advanced analytics and business intelligence", "Custom integrations and APIs", "Enterprise-grade security and compliance", "Advanced reporting and insights"],
           highlights: ["Advanced Analytics", "Custom APIs", "Enterprise Security", "Advanced Reporting"]
         },
-        { 
-          title: "Deployment Options", 
+        {
+          title: "Deployment Options",
           icon: "☁️",
           details: ["Cloud SaaS: Multi-tenant hosted solution", "Private cloud: Dedicated infrastructure", "On-premise: Client-managed servers", "Hybrid: Combination of cloud and on-premise"],
           highlights: ["Cloud SaaS", "Private Cloud", "On-premise", "Hybrid"]
         },
-        { 
-          title: "Enterprise Sales", 
+        {
+          title: "Enterprise Sales",
           icon: "👔",
           details: ["Sales team: Dedicated enterprise sales", "Solution architects: Technical pre-sales", "Customer success: Dedicated account managers", "Professional services: Implementation and consulting"],
           highlights: ["Enterprise Sales", "Solution Architects", "Account Managers", "Professional Services"]
@@ -210,20 +211,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #54a0ff 0%, #5f27cd 100%)",
       bgPattern: "radial-gradient(circle at 50% 50%, rgba(84, 160, 255, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "API Platform", 
+        {
+          title: "API Platform",
           icon: "🔌",
           details: ["Comprehensive REST and GraphQL APIs", "Developer portal and documentation", "SDK development for multiple languages", "API management and monitoring program"],
           highlights: ["REST APIs", "GraphQL", "Developer Portal", "SDK Development"]
         },
-        { 
-          title: "Integration Network", 
+        {
+          title: "Integration Network",
           icon: "🔗",
           details: ["Enterprise systems: ERP, CRM, HR systems", "Industry tools: Specialized software integrations", "Data platforms: Analytics and BI tools", "IoT devices: Hardware and sensor integrations"],
           highlights: ["ERP/CRM/HR", "Industry Tools", "Data Platforms", "IoT Devices"]
         },
-        { 
-          title: "Marketplace Development", 
+        {
+          title: "Marketplace Development",
           icon: "🛍️",
           details: ["Third-party apps: Complementary applications", "Custom integrations: Industry-specific solutions", "Data connectors: Import/export capabilities", "Analytics tools: Business intelligence integration"],
           highlights: ["Third-party Apps", "Custom Integrations", "Data Connectors", "Analytics Tools"]
@@ -238,20 +239,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #5f27cd 0%, #ff6b6b 100%)",
       bgPattern: "radial-gradient(circle at 20% 80%, rgba(95, 39, 205, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "International Expansion", 
+        {
+          title: "International Expansion",
           icon: "🌏",
           details: ["Regional offices and local teams", "Cultural adaptation and localization", "Compliance with local regulations", "Partnership with local companies"],
           highlights: ["Regional Offices", "Cultural Adaptation", "Local Compliance", "Local Partnerships"]
         },
-        { 
-          title: "Product Localization", 
+        {
+          title: "Product Localization",
           icon: "🌐",
           details: ["Language support: Multiple languages", "Currency support: Multiple currencies", "Time zones: Global time zone handling", "Local regulations: Country-specific compliance", "Cultural adaptation: UI/UX for different markets"],
           highlights: ["Multi-language", "Multi-currency", "Time Zones", "Local Regulations", "Cultural UX"]
         },
-        { 
-          title: "Acquisition Strategy", 
+        {
+          title: "Acquisition Strategy",
           icon: "🎯",
           details: ["Strategic acquisitions: Complementary companies", "Technology acquisitions: AI/ML companies", "Talent acquisition: Key personnel and teams", "Market expansion: Geographic market entry"],
           highlights: ["Strategic Acquisitions", "Tech Acquisitions", "Talent Acquisition", "Market Expansion"]
@@ -266,20 +267,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #ff6b6b 0%, #00d9ff 100%)",
       bgPattern: "radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Artificial Intelligence", 
+        {
+          title: "Artificial Intelligence",
           icon: "🧠",
           details: ["Machine learning algorithms for predictive analytics", "Natural language processing for user interactions", "Computer vision for document processing", "AI-powered automation and optimization capabilities"],
           highlights: ["Machine Learning", "NLP", "Computer Vision", "AI Automation"]
         },
-        { 
-          title: "Advanced Analytics", 
+        {
+          title: "Advanced Analytics",
           icon: "📊",
           details: ["Predictive analytics: Future trends and needs", "Behavioral analytics: User and system patterns", "Risk assessment: Proactive risk management", "Operational intelligence: Real-time insights", "Business intelligence: Executive dashboards"],
           highlights: ["Predictive Analytics", "Behavioral Analytics", "Risk Assessment", "Operational Intelligence", "Business Intelligence"]
         },
-        { 
-          title: "Innovation Labs", 
+        {
+          title: "Innovation Labs",
           icon: "🔬",
           details: ["R&D team: Dedicated innovation team", "Technology partnerships: Universities and research labs", "Patent portfolio: Intellectual property protection", "Future vision: Long-term technology roadmap"],
           highlights: ["R&D Team", "Tech Partnerships", "Patent Portfolio", "Future Vision"]
@@ -294,20 +295,20 @@ const JourneyModal = ({ isOpen, onClose }) => {
       gradient: "linear-gradient(135deg, #00d9ff 0%, #667eea 100%)",
       bgPattern: "radial-gradient(circle at 40% 60%, rgba(0, 217, 255, 0.1) 0%, transparent 50%)",
       items: [
-        { 
-          title: "Industry Leadership", 
+        {
+          title: "Industry Leadership",
           icon: "🏆",
           details: ["Thought leadership and industry expertise", "Industry conferences and speaking engagements", "White papers and research publications", "Industry standards and best practices research"],
           highlights: ["Thought Leadership", "Industry Conferences", "White Papers", "Industry Standards"]
         },
-        { 
-          title: "Ecosystem Dominance", 
+        {
+          title: "Ecosystem Dominance",
           icon: "🌟",
           details: ["Platform effects: Network effects in industry", "Data advantage: Largest industry dataset", "Technology moat: Proprietary algorithms and systems", "Brand recognition: Trusted platform", "Customer lock-in: High switching costs"],
           highlights: ["Platform Effects", "Data Advantage", "Technology Moat", "Brand Recognition", "Customer Lock-in"]
         },
-        { 
-          title: "Sustainable Growth", 
+        {
+          title: "Sustainable Growth",
           icon: "📈",
           details: ["Recurring revenue: High subscription retention", "Customer lifetime value: Long-term relationships", "Net revenue retention: Strong expansion revenue", "Profitability: Sustainable unit economics", "Market share: Significant market presence"],
           highlights: ["Recurring Revenue", "Customer LTV", "Net Revenue Retention", "Profitability", "Market Share"]
@@ -325,7 +326,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
         <div className="modal-bg-elements">
           <div className="floating-particles">
             {[...Array(20)].map((_, i) => (
-              <div key={i} className="particle" style={{ 
+              <div key={i} className="particle" style={{
                 '--delay': `${i * 0.5}s`,
                 '--size': `${Math.random() * 4 + 2}px`,
                 '--x': `${Math.random() * 100}%`,
@@ -345,8 +346,8 @@ const JourneyModal = ({ isOpen, onClose }) => {
               <p className="subtitle">From Idea to Millions of Users</p>
               <div className="progress-indicator">
                 <div className="progress-bar">
-                  <div 
-                    className="progress-fill" 
+                  <div
+                    className="progress-fill"
                     style={{ width: `${((activePhase + 1) / phases.length) * 100}%` }}
                   ></div>
                 </div>
@@ -358,7 +359,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
             </button>
           </div>
         </div>
-        
+
         <div className="modal-body">
           <div className="journey-timeline">
             <div className="timeline-nav" onScroll={handleScroll} onWheel={handleWheel}>
@@ -373,7 +374,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                     className={`timeline-nav-item ${activePhase === index ? 'active' : ''}`}
                     onClick={() => setActivePhase(index)}
 
-                    style={{ 
+                    style={{
                       '--phase-color': phase.color,
                       '--phase-gradient': phase.gradient,
                       '--bg-pattern': phase.bgPattern
@@ -394,7 +395,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                 ))}
               </div>
             </div>
-            
+
             <div className="timeline-content" onScroll={handleScroll} onWheel={handleWheel}>
               <div className="phase-header">
                 <div className="phase-info">
@@ -438,7 +439,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="phase-details">
                 {phases[activePhase].items.map((item, index) => (
                   <div key={index} className="phase-item" style={{ '--phase-color': phases[activePhase].color }}>
@@ -446,7 +447,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                       <div className="item-icon">{item.icon}</div>
                       <h4>{item.title}</h4>
                     </div>
-                    
+
                     <div className="highlights-section">
                       <div className="highlights-grid">
                         {item.highlights.map((highlight, highlightIndex) => (
@@ -456,7 +457,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
                         ))}
                       </div>
                     </div>
-                    
+
                     <div className="details-section">
                       <h5>Detailed Tasks:</h5>
                       <ul>
@@ -489,11 +490,11 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      
+
       // Update active section based on scroll position
-      const sections = ['features', 'watchpoint', 'chatbot', 'philosophy', 'contact'];
+      const sections = ['features', 'watchpoint', 'philosophy', 'contact'];
       const scrollPosition = window.scrollY + 100;
-      
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -544,59 +545,31 @@ function App() {
         <div className="bg-gradient bg-gradient-2"></div>
         <div className="bg-gradient bg-gradient-3"></div>
       </div>
-      
+
       {/* Particle Effects */}
       <div className="particles"></div>
-      {/* Header */}
-      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <div className="nav">
-                    <div className="logo">
-            <img src={logoImage} alt="CloudBamboo" className="logo-image" />
-            <div className="logo-text-container">
-              <div className="cloud-platform">
-                <div className="cloud-cloud cloud-1"></div>
-                <div className="cloud-cloud cloud-2"></div>
-                <div className="cloud-cloud cloud-3"></div>
-                <div className="cloud-cloud cloud-4"></div>
-                <div className="cloud-cloud cloud-5"></div>
-              </div>
-              <div className="cloud-particles">
-                <div className="cloud-particle particle-1"></div>
-                <div className="cloud-particle particle-2"></div>
-                <div className="cloud-particle particle-3"></div>
-                <div className="cloud-particle particle-4"></div>
-              </div>
-              <span className="logo-text logo-text-solid">
-                <span className="text-char" data-char="C">C</span>
-                <span className="text-char" data-char="l">l</span>
-                <span className="text-char" data-char="o">o</span>
-                <span className="text-char" data-char="u">u</span>
-                <span className="text-char" data-char="d">d</span>
-                <span className="text-char" data-char="B">B</span>
-                <span className="text-char" data-char="a">a</span>
-                <span className="text-char" data-char="m">m</span>
-                <span className="text-char" data-char="b">b</span>
-                <span className="text-char" data-char="o">o</span>
-                <span className="text-char" data-char="o">o</span>
-              </span>
-              <div className="logo-underline"></div>
-            </div>
+      {/* Modern Header */}
+      <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
+        <div className="header-container">
+          <div className="brand">
+            <img src={logoImage} alt="CloudBamboo" className="brand-logo" />
+            <span className="brand-name">CloudBamboo</span>
           </div>
-          <nav className="nav-links">
-            <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
-            <a href="#watchpoint" className={`nav-link ${activeSection === 'watchpoint' ? 'active' : ''}`}>WatchPoint</a>
-            <a href="#chatbot" className={`nav-link ${activeSection === 'chatbot' ? 'active' : ''}`}>AI Chatbots</a>
-            <a href="#philosophy" className={`nav-link ${activeSection === 'philosophy' ? 'active' : ''}`}>Philosophy</a>
-            <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
+          
+          <nav className="navigation">
+            <a href="#features" className={`nav-item ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
+            <a href="#watchpoint" className={`nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}>WatchPoint</a>
+            <a href="#philosophy" className={`nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}>Philosophy</a>
+            <a href="#contact" className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
           </nav>
-          <div className="nav-cta">
-            <button className="btn btn-creative" onClick={() => setIsModalOpen(true)}>How it's done?</button>
+          
+          <div className="header-actions">
+            <button className="mobile-toggle" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
           </div>
-          <button className="mobile-menu-btn" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </div>
       </header>
 
@@ -608,7 +581,7 @@ function App() {
               We Build Software That Powers Your Entire Operation
             </h1>
             <p className="hero-subtitle">
-              CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions 
+              CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions
               that automate workflows and provide critical business insights.
             </p>
             <div className="hero-cta">
@@ -630,13 +603,13 @@ function App() {
                     </div>
                     <div className="orb-glow"></div>
                   </div>
-                  
-                  <div className="cta-orb secondary-orb" onClick={() => document.getElementById('chatbot').scrollIntoView({ behavior: 'smooth' })}>
+
+                  <div className="cta-orb secondary-orb" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
                     <div className="orb-content">
-                      <div className="orb-icon">🤖</div>
+                      <div className="orb-icon">💬</div>
                       <div className="orb-text">
-                        <span className="orb-title">Chat with AI</span>
-                        <span className="orb-subtitle">Talk to our AI rep</span>
+                        <span className="orb-title">Get in Touch</span>
+                        <span className="orb-subtitle">Contact our team</span>
                       </div>
                     </div>
                     <div className="orb-particles">
@@ -648,7 +621,7 @@ function App() {
                     <div className="orb-glow"></div>
                   </div>
                 </div>
-                
+
 
               </div>
             </div>
@@ -814,283 +787,10 @@ function App() {
       </section>
 
       {/* WatchPoint Section */}
-      <section id="watchpoint" className="watchpoint">
-        <div className="watchpoint-floating-elements">
-          <div className="floating-element"></div>
-          <div className="floating-element"></div>
-          <div className="floating-element"></div>
-          <div className="floating-element"></div>
-          <div className="floating-element"></div>
-        </div>
-        <div className="watchpoint-container container">
-          <div className="section-header scroll-reveal">
-            <h2 className="section-title">
-              <span className="creative-watchpoint">
-                <span className="letter w">W</span>
-                <span className="letter a">a</span>
-                <span className="letter t">t</span>
-                <span className="letter c">c</span>
-                <span className="letter h">h</span>
-                <span className="letter p">P</span>
-                <span className="letter o">o</span>
-                <span className="letter i">i</span>
-                <span className="letter n">n</span>
-                <span className="letter t2">t</span>
-              </span>
-            </h2>
-            <p className="section-subtitle">
-              A powerful Workforce Management System designed to streamline the operations of a service-based business. 
-              WatchPoint provides a centralized platform for everything from staff onboarding and real-time attendance 
-              to automated payroll and invoicing.
-            </p>
-          </div>
-          
-          <div className="dashboard-showcase scroll-reveal">
-            <div className="dashboard-preview">
-              <div className="dashboard-mockup">
-                <div className="mockup-header">
-                  <div className="mockup-dot"></div>
-                  <div className="mockup-dot"></div>
-                  <div className="mockup-dot"></div>
-                  <div className="mockup-url-bar">
-                    <span className="url-text">app.watchpoint.in</span>
-                  </div>
-                </div>
-                <div className="mockup-iframe-container">
-                  <img
-                    src="/src/assets/attendance_demo.png"
-                    className="mockup-iframe"
-                    alt="WatchPoint Attendance Dashboard Demo"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="dashboard-features">
-              <div className="dashboard-feature">
-                <div className="feature-check">✓</div>
-                <div className="feature-content">
-                  <h4>Real-time Monitoring</h4>
-                  <p>Track your entire workforce in real-time with live location updates and instant notifications.</p>
-                </div>
-              </div>
-              <div className="dashboard-feature">
-                <div className="feature-check">✓</div>
-                <div className="feature-content">
-                  <h4>Automated Workflows</h4>
-                  <p>From scheduling to payroll, automate repetitive tasks and focus on growing your business.</p>
-                </div>
-              </div>
-              <div className="dashboard-feature">
-                <div className="feature-check">✓</div>
-                <div className="feature-content">
-                  <h4>Comprehensive Analytics</h4>
-                  <p>Get deep insights into your operations with customizable dashboards and detailed reports.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="workflow-section scroll-reveal">
-            <div className="workflow-header">
-              <h3 className="workflow-title">The Power of a Single 'Link'</h3>
-              <p className="workflow-subtitle">One connection transforms your entire operation</p>
-            </div>
-            
-            <div className="workflow-showcase">
-              <div className="workflow-timeline">
-                <div className="timeline-track">
-                  <div className="track-line"></div>
-                  <div className="track-pulse"></div>
-                </div>
-                
-                <div className="workflow-step step-1">
-                  <div className="step-orb">
-                    <div className="orb-glow"></div>
-                    <div className="orb-content">
-                      <div className="step-icon">👥</div>
-                      <div className="step-particles">
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="step-info">
-                    <h4 className="step-title">Staff</h4>
-                    <p className="step-desc">Manage your workforce</p>
-                  </div>
-                  <div className="step-connector">
-                    <div className="connector-line"></div>
-                    <div className="connector-arrow">⚡</div>
-                  </div>
-                </div>
-                
-                <div className="workflow-step step-2">
-                  <div className="step-orb">
-                    <div className="orb-glow"></div>
-                    <div className="orb-content">
-                      <div className="step-icon">🏢</div>
-                      <div className="step-particles">
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="step-info">
-                    <h4 className="step-title">Client</h4>
-                    <p className="step-desc">Connect with customers</p>
-                  </div>
-                  <div className="step-connector">
-                    <div className="connector-line"></div>
-                    <div className="connector-arrow">⚡</div>
-                  </div>
-                </div>
-                
-                <div className="workflow-step step-3">
-                  <div className="step-orb">
-                    <div className="orb-glow"></div>
-                    <div className="orb-content">
-                      <div className="step-icon">📅</div>
-                      <div className="step-particles">
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="step-info">
-                    <h4 className="step-title">Schedule</h4>
-                    <p className="step-desc">Plan assignments</p>
-                  </div>
-                  <div className="step-connector">
-                    <div className="connector-line"></div>
-                    <div className="connector-arrow">⚡</div>
-                  </div>
-                </div>
-                
-                <div className="workflow-step step-4">
-                  <div className="step-orb">
-                    <div className="orb-glow"></div>
-                    <div className="orb-content">
-                      <div className="step-icon">🔗</div>
-                      <div className="step-particles">
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                        <div className="particle"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="step-info">
-                    <h4 className="step-title">Link</h4>
-                    <p className="step-desc">Magic happens here</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="workflow-outcomes">
-                <div className="outcome-card outcome-1">
-                  <div className="outcome-icon">📊</div>
-                  <div className="outcome-content">
-                    <h4>Reports</h4>
-                    <p>Comprehensive analytics</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-                
-                <div className="outcome-card outcome-2">
-                  <div className="outcome-icon">📍</div>
-                  <div className="outcome-content">
-                    <h4>Tracking</h4>
-                    <p>Real-time monitoring</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-                
-                <div className="outcome-card outcome-3">
-                  <div className="outcome-icon">📅</div>
-                  <div className="outcome-content">
-                    <h4>Scheduling</h4>
-                    <p>Smart automation</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-                
-                <div className="outcome-card outcome-4">
-                  <div className="outcome-icon">👥</div>
-                  <div className="outcome-content">
-                    <h4>Accounts</h4>
-                    <p>User management</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-                
-                <div className="outcome-card outcome-5">
-                  <div className="outcome-icon">💰</div>
-                  <div className="outcome-content">
-                    <h4>Finance</h4>
-                    <p>Financial control</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-                
-                <div className="outcome-card outcome-6">
-                  <div className="outcome-icon">🛡️</div>
-                  <div className="outcome-content">
-                    <h4>Security</h4>
-                    <p>Enterprise protection</p>
-                  </div>
-                  <div className="outcome-glow"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="modules-showcase scroll-reveal">
-            <div className="module-card">
-              <div className="module-icon">🎯</div>
-              <h4 className="module-title">Operations Hub</h4>
-              <p className="module-description">
-                Manage Staff, Clients, and Assignments seamlessly in one unified platform.
-              </p>
-            </div>
-            <div className="module-card">
-              <div className="module-icon">⏰</div>
-              <h4 className="module-title">Real-Time Accountability</h4>
-              <p className="module-description">
-                Track attendance with QR codes and monitor live staff locations instantly.
-              </p>
-            </div>
-            <div className="module-card">
-              <div className="module-icon">💳</div>
-              <h4 className="module-title">Automated Financials</h4>
-              <p className="module-description">
-                Generate accurate payroll and invoices automatically from operational data.
-              </p>
-            </div>
-            <div className="module-card">
-              <div className="module-icon">📊</div>
-              <h4 className="module-title">Actionable Insights</h4>
-              <p className="module-description">
-                Get a high-level overview with a comprehensive analytics dashboard.
-              </p>
-            </div>
-          </div>
-          
-          <div className="watchpoint-cta scroll-reveal">
-            <button
-              className="btn btn-primary"
-              onClick={() => window.open('https://watchpoint.in', '_blank')}
-            >
-              View Demo
-            </button>
-            <button className="btn btn-glass">Download Brochure</button>
-          </div>
-        </div>
-      </section>
+      <WatchPointPlans />
 
-      {/* Chatbot Section */}
+      {/* Chatbot Section - Hidden for now */}
+      {/* 
       <section id="chatbot" className="chatbot">
         <div className="chatbot-floating-elements">
           <div className="chatbot-floating-element"></div>
@@ -1105,7 +805,7 @@ function App() {
               tailored to your business with seamless WhatsApp integration and stunning UI.
             </p>
           </div>
-          
+
           <div className="chatbot-showcase scroll-reveal">
             <div className="chatbot-demo">
               <div className="chatbot-interface">
@@ -1139,7 +839,7 @@ function App() {
                 </div>
               </div>
             </div>
-            
+
             <div className="chatbot-features">
               <div className="chatbot-feature">
                 <div className="feature-icon">🧠</div>
@@ -1171,7 +871,7 @@ function App() {
               </div>
             </div>
           </div>
-          
+
           <div className="ai-models-section scroll-reveal">
             <h3 className="models-title">Powered by Leading AI Models</h3>
             <div className="ai-models-grid">
@@ -1197,7 +897,7 @@ function App() {
               </div>
             </div>
           </div>
-          
+
           <div className="chatbot-cta scroll-reveal">
             <button
               className="btn btn-primary"
@@ -1209,6 +909,7 @@ function App() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Philosophy Section - Enhanced */}
       <section id="philosophy" className="philosophy">
@@ -1292,11 +993,11 @@ function App() {
             <div className="contact-info scroll-reveal">
               <h2>Have a Project in Mind?</h2>
               <p>
-                Whether you're interested in WatchPoint or have a unique challenge that requires 
+                Whether you're interested in WatchPoint or have a unique challenge that requires
                 a custom software solution, our team is ready to talk.
               </p>
               <p>
-                We're here to help you transform your business operations with cutting-edge 
+                We're here to help you transform your business operations with cutting-edge
                 software solutions tailored to your specific needs.
               </p>
               <div className="contact-details">
@@ -1339,8 +1040,8 @@ function App() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="message">Message</label>
-                  <textarea 
-                    id="message" 
+                  <textarea
+                    id="message"
                     placeholder="Tell us about your project or questions..."
                     rows="4"
                   ></textarea>
@@ -1364,7 +1065,7 @@ function App() {
               <span className="footer-logo-text">CloudBamboo</span>
             </div>
               <p className="footer-description">
-                Building powerful SaaS solutions that transform how service-based 
+                Building powerful SaaS solutions that transform how service-based
                 businesses operate and grow.
               </p>
             </div>
@@ -1409,7 +1110,7 @@ function App() {
           </div>
         </div>
       </footer>
-      
+
       <JourneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
