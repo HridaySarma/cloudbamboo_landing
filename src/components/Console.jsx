@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoImage from '../assets/logo_gemini.png';
+import logoImage from '../assets/logo_modern.png';
 import '../styles/Console.css';
 
 const Console = () => {

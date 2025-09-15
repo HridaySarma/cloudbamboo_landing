@@ -81,6 +81,16 @@ const plans = [
 
 const WatchPointPlans = () => {
 	const [isFullscreen, setIsFullscreen] = useState(false);
+	const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+	const [selectedPlan, setSelectedPlan] = useState(null);
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		phone: '',
+		message: ''
+	});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState(null);
 
 	const openFullscreen = () => {
 		setIsFullscreen(true);
@@ -90,11 +100,79 @@ const WatchPointPlans = () => {
 		setIsFullscreen(false);
 	};
 
+	const openContactForm = (plan) => {
+		setSelectedPlan(plan);
+		setIsContactFormOpen(true);
+		setFormData(prev => ({
+			...prev,
+			message: `I'm interested in the ${plan.name} plan (₹${plan.price}/user/month). Please get in touch with me.`
+		}));
+	};
+
+	const closeContactForm = () => {
+		setIsContactFormOpen(false);
+		setSelectedPlan(null);
+		setSubmitStatus(null);
+		setFormData({
+			name: '',
+			email: '',
+			phone: '',
+			message: ''
+		});
+	};
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setFormData(prev => ({
+			...prev,
+			[name]: value
+		}));
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setSubmitStatus(null);
+
+		try {
+			// Create a mailto link that opens the user's email client
+			const subject = `WatchPoint ${selectedPlan.name} Plan Inquiry`;
+			const body = `Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Selected Plan: ${selectedPlan.name} (₹${selectedPlan.price}/user/month)
+
+Message:
+${formData.message}
+
+--
+This inquiry was submitted through the WatchPoint website.`;
+
+			const mailtoLink = `mailto:hq@cloudbamboo.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+			window.location.href = mailtoLink;
+
+			setSubmitStatus('success');
+			setTimeout(() => {
+				closeContactForm();
+			}, 2000);
+
+		} catch (error) {
+			console.error('Error submitting form:', error);
+			setSubmitStatus('error');
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
 	// Handle ESC key press
 	React.useEffect(() => {
 		const handleKeyPress = (event) => {
-			if (event.key === 'Escape' && isFullscreen) {
-				closeFullscreen();
+			if (event.key === 'Escape') {
+				if (isContactFormOpen) {
+					closeContactForm();
+				} else if (isFullscreen) {
+					closeFullscreen();
+				}
 			}
 		};
 
@@ -102,11 +180,11 @@ const WatchPointPlans = () => {
 		return () => {
 			document.removeEventListener('keydown', handleKeyPress);
 		};
-	}, [isFullscreen]);
+	}, [isFullscreen, isContactFormOpen]);
 
-	// Prevent body scroll when fullscreen is open
+	// Prevent body scroll when fullscreen or contact form is open
 	React.useEffect(() => {
-		if (isFullscreen) {
+		if (isFullscreen || isContactFormOpen) {
 			document.body.style.overflow = 'hidden';
 		} else {
 			document.body.style.overflow = 'unset';
@@ -115,7 +193,7 @@ const WatchPointPlans = () => {
 		return () => {
 			document.body.style.overflow = 'unset';
 		};
-	}, [isFullscreen]);
+	}, [isFullscreen, isContactFormOpen]);
 
 	return (
 	<section id="watchpoint" className="watchpoint">
@@ -288,7 +366,12 @@ const WatchPointPlans = () => {
 								))}
 							</ul>
 							<div className="plan-footer">
-								<button className="plan-cta-btn">Get Started</button>
+								<button 
+									className="plan-cta-btn"
+									onClick={() => openContactForm(plan)}
+								>
+									Get Started
+								</button>
 							</div>
 						</div>
 					))}
@@ -319,6 +402,145 @@ const WatchPointPlans = () => {
 						alt="WatchPoint Attendance Dashboard Demo - Fullscreen"
 						className="fullscreen-image"
 					/>
+				</div>
+			</div>
+		)}
+
+		{/* Contact Form Modal */}
+		{isContactFormOpen && (
+			<div 
+				className="contact-form-modal"
+				onClick={closeContactForm}
+			>
+				<div 
+					className="contact-form-content"
+					onClick={(e) => e.stopPropagation()}
+				>
+					<div className="contact-form-header">
+						<h3 className="contact-form-title">
+							Get Started with {selectedPlan?.name}
+						</h3>
+						<p className="contact-form-subtitle">
+							Fill out the form below and we'll get back to you shortly
+						</p>
+						<button 
+							className="contact-form-close"
+							onClick={closeContactForm}
+							aria-label="Close contact form"
+						>
+							×
+						</button>
+					</div>
+
+					<form className="contact-form" onSubmit={handleSubmit}>
+						<div className="form-row">
+							<div className="form-group">
+								<label htmlFor="name" className="form-label">
+									Full Name *
+								</label>
+								<input
+									type="text"
+									id="name"
+									name="name"
+									value={formData.name}
+									onChange={handleInputChange}
+									className="form-input"
+									placeholder="Enter your full name"
+									required
+								/>
+							</div>
+						</div>
+
+						<div className="form-row">
+							<div className="form-group">
+								<label htmlFor="email" className="form-label">
+									Email Address *
+								</label>
+								<input
+									type="email"
+									id="email"
+									name="email"
+									value={formData.email}
+									onChange={handleInputChange}
+									className="form-input"
+									placeholder="Enter your email address"
+									required
+								/>
+							</div>
+							<div className="form-group">
+								<label htmlFor="phone" className="form-label">
+									Phone Number
+								</label>
+								<input
+									type="tel"
+									id="phone"
+									name="phone"
+									value={formData.phone}
+									onChange={handleInputChange}
+									className="form-input"
+									placeholder="Enter your phone number"
+								/>
+							</div>
+						</div>
+
+						<div className="form-row">
+							<div className="form-group">
+								<label htmlFor="message" className="form-label">
+									Message
+								</label>
+								<textarea
+									id="message"
+									name="message"
+									value={formData.message}
+									onChange={handleInputChange}
+									className="form-textarea"
+									placeholder="Tell us about your requirements..."
+									rows="4"
+								/>
+							</div>
+						</div>
+
+						{submitStatus && (
+							<div className={`form-status ${submitStatus}`}>
+								{submitStatus === 'success' ? (
+									<>
+										<span className="status-icon">✓</span>
+										Thank you! Your email client should open shortly with your inquiry.
+									</>
+								) : (
+									<>
+										<span className="status-icon">⚠</span>
+										Something went wrong. Please try again or contact us directly.
+									</>
+								)}
+							</div>
+						)}
+
+						<div className="form-actions">
+							<button
+								type="button"
+								className="btn-secondary"
+								onClick={closeContactForm}
+								disabled={isSubmitting}
+							>
+								Cancel
+							</button>
+							<button
+								type="submit"
+								className="btn-primary"
+								disabled={isSubmitting || !formData.name || !formData.email}
+							>
+								{isSubmitting ? (
+									<>
+										<span className="spinner"></span>
+										Submitting...
+									</>
+								) : (
+									'Send Inquiry'
+								)}
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		)}

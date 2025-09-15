@@ -5,12 +5,11 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-links">
-          <a href="#" className="footer-link">Product</a>
-          <a href="#" className="footer-link">About Us</a>
-          <a href="#" className="footer-link">Contact</a>
+          <a href="#" className="footer-link">Terms & Conditions</a>
+          <a href="#" className="footer-link">Privacy Policy</a>
         </div>
         <div className="footer-location">
-          <p>Guwahati, Assam, India</p>
+          <p>Kharamakha, Mazbat, Assam, India</p>
         </div>
         <div className="footer-copyright">
           <p>© 2025 CloudBamboo Digital LLP</p>

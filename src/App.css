@@ -1358,11 +1358,178 @@ body.modal-open {
   }
 }
 
+/* Legal Modal Styles */
+.legal-modal {
+  max-width: 900px;
+  width: 90vw;
+  max-height: 90vh;
+}
+
+.legal-modal .modal-header {
+  background: linear-gradient(135deg, rgba(0, 168, 204, 0.15) 0%, rgba(102, 126, 234, 0.15) 50%, rgba(0, 217, 255, 0.1) 100%);
+  border-bottom: 2px solid rgba(0, 168, 204, 0.3);
+}
+
+.legal-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 168, 204, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 168, 204, 0.3);
+  margin-top: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.legal-badge .badge-icon {
+  font-size: 16px;
+}
+
+.legal-badge .badge-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.legal-content {
+  padding: 20px 40px 40px;
+  max-height: calc(90vh - 180px);
+  overflow-y: auto;
+  color: #ffffff;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.legal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.legal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.legal-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 168, 204, 0.6);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.legal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 168, 204, 0.8);
+  background-clip: content-box;
+}
+
+.legal-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legal-section:last-child {
+  border-bottom: none;
+}
+
+.legal-section h3 {
+  color: #00D9FF;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.legal-section h4 {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 20px 0 12px 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.legal-section p {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.legal-section ul {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.legal-section li {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.legal-section li::marker {
+  color: #00A8CC;
+}
+
+.contact-info {
+  background: rgba(0, 168, 204, 0.1);
+  border: 1px solid rgba(0, 168, 204, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.contact-info p {
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-info strong {
+  color: #00D9FF;
+  font-weight: 600;
+}
+
+/* Footer button styles for legal links */
+.footer-link {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-link:hover {
+  color: #00D9FF;
+  text-decoration: underline !important;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .modal-content {
     width: 95vw;
     max-height: 95vh;
+  }
+  
+  .legal-modal {
+    width: 95vw;
+    max-width: none;
+  }
+  
+  .legal-content {
+    padding: 15px 20px 30px;
+    font-size: 13px;
+  }
+  
+  .legal-section h3 {
+    font-size: 18px;
+  }
+  
+  .legal-section h4 {
+    font-size: 15px;
+  }
+  
+  .modal-header {
+    padding: 20px 24px;
   }
 
   .journey-timeline {
@@ -1490,7 +1657,7 @@ body.modal-open {
 }
 
 .brand-logo {
-  height: 40px;
+  height: 60px;
   width: auto;
   transition: var(--transition-all);
 }
@@ -1642,7 +1809,7 @@ body.modal-open {
   }
   
   .brand-logo {
-    height: 35px;
+    height: 50px;
   }
   
   .cta-button {
@@ -1676,7 +1843,7 @@ body.modal-open {
 
 /* Logo image styles */
 .logo-image {
-  height: 55px;
+  height: 75px;
   width: auto;
   object-fit: contain;
   transition: all 0.3s ease;
@@ -1692,7 +1859,7 @@ body.modal-open {
 
 /* Footer logo image styles */
 .footer-logo-image {
-  height: 50px;
+  height: 70px;
   width: auto;
   object-fit: contain;
   transition: all 0.3s ease;
@@ -2131,7 +2298,7 @@ body.modal-open {
 
   /* Mobile logo adjustments */
   .logo-image {
-    height: 45px;
+    height: 60px;
   }
 
   .logo-text {
@@ -2144,7 +2311,7 @@ body.modal-open {
   }
 
   .footer-logo-image {
-    height: 40px;
+    height: 55px;
   }
 }
 
@@ -4387,6 +4554,169 @@ body.modal-open {
   }
 }
 
+/* 3D SVG Icon Styles */
+.icon-3d {
+  width: 100%;
+  height: 100%;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+}
+
+.philosophy-card:hover .icon-3d {
+  transform: perspective(1000px) rotateY(8deg) rotateX(5deg) scale(1.05);
+}
+
+/* Shield Icon Animations */
+.shield-base {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.shield-highlight {
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.8;
+}
+
+.philosophy-card:hover .shield-base {
+  filter: drop-shadow(0 8px 25px rgba(79, 70, 229, 0.4));
+}
+
+.philosophy-card:hover .shield-highlight {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.emblem {
+  transition: all 0.5s ease;
+}
+
+.philosophy-card:hover .emblem {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+/* Growth Chart Icon Animations */
+.bar-1, .bar-2, .bar-3, .bar-4 {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: bottom;
+}
+
+.philosophy-card:hover .bar-1 {
+  transform: scaleY(1.15);
+  transition-delay: 0.1s;
+}
+
+.philosophy-card:hover .bar-2 {
+  transform: scaleY(1.2);
+  transition-delay: 0.15s;
+}
+
+.philosophy-card:hover .bar-3 {
+  transform: scaleY(1.25);
+  transition-delay: 0.2s;
+}
+
+.philosophy-card:hover .bar-4 {
+  transform: scaleY(1.3);
+  transition-delay: 0.25s;
+}
+
+.growth-arrow {
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.philosophy-card:hover .growth-arrow {
+  transform: translateY(-2px) scale(1.05);
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.4));
+}
+
+.arrow-highlight {
+  transition: all 0.6s ease;
+  opacity: 0.3;
+}
+
+.philosophy-card:hover .arrow-highlight {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+/* Gears Icon Animations */
+.gear-main, .gear-secondary {
+  transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+}
+
+.philosophy-card:hover .gear-main {
+  transform: rotate(20deg);
+  filter: drop-shadow(0 0 12px rgba(220, 38, 38, 0.3));
+}
+
+.philosophy-card:hover .gear-secondary {
+  transform: rotate(-15deg);
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.3));
+}
+
+.gear-inner, .gear-inner-2 {
+  transition: all 0.6s ease;
+}
+
+.philosophy-card:hover .gear-inner {
+  transform: scale(1.05);
+  opacity: 0.5;
+}
+
+.philosophy-card:hover .gear-inner-2 {
+  transform: scale(1.08);
+  opacity: 0.5;
+}
+
+.node-1, .node-2 {
+  transition: all 0.5s ease;
+}
+
+.philosophy-card:hover .node-1,
+.philosophy-card:hover .node-2 {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px rgba(234, 179, 8, 0.5));
+}
+
+.connection-1, .connection-2 {
+  transition: all 0.7s ease;
+  stroke-dasharray: 0;
+  stroke-dashoffset: 0;
+}
+
+.philosophy-card:hover .connection-1,
+.philosophy-card:hover .connection-2 {
+  stroke-dasharray: 8;
+  stroke-dashoffset: -16;
+  animation: connectionFlow 3s ease-in-out infinite;
+}
+
+@keyframes connectionFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+/* Enhanced hover effects for 3D icons */
+.philosophy-card:hover .icon-3d {
+  animation: iconFloat3D 4s ease-in-out infinite;
+}
+
+@keyframes iconFloat3D {
+  0%, 100% {
+    transform: perspective(1000px) rotateY(8deg) rotateX(5deg) scale(1.05) translateY(0);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(8deg) rotateX(5deg) scale(1.05) translateY(-3px);
+  }
+}
+
 .philosophy-title {
   font-size: var(--text-3xl);
   margin-bottom: var(--space-4);
@@ -5156,7 +5486,7 @@ body.modal-open {
 
   /* Extra small screen logo adjustments */
   .logo-image {
-    height: 38px;
+    height: 50px;
   }
 
   .logo-text {
@@ -5169,7 +5499,7 @@ body.modal-open {
   }
 
   .footer-logo-image {
-    height: 35px;
+    height: 45px;
   }
 }
 

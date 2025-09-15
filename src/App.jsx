@@ -1,8 +1,501 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { initializeAnimations, initializeCursor } from './utils/animations';
-import logoImage from './assets/logo_gemini.png';
+import logoImage from './assets/logo_modern.png';
 import WatchPointPlans from './components/WatchPointPlans';
+
+// Terms and Conditions Modal Component
+const TermsModal = ({ isOpen, onClose }) => {
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const handleScroll = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleWheel = (e) => {
+    e.stopPropagation();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content legal-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Animated Background Elements */}
+        <div className="modal-bg-elements">
+          <div className="floating-particles">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className="particle" style={{
+                '--delay': `${i * 0.5}s`,
+                '--size': `${Math.random() * 4 + 2}px`,
+                '--x': `${Math.random() * 100}%`,
+                '--y': `${Math.random() * 100}%`
+              }}></div>
+            ))}
+          </div>
+          <div className="gradient-orb orb-1"></div>
+          <div className="gradient-orb orb-2"></div>
+          <div className="gradient-orb orb-3"></div>
+        </div>
+
+        <div className="modal-header">
+          <div className="header-content">
+            <div className="title-section">
+              <h2>Terms and Conditions</h2>
+              <p className="subtitle">CloudBamboo Digital LLP - Service Agreement</p>
+              <div className="legal-badge">
+                <span className="badge-icon">📋</span>
+                <span className="badge-text">Last Updated: January 2025</span>
+              </div>
+            </div>
+            <button className="modal-close" onClick={onClose}>
+              <span>×</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="modal-body">
+          <div className="legal-content" onScroll={handleScroll} onWheel={handleWheel}>
+            
+            <section className="legal-section">
+              <h3>1. Acceptance of Terms</h3>
+              <p>
+                By accessing and using CloudBamboo Digital LLP's services, including but not limited to our WatchPoint platform, 
+                consulting services, and custom software solutions, you agree to be bound by these Terms and Conditions. 
+                If you do not agree to these terms, please do not use our services.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>2. Services Description</h3>
+              <h4>2.1 Software as a Service (SaaS)</h4>
+              <p>
+                CloudBamboo provides cloud-based software solutions including workforce management systems, 
+                attendance tracking, project management tools, and custom business applications.
+              </p>
+              
+              <h4>2.2 Custom Development</h4>
+              <p>
+                We offer custom software development services tailored to specific business requirements, 
+                including but not limited to web applications, mobile apps, and enterprise systems.
+              </p>
+              
+              <h4>2.3 Consulting Services</h4>
+              <p>
+                Technical consulting, system architecture design, and digital transformation advisory services.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>3. User Responsibilities</h3>
+              <h4>3.1 Account Security</h4>
+              <p>
+                Users are responsible for maintaining the confidentiality of their account credentials and 
+                for all activities that occur under their account. Users must notify us immediately of any 
+                unauthorized use of their account.
+              </p>
+              
+              <h4>3.2 Acceptable Use</h4>
+              <p>
+                Users agree not to use our services for any unlawful purpose or in any way that could damage, 
+                disable, overburden, or impair our servers or networks. Users must not attempt to gain 
+                unauthorized access to any part of our services.
+              </p>
+              
+              <h4>3.3 Data Accuracy</h4>
+              <p>
+                Users are responsible for the accuracy and completeness of data entered into our systems 
+                and for regularly backing up their data.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>4. Payment Terms</h3>
+              <h4>4.1 Subscription Fees</h4>
+              <p>
+                Subscription fees are billed in advance on a monthly or annual basis. All fees are non-refundable 
+                except as expressly stated in these terms or required by law.
+              </p>
+              
+              <h4>4.2 Custom Development</h4>
+              <p>
+                Custom development projects are billed according to the agreed project proposal. 
+                Payment terms will be specified in the individual service agreement.
+              </p>
+              
+              <h4>4.3 Late Payments</h4>
+              <p>
+                Accounts with overdue payments may result in service suspension until payment is received. 
+                We reserve the right to charge interest on overdue amounts.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>5. Intellectual Property</h3>
+              <h4>5.1 CloudBamboo Property</h4>
+              <p>
+                All software, documentation, and related materials provided by CloudBamboo remain our 
+                intellectual property. Users are granted a limited, non-exclusive license to use our services.
+              </p>
+              
+              <h4>5.2 Customer Data</h4>
+              <p>
+                Customers retain ownership of their data. We claim no intellectual property rights over 
+                customer data and will not use customer data except as necessary to provide services.
+              </p>
+              
+              <h4>5.3 Custom Development</h4>
+              <p>
+                For custom development projects, intellectual property ownership will be specified in 
+                the individual service agreement.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>6. Data Protection & Privacy</h3>
+              <p>
+                We are committed to protecting your privacy and personal data. Our data handling practices 
+                are detailed in our Privacy Policy, which forms an integral part of these terms.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>7. Service Level Agreement</h3>
+              <h4>7.1 Uptime</h4>
+              <p>
+                We strive to maintain 99.9% uptime for our SaaS services. Planned maintenance will be 
+                communicated in advance when possible.
+              </p>
+              
+              <h4>7.2 Support</h4>
+              <p>
+                Technical support is provided during business hours (9 AM - 6 PM IST) via email and phone. 
+                Emergency support may be available for critical issues.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>8. Limitation of Liability</h3>
+              <p>
+                To the maximum extent permitted by law, CloudBamboo's liability for any claims arising from 
+                or related to these terms or our services shall not exceed the amount paid by the customer 
+                for services in the 12 months preceding the claim.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>9. Termination</h3>
+              <h4>9.1 Termination by Customer</h4>
+              <p>
+                Customers may terminate their subscription at any time. Termination will be effective at 
+                the end of the current billing period.
+              </p>
+              
+              <h4>9.2 Termination by CloudBamboo</h4>
+              <p>
+                We may terminate services immediately if users violate these terms or for non-payment. 
+                We will provide reasonable notice when possible.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>10. Governing Law</h3>
+              <p>
+                These terms are governed by the laws of India. Any disputes shall be subject to the 
+                exclusive jurisdiction of the courts in Assam, India.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>11. Contact Information</h3>
+              <p>
+                For questions about these Terms and Conditions, please contact us at:
+              </p>
+              <div className="contact-info">
+                <p><strong>CloudBamboo Digital LLP</strong></p>
+                <p>Email: hq@cloudbamboo.com</p>
+                <p>Phone: +91 8399811340</p>
+                <p>Address: Kharamakha, Mazbat, Assam, India</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Privacy Policy Modal Component
+const PrivacyModal = ({ isOpen, onClose }) => {
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const handleScroll = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleWheel = (e) => {
+    e.stopPropagation();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content legal-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Animated Background Elements */}
+        <div className="modal-bg-elements">
+          <div className="floating-particles">
+            {[...Array(20)].map((_, i) => (
+              <div key={i} className="particle" style={{
+                '--delay': `${i * 0.5}s`,
+                '--size': `${Math.random() * 4 + 2}px`,
+                '--x': `${Math.random() * 100}%`,
+                '--y': `${Math.random() * 100}%`
+              }}></div>
+            ))}
+          </div>
+          <div className="gradient-orb orb-1"></div>
+          <div className="gradient-orb orb-2"></div>
+          <div className="gradient-orb orb-3"></div>
+        </div>
+
+        <div className="modal-header">
+          <div className="header-content">
+            <div className="title-section">
+              <h2>Privacy Policy</h2>
+              <p className="subtitle">How we collect, use, and protect your information</p>
+              <div className="legal-badge">
+                <span className="badge-icon">🔒</span>
+                <span className="badge-text">Last Updated: January 2025</span>
+              </div>
+            </div>
+            <button className="modal-close" onClick={onClose}>
+              <span>×</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="modal-body">
+          <div className="legal-content" onScroll={handleScroll} onWheel={handleWheel}>
+            
+            <section className="legal-section">
+              <h3>1. Introduction</h3>
+              <p>
+                CloudBamboo Digital LLP ("we," "our," or "us") is committed to protecting your privacy. 
+                This Privacy Policy explains how we collect, use, disclose, and safeguard your information 
+                when you use our services, including our website and software applications.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>2. Information We Collect</h3>
+              
+              <h4>2.1 Personal Information</h4>
+              <p>We may collect the following personal information:</p>
+              <ul>
+                <li>Name, email address, and phone number</li>
+                <li>Company name and job title</li>
+                <li>Billing and payment information</li>
+                <li>Communication preferences</li>
+              </ul>
+              
+              <h4>2.2 Usage Data</h4>
+              <p>We automatically collect information about how you use our services:</p>
+              <ul>
+                <li>Log files and usage statistics</li>
+                <li>IP addresses and device information</li>
+                <li>Browser type and operating system</li>
+                <li>Pages visited and time spent on our services</li>
+              </ul>
+              
+              <h4>2.3 Cookies and Tracking</h4>
+              <p>
+                We use cookies and similar tracking technologies to enhance your experience, 
+                analyze usage patterns, and improve our services.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>3. How We Use Your Information</h3>
+              
+              <h4>3.1 Service Provision</h4>
+              <ul>
+                <li>Provide, maintain, and improve our services</li>
+                <li>Process transactions and manage accounts</li>
+                <li>Provide customer support and technical assistance</li>
+                <li>Send important service-related communications</li>
+              </ul>
+              
+              <h4>3.2 Business Operations</h4>
+              <ul>
+                <li>Analyze usage patterns to improve our services</li>
+                <li>Conduct research and development</li>
+                <li>Prevent fraud and ensure security</li>
+                <li>Comply with legal obligations</li>
+              </ul>
+              
+              <h4>3.3 Marketing Communications</h4>
+              <ul>
+                <li>Send newsletters and product updates (with consent)</li>
+                <li>Provide information about new features and services</li>
+                <li>Conduct surveys and gather feedback</li>
+              </ul>
+            </section>
+
+            <section className="legal-section">
+              <h3>4. Information Sharing</h3>
+              
+              <h4>4.1 We Do Not Sell Personal Information</h4>
+              <p>
+                We do not sell, rent, or trade your personal information to third parties 
+                for marketing purposes.
+              </p>
+              
+              <h4>4.2 Service Providers</h4>
+              <p>
+                We may share information with trusted third-party service providers who assist 
+                us in operating our business, such as:
+              </p>
+              <ul>
+                <li>Cloud hosting and infrastructure providers</li>
+                <li>Payment processors</li>
+                <li>Customer support platforms</li>
+                <li>Analytics and monitoring services</li>
+              </ul>
+              
+              <h4>4.3 Legal Requirements</h4>
+              <p>
+                We may disclose information when required by law, court order, or government 
+                regulation, or to protect our rights and safety.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>5. Data Security</h3>
+              
+              <h4>5.1 Security Measures</h4>
+              <p>We implement industry-standard security measures including:</p>
+              <ul>
+                <li>Encryption of data in transit and at rest</li>
+                <li>Regular security audits and penetration testing</li>
+                <li>Access controls and authentication mechanisms</li>
+                <li>Employee training on data protection</li>
+              </ul>
+              
+              <h4>5.2 Data Breach Response</h4>
+              <p>
+                In the event of a data breach, we will notify affected users and relevant 
+                authorities as required by law, typically within 72 hours of discovery.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>6. Data Retention</h3>
+              <p>
+                We retain personal information only as long as necessary to fulfill the purposes 
+                for which it was collected, including:
+              </p>
+              <ul>
+                <li>Active account data: Retained while account is active</li>
+                <li>Billing records: Retained for 7 years for tax purposes</li>
+                <li>Marketing data: Retained until opt-out or request for deletion</li>
+                <li>Log files: Typically retained for 90 days</li>
+              </ul>
+            </section>
+
+            <section className="legal-section">
+              <h3>7. Your Rights</h3>
+              
+              <h4>7.1 Access and Control</h4>
+              <p>You have the right to:</p>
+              <ul>
+                <li>Access your personal information</li>
+                <li>Update or correct inaccurate information</li>
+                <li>Request deletion of your personal information</li>
+                <li>Opt-out of marketing communications</li>
+                <li>Data portability (receive your data in a structured format)</li>
+              </ul>
+              
+              <h4>7.2 Exercise Your Rights</h4>
+              <p>
+                To exercise these rights, contact us at hq@cloudbamboo.com. We will respond 
+                to your request within 30 days.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>8. International Data Transfers</h3>
+              <p>
+                Your information may be transferred to and processed in countries other than 
+                your own. We ensure appropriate safeguards are in place to protect your information 
+                during such transfers.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>9. Children's Privacy</h3>
+              <p>
+                Our services are not intended for children under 13 years of age. We do not 
+                knowingly collect personal information from children under 13.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>10. Updates to This Policy</h3>
+              <p>
+                We may update this Privacy Policy from time to time. We will notify you of 
+                significant changes by email or through our services. Your continued use of 
+                our services after such notification constitutes acceptance of the updated policy.
+              </p>
+            </section>
+
+            <section className="legal-section">
+              <h3>11. Contact Us</h3>
+              <p>
+                If you have questions about this Privacy Policy or our privacy practices, 
+                please contact us:
+              </p>
+              <div className="contact-info">
+                <p><strong>CloudBamboo Digital LLP</strong></p>
+                <p>Email: hq@cloudbamboo.com</p>
+                <p>Phone: +91 8399811340</p>
+                <p>Address: Kharamakha, Mazbat, Assam, India</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Enhanced Modal Component
 const JourneyModal = ({ isOpen, onClose }) => {
@@ -486,6 +979,8 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -925,7 +1420,32 @@ function App() {
             <div className="philosophy-card scroll-reveal">
               <div className="philosophy-icon-container">
                 <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">💪</div>
+                <div className="philosophy-icon">
+                  <svg viewBox="0 0 100 100" className="icon-3d">
+                    <defs>
+                      <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style={{stopColor:'#4f46e5', stopOpacity:1}} />
+                        <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
+                        <stop offset="100%" style={{stopColor:'#2563eb', stopOpacity:1}} />
+                      </linearGradient>
+                      <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
+                      </filter>
+                    </defs>
+                    {/* Shield base */}
+                    <path d="M50 10 L20 25 L20 55 Q20 75 50 85 Q80 75 80 55 L80 25 Z" 
+                          fill="url(#shieldGrad)" 
+                          filter="url(#shadow)"
+                          className="shield-base"/>
+                    {/* Shield highlight */}
+                    <path d="M50 15 L25 27 L25 52 Q25 68 50 76 Q75 68 75 52 L75 27 Z" 
+                          fill="rgba(255,255,255,0.2)"
+                          className="shield-highlight"/>
+                    {/* Center emblem */}
+                    <circle cx="50" cy="45" r="8" fill="rgba(255,255,255,0.8)" className="emblem"/>
+                    <circle cx="50" cy="45" r="4" fill="url(#shieldGrad)" className="emblem-inner"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="philosophy-title">Strong Foundations</h3>
               <p className="philosophy-description">
@@ -936,7 +1456,36 @@ function App() {
             <div className="philosophy-card scroll-reveal">
               <div className="philosophy-icon-container">
                 <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">📈</div>
+                <div className="philosophy-icon">
+                  <svg viewBox="0 0 100 100" className="icon-3d">
+                    <defs>
+                      <linearGradient id="growthGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" style={{stopColor:'#059669', stopOpacity:1}} />
+                        <stop offset="50%" style={{stopColor:'#10b981', stopOpacity:1}} />
+                        <stop offset="100%" style={{stopColor:'#34d399', stopOpacity:1}} />
+                      </linearGradient>
+                      <filter id="growthShadow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
+                      </filter>
+                    </defs>
+                    {/* Chart bars */}
+                    <rect x="15" y="65" width="8" height="20" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-1"/>
+                    <rect x="28" y="55" width="8" height="30" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-2"/>
+                    <rect x="41" y="45" width="8" height="40" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-3"/>
+                    <rect x="54" y="30" width="8" height="55" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-4"/>
+                    {/* Growth arrow */}
+                    <path d="M65 60 L85 25 L80 30 L85 20 L90 25 L85 25" 
+                          stroke="url(#growthGrad)" 
+                          strokeWidth="3" 
+                          fill="url(#growthGrad)" 
+                          filter="url(#growthShadow)"
+                          className="growth-arrow"/>
+                    {/* Arrow head highlight */}
+                    <path d="M85 20 L90 25 L85 25" 
+                          fill="rgba(255,255,255,0.3)" 
+                          className="arrow-highlight"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="philosophy-title">Designed for Growth</h3>
               <p className="philosophy-description">
@@ -947,7 +1496,48 @@ function App() {
             <div className="philosophy-card scroll-reveal">
               <div className="philosophy-icon-container">
                 <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">🔄</div>
+                <div className="philosophy-icon">
+                  <svg viewBox="0 0 100 100" className="icon-3d">
+                    <defs>
+                      <linearGradient id="flexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style={{stopColor:'#dc2626', stopOpacity:1}} />
+                        <stop offset="50%" style={{stopColor:'#f59e0b', stopOpacity:1}} />
+                        <stop offset="100%" style={{stopColor:'#eab308', stopOpacity:1}} />
+                      </linearGradient>
+                      <filter id="flexShadow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
+                      </filter>
+                    </defs>
+                    {/* Main gear */}
+                    <g filter="url(#flexShadow)">
+                      <circle cx="40" cy="45" r="18" fill="url(#flexGrad)" className="gear-main"/>
+                      <circle cx="40" cy="45" r="12" fill="rgba(255,255,255,0.2)" className="gear-inner"/>
+                      <circle cx="40" cy="45" r="6" fill="url(#flexGrad)" className="gear-center"/>
+                      {/* Gear teeth */}
+                      <rect x="38" y="25" width="4" height="6" fill="url(#flexGrad)"/>
+                      <rect x="38" y="57" width="4" height="6" fill="url(#flexGrad)"/>
+                      <rect x="22" y="43" width="6" height="4" fill="url(#flexGrad)"/>
+                      <rect x="54" y="43" width="6" height="4" fill="url(#flexGrad)"/>
+                    </g>
+                    {/* Secondary gear */}
+                    <g filter="url(#flexShadow)">
+                      <circle cx="65" cy="30" r="12" fill="url(#flexGrad)" className="gear-secondary"/>
+                      <circle cx="65" cy="30" r="8" fill="rgba(255,255,255,0.2)" className="gear-inner-2"/>
+                      <circle cx="65" cy="30" r="4" fill="url(#flexGrad)" className="gear-center-2"/>
+                      {/* Small gear teeth */}
+                      <rect x="63" y="16" width="4" height="4" fill="url(#flexGrad)"/>
+                      <rect x="63" y="40" width="4" height="4" fill="url(#flexGrad)"/>
+                      <rect x="51" y="28" width="4" height="4" fill="url(#flexGrad)"/>
+                      <rect x="75" y="28" width="4" height="4" fill="url(#flexGrad)"/>
+                    </g>
+                    {/* Connection nodes */}
+                    <circle cx="25" cy="65" r="4" fill="url(#flexGrad)" filter="url(#flexShadow)" className="node-1"/>
+                    <circle cx="75" cy="60" r="4" fill="url(#flexGrad)" filter="url(#flexShadow)" className="node-2"/>
+                    {/* Connection lines */}
+                    <path d="M40 60 Q32 62 25 65" stroke="url(#flexGrad)" strokeWidth="2" fill="none" className="connection-1"/>
+                    <path d="M65 42 Q70 51 75 60" stroke="url(#flexGrad)" strokeWidth="2" fill="none" className="connection-2"/>
+                  </svg>
+                </div>
               </div>
               <h3 className="philosophy-title">Ultimate Flexibility</h3>
               <p className="philosophy-description">
@@ -1003,15 +1593,15 @@ function App() {
               <div className="contact-details">
                 <div className="contact-item">
                   <span className="contact-icon">📧</span>
-                  <span>hello@cloudbamboo.com</span>
+                  <span>hq@cloudbamboo.com</span>
                 </div>
                 <div className="contact-item">
                   <span className="contact-icon">📱</span>
-                  <span>+91 98765 43210</span>
+                  <span>+91 8399811340</span>
                 </div>
                 <div className="contact-item">
                   <span className="contact-icon">📍</span>
-                  <span>Guwahati, Assam, India</span>
+                  <span>Kharamakha, Mazbat, Assam, India</span>
                 </div>
               </div>
             </div>
@@ -1070,30 +1660,22 @@ function App() {
               </p>
             </div>
             <div className="footer-column">
-              <h4>Product</h4>
+              <h4>Legal</h4>
               <div className="footer-links">
-                <a href="#" className="footer-link">WatchPoint</a>
-                <a href="#" className="footer-link">Features</a>
-                <a href="#" className="footer-link">Pricing</a>
-                <a href="#" className="footer-link">API Docs</a>
-              </div>
-            </div>
-            <div className="footer-column">
-              <h4>Company</h4>
-              <div className="footer-links">
-                <a href="#" className="footer-link">About Us</a>
-                <a href="#" className="footer-link">Careers</a>
-                <a href="#" className="footer-link">Blog</a>
-                <a href="#" className="footer-link">Press</a>
-              </div>
-            </div>
-            <div className="footer-column">
-              <h4>Support</h4>
-              <div className="footer-links">
-                <a href="#" className="footer-link">Help Center</a>
-                <a href="#" className="footer-link">Contact</a>
-                <a href="#" className="footer-link">Status</a>
-                <a href="#" className="footer-link">Terms</a>
+                <button 
+                  className="footer-link"
+                  onClick={() => setIsTermsModalOpen(true)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                >
+                  Terms & Conditions
+                </button>
+                <button 
+                  className="footer-link"
+                  onClick={() => setIsPrivacyModalOpen(true)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                >
+                  Privacy Policy
+                </button>
               </div>
             </div>
           </div>
@@ -1112,6 +1694,8 @@ function App() {
       </footer>
 
       <JourneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <TermsModal isOpen={isTermsModalOpen} onClose={() => setIsTermsModalOpen(false)} />
+      <PrivacyModal isOpen={isPrivacyModalOpen} onClose={() => setIsPrivacyModalOpen(false)} />
     </div>
   );
 }
