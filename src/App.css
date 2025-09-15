@@ -1585,7 +1585,7 @@ body.modal-open {
   animation: secretReveal 2s ease-in-out infinite;
   border-color: rgba(233, 69, 96, 0.8);
   letter-spacing: 2px;
-  color: #ff6b9d;
+  color: #ffffff;
 }
 
 .btn-creative:hover::before {
@@ -4929,7 +4929,7 @@ body.modal-open {
 .contact-info h2::after {
   content: '?';
   position: absolute;
-  right: -40px;
+  right: 5px;
   top: 0;
   font-size: var(--text-6xl);
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
