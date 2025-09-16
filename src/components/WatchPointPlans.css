@@ -494,10 +494,10 @@
 
 .fullscreen-close {
   position: absolute;
-  top: -50px;
-  right: -10px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.8);
   color: white;
   font-size: 30px;
   width: 45px;
@@ -508,14 +508,16 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
-  z-index: 1;
+  backdrop-filter: blur(2px);
+  z-index: 10001;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .fullscreen-close:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 1);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .fullscreen-close:active {
@@ -545,8 +547,6 @@
 /* Mobile responsive for fullscreen */
 @media (max-width: 768px) {
   .fullscreen-close {
-    top: 20px;
-    right: 20px;
     font-size: 24px;
     width: 40px;
     height: 40px;
