@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { initializeAnimations, initializeCursor } from './utils/animations';
+import { initializeAnimations } from './utils/animations';
 import logoImage from './assets/logo_modern.png';
 import WatchPointPlans from './components/WatchPointPlans';
 
@@ -1127,7 +1127,7 @@ function App() {
   useEffect(() => {
     // Initialize all animations
     initializeAnimations();
-    initializeCursor();
+    // initializeCursor(); // Removed cursor tracking effect
   }, []);
 
   return (
@@ -1941,7 +1941,7 @@ function App() {
         <div className="container">
           <div className="contact-container">
             <div className="contact-info scroll-reveal">
-              <h2>Have a Project in Mind?</h2>
+              <h2>Have a Project in Mind</h2>
               <p>
                 Whether you're interested in WatchPoint or have a unique challenge that requires
                 a custom software solution, our team is ready to talk.

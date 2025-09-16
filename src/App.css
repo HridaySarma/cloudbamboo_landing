@@ -5170,8 +5170,8 @@ body.modal-open {
 
 .contact-info h2::after {
   content: '?';
-  position: absolute;
-  right: 5px;
+  position: relative;
+  margin-left: 10px;
   top: 0;
   font-size: var(--text-6xl);
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
@@ -5820,43 +5820,7 @@ body.modal-open {
   }
 }
 
-/* Custom Cursor */
-.custom-cursor {
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: all 0.1s ease;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-}
-
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-}
-
-.custom-cursor.hover {
-  width: 60px;
-  height: 60px;
-  background: rgba(0, 217, 255, 0.1);
-  border-color: var(--primary-light);
-}
-
-.cursor-dot.hover {
-  width: 12px;
-  height: 12px;
-  background: var(--primary-light);
-}
+/* Custom Cursor - REMOVED (was causing cursor lag and confusion) */
 
 /* Hero Decorations */
 .hero-decoration {
