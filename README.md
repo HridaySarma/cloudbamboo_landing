@@ -1,10 +1,10 @@
 # CloudBamboo Digital Landing Page
 
-This is the official homepage for CloudBamboo Digital, a software company that builds powerful, operational SaaS platforms.
+This is the official homepage for CloudBamboo Digital LLP, a software company that builds powerful, operational SaaS platforms for businesses across all industries.
 
 ## Project Overview
 
-This React-based landing page showcases CloudBamboo Digital's expertise in building enterprise-grade SaaS solutions, with a focus on their flagship product, WatchPoint - a Workforce Management System for service-based businesses.
+This React-based landing page showcases CloudBamboo Digital LLP's expertise in building enterprise-grade SaaS solutions for businesses across all industries, with a focus on their flagship product, WatchPoint - a comprehensive Workforce Management System.
 
 ## Features
 

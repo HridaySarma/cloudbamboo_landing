@@ -177,7 +177,7 @@ const Console = () => {
       <header className="console-header">
         <div className="console-nav">
           <Link to="/" className="console-logo">
-            <img src={logoImage} alt="CloudBamboo Digital" className="logo-image" />
+            <img src={logoImage} alt="CloudBamboo Digital LLP" className="logo-image" />
             <span className="logo-text">
               <span className="brand-cloud">Cloud</span>
               <span className="brand-bamboo">bamboo</span>

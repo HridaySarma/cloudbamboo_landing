@@ -3,22 +3,37 @@ import './App.css';
 import { initializeAnimations } from './utils/animations';
 import logoImage from './assets/logo_modern.png';
 import WatchPointPlans from './components/WatchPointPlans';
+import FounderSection from './components/FounderSection';
 
 // Terms and Conditions Modal Component
 const TermsModal = ({ isOpen, onClose }) => {
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open while preserving scroll position
   useEffect(() => {
     if (isOpen) {
+      const scrollY = window.scrollY;
       document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
     } else {
       document.body.classList.remove('modal-open');
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      const scrollY = document.body.style.top;
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
 
     return () => {
       document.body.classList.remove('modal-open');
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isOpen]);
 
@@ -56,7 +71,7 @@ const TermsModal = ({ isOpen, onClose }) => {
           <div className="header-content">
             <div className="title-section">
               <h2>Terms and Conditions</h2>
-              <p className="subtitle">CloudBamboo Digital LLP - Service Agreement</p>
+              <p className="subtitle">CloudBamboo Digital LLP - Limited Liability Partnership (Founded 2025)</p>
               <div className="legal-badge">
                 <span className="badge-icon">📋</span>
                 <span className="badge-text">Last Updated: January 2025</span>
@@ -84,7 +99,7 @@ const TermsModal = ({ isOpen, onClose }) => {
               <h3>2. Services Description</h3>
               <h4>2.1 Software as a Service (SaaS)</h4>
               <p>
-                CloudBamboo Digital provides cloud-based software solutions including workforce management systems, 
+                CloudBamboo Digital LLP provides cloud-based software solutions including workforce management systems, 
                 attendance tracking, project management tools, and custom business applications.
               </p>
               
@@ -146,9 +161,9 @@ const TermsModal = ({ isOpen, onClose }) => {
 
             <section className="legal-section">
               <h3>5. Intellectual Property</h3>
-              <h4>5.1 CloudBamboo Digital Property</h4>
+              <h4>5.1 CloudBamboo Digital LLP Property</h4>
               <p>
-                All software, documentation, and related materials provided by CloudBamboo Digital remain our 
+                All software, documentation, and related materials provided by CloudBamboo Digital LLP remain our 
                 intellectual property. Users are granted a limited, non-exclusive license to use our services.
               </p>
               
@@ -191,7 +206,7 @@ const TermsModal = ({ isOpen, onClose }) => {
             <section className="legal-section">
               <h3>8. Limitation of Liability</h3>
               <p>
-                To the maximum extent permitted by law, CloudBamboo Digital's liability for any claims arising from 
+                To the maximum extent permitted by law, CloudBamboo Digital LLP's liability for any claims arising from 
                 or related to these terms or our services shall not exceed the amount paid by the customer 
                 for services in the 12 months preceding the claim.
               </p>
@@ -205,7 +220,7 @@ const TermsModal = ({ isOpen, onClose }) => {
                 the end of the current billing period.
               </p>
               
-              <h4>9.2 Termination by CloudBamboo Digital</h4>
+              <h4>9.2 Termination by CloudBamboo Digital LLP</h4>
               <p>
                 We may terminate services immediately if users violate these terms or for non-payment. 
                 We will provide reasonable notice when possible.
@@ -227,9 +242,10 @@ const TermsModal = ({ isOpen, onClose }) => {
               </p>
               <div className="contact-info">
                 <p><strong>CloudBamboo Digital LLP</strong></p>
+                <p>Limited Liability Partnership (Founded 2025)</p>
                 <p>Email: hq@cloudbamboo.com</p>
                 <p>Phone: +91 8399811340</p>
-                <p>Address: Kharamakha, Mazbat, Assam, India</p>
+                <p>Registered Office: Kharamakha, Mazbat, Assam, India</p>
               </div>
             </section>
           </div>
@@ -241,19 +257,33 @@ const TermsModal = ({ isOpen, onClose }) => {
 
 // Privacy Policy Modal Component
 const PrivacyModal = ({ isOpen, onClose }) => {
-  // Prevent body scroll when modal is open
+  // Prevent body scroll when modal is open while preserving scroll position
   useEffect(() => {
     if (isOpen) {
+      const scrollY = window.scrollY;
       document.body.classList.add('modal-open');
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
     } else {
       document.body.classList.remove('modal-open');
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      const scrollY = document.body.style.top;
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
 
     return () => {
       document.body.classList.remove('modal-open');
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
     };
   }, [isOpen]);
 
@@ -291,7 +321,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
           <div className="header-content">
             <div className="title-section">
               <h2>Privacy Policy</h2>
-              <p className="subtitle">How we collect, use, and protect your information</p>
+              <p className="subtitle">CloudBamboo Digital LLP - Limited Liability Partnership (Founded 2025)</p>
               <div className="legal-badge">
                 <span className="badge-icon">🔒</span>
                 <span className="badge-text">Last Updated: January 2025</span>
@@ -485,9 +515,10 @@ const PrivacyModal = ({ isOpen, onClose }) => {
               </p>
               <div className="contact-info">
                 <p><strong>CloudBamboo Digital LLP</strong></p>
+                <p>Limited Liability Partnership (Founded 2025)</p>
                 <p>Email: hq@cloudbamboo.com</p>
                 <p>Phone: +91 8399811340</p>
-                <p>Address: Kharamakha, Mazbat, Assam, India</p>
+                <p>Registered Office: Kharamakha, Mazbat, Assam, India</p>
               </div>
             </section>
           </div>
@@ -1085,7 +1116,7 @@ function App() {
       setScrolled(window.scrollY > 50);
 
       // Update active section based on scroll position
-      const sections = ['features', 'watchpoint', 'philosophy', 'contact'];
+      const sections = ['features', 'watchpoint', 'philosophy', 'contact', 'about'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -1145,12 +1176,16 @@ function App() {
       <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
           <div className="brand">
-            <img src={logoImage} alt="CloudBamboo Digital" className="brand-logo" />
-            <span className="brand-name">
-              <span className="brand-cloud">Cloud</span>
-              <span className="brand-bamboo">bamboo</span>
-              <span className="brand-digital">Digital</span>
-            </span>
+            <img src={logoImage} alt="CloudBamboo Digital LLP" className="brand-logo" />
+            <div className="brand-name">
+              <div className="brand-line">
+                <span className="brand-cloud">Cloud</span>
+                <span className="brand-bamboo">bamboo</span>
+              </div>
+              <div className="digital-line">
+                <span className="brand-digital">Digital LLP</span>
+              </div>
+            </div>
           </div>
           
           <nav className="navigation">
@@ -1158,6 +1193,7 @@ function App() {
             <a href="#watchpoint" className={`nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}>WatchPoint</a>
             <a href="#philosophy" className={`nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}>Philosophy</a>
             <a href="#contact" className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
+            <a href="#about" className={`nav-item ${activeSection === 'about' ? 'active' : ''}`}>About</a>
           </nav>
           
           <div className="header-actions">
@@ -1178,7 +1214,7 @@ function App() {
               We Build Software That Powers Your Entire Operation
             </h1>
             <p className="hero-subtitle">
-              CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions
+              CloudBamboo Digital LLP architects robust, flexible, and scalable SaaS solutions
               that automate workflows and provide critical business insights.
             </p>
             <div className="hero-cta">
@@ -1285,7 +1321,7 @@ function App() {
           <div className="section-header scroll-reveal">
 <h2 className="section-title">Our Solutions</h2>
             <p className="section-subtitle">
-              We build powerful operational SaaS platforms designed for the unique challenges of service-based businesses.
+              We build powerful operational SaaS platforms designed for businesses of all types that can benefit from cutting-edge software solutions.
             </p>
           </div>
           <div className="features-grid">
@@ -1644,6 +1680,9 @@ function App() {
       {/* WatchPoint Section */}
       <WatchPointPlans />
 
+      {/* Founder Section */}
+      <FounderSection />
+
       {/* Chatbot Section - Hidden for now */}
       {/* 
       <section id="chatbot" className="chatbot">
@@ -1667,7 +1706,7 @@ function App() {
                 <div className="chatbot-header">
                   <div className="chatbot-avatar">🤖</div>
                   <div className="chatbot-info">
-                    <h4>CloudBamboo Digital AI Assistant</h4>
+                    <h4>CloudBamboo Digital LLP AI Assistant</h4>
                     <span className="chatbot-status">● Online</span>
                   </div>
                 </div>
@@ -2005,47 +2044,349 @@ function App() {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section id="about" className="about-section">
+        <div className="container">
+          <div className="section-header scroll-reveal">
+            <h2 className="section-title">About CloudBamboo Digital LLP</h2>
+            <p className="section-subtitle">
+              A trusted Limited Liability Partnership building the future of business operations
+            </p>
+          </div>
+          
+          <div className="about-content">
+            <div className="mission-vision-grid">
+              <div className="mission-card scroll-reveal">
+                <div className="card-icon-container">
+                  <div className="card-icon-bg"></div>
+                  <div className="card-icon">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <defs>
+                        <linearGradient id="missionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{stopColor:'#4f46e5', stopOpacity:1}} />
+                          <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
+                          <stop offset="100%" style={{stopColor:'#2563eb', stopOpacity:1}} />
+                        </linearGradient>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      {/* Target circles */}
+                      <circle cx="50" cy="50" r="40" fill="none" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.3" className="target-ring-1"/>
+                      <circle cx="50" cy="50" r="30" fill="none" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.5" className="target-ring-2"/>
+                      <circle cx="50" cy="50" r="20" fill="none" stroke="url(#missionGrad)" strokeWidth="3" opacity="0.7" className="target-ring-3"/>
+                      <circle cx="50" cy="50" r="8" fill="url(#missionGrad)" filter="url(#glow)" className="target-center"/>
+                      {/* Crosshairs */}
+                      <line x1="10" y1="50" x2="40" y2="50" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
+                      <line x1="60" y1="50" x2="90" y2="50" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
+                      <line x1="50" y1="10" x2="50" y2="40" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
+                      <line x1="50" y1="60" x2="50" y2="90" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
+                    </svg>
+                  </div>
+                  <div className="icon-particles">
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                  </div>
+                </div>
+                <h3>Our Mission</h3>
+                <p>
+                  Our mission is to empower businesses of all types by providing powerful, 
+                  intuitive, and affordable SaaS solutions that streamline operations, 
+                  automate workflows, and drive sustainable growth.
+                </p>
+              </div>
+              
+              <div className="vision-card scroll-reveal">
+                <div className="card-icon-container">
+                  <div className="card-icon-bg"></div>
+                  <div className="card-icon">
+                    <svg viewBox="0 0 100 100" className="icon-svg">
+                      <defs>
+                        <linearGradient id="visionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style={{stopColor:'#059669', stopOpacity:1}} />
+                          <stop offset="50%" style={{stopColor:'#0891b2', stopOpacity:1}} />
+                          <stop offset="100%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
+                        </linearGradient>
+                        <filter id="visionGlow" x="-50%" y="-50%" width="200%" height="200%">
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
+                        </filter>
+                      </defs>
+                      {/* Rocket body */}
+                      <path d="M45 70 L55 70 L52 20 L48 20 Z" fill="url(#visionGrad)" filter="url(#visionGlow)"/>
+                      {/* Rocket tip */}
+                      <path d="M48 20 L52 20 L50 10 Z" fill="url(#visionGrad)" opacity="0.9"/>
+                      {/* Fins */}
+                      <path d="M45 65 L40 75 L45 70 Z" fill="url(#visionGrad)" opacity="0.7"/>
+                      <path d="M55 65 L60 75 L55 70 Z" fill="url(#visionGrad)" opacity="0.7"/>
+                      {/* Flames */}
+                      <path d="M45 70 L42 85 L50 82 L58 85 L55 70" fill="#ff6b35" opacity="0.8" className="rocket-flame"/>
+                      {/* Growth arrows */}
+                      <path d="M25 45 L35 35 M30 35 L35 35 L35 40" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-1"/>
+                      <path d="M65 35 L75 25 M70 25 L75 25 L75 30" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-2"/>
+                      <path d="M20 25 L30 15 M25 15 L30 15 L30 20" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-3"/>
+                    </svg>
+                  </div>
+                  <div className="icon-particles">
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                  </div>
+                </div>
+                <h3>Our Vision</h3>
+                <p>
+                  Our vision is to become the leading technology partner for businesses 
+                  across India and beyond, enabling them to scale efficiently and compete 
+                  in the digital economy through innovative software solutions.
+                </p>
+              </div>
+            </div>
+            
+            <div className="company-story scroll-reveal">
+              <div className="story-icon-container">
+                <svg viewBox="0 0 100 100" className="story-icon">
+                  <defs>
+                    <linearGradient id="storyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{stopColor:'#f59e0b', stopOpacity:1}} />
+                      <stop offset="50%" style={{stopColor:'#ef4444', stopOpacity:1}} />
+                      <stop offset="100%" style={{stopColor:'#8b5cf6', stopOpacity:1}} />
+                    </linearGradient>
+                  </defs>
+                  {/* Book/Story icon */}
+                  <rect x="25" y="20" width="50" height="60" rx="4" fill="none" stroke="url(#storyGrad)" strokeWidth="2"/>
+                  <rect x="30" y="25" width="40" height="50" rx="2" fill="url(#storyGrad)" opacity="0.1"/>
+                  <line x1="35" y1="35" x2="65" y2="35" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
+                  <line x1="35" y1="42" x2="60" y2="42" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
+                  <line x1="35" y1="49" x2="65" y2="49" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
+                  <line x1="35" y1="56" x2="55" y2="56" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
+                  <circle cx="20" cy="50" r="8" fill="url(#storyGrad)" opacity="0.3"/>
+                  <circle cx="80" cy="50" r="6" fill="url(#storyGrad)" opacity="0.4"/>
+                </svg>
+              </div>
+              <h3>Our Story</h3>
+              <p>
+                Founded in 2025, <strong>CloudBamboo Digital LLP</strong> is a Limited Liability Partnership 
+                based in Assam, India. We specialize in architecting robust, flexible, and scalable 
+                SaaS solutions that automate workflows and provide critical business insights.
+              </p>
+              <p>
+                Our team combines deep technical expertise with practical business understanding 
+                to create software that doesn't just work—it transforms how businesses operate.
+              </p>
+            </div>
+            
+            <div className="company-credentials scroll-reveal">
+              <div className="credentials-header">
+                <div className="credentials-icon">
+                  <svg viewBox="0 0 100 100" className="credentials-svg">
+                    <defs>
+                      <linearGradient id="credGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style={{stopColor:'#1e40af', stopOpacity:1}} />
+                        <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
+                        <stop offset="100%" style={{stopColor:'#059669', stopOpacity:1}} />
+                      </linearGradient>
+                    </defs>
+                    {/* Certificate/Shield shape */}
+                    <path d="M50 10 L75 25 L75 60 Q75 75 50 85 Q25 75 25 60 L25 25 Z" 
+                          fill="none" stroke="url(#credGrad)" strokeWidth="2"/>
+                    <path d="M50 15 L70 27 L70 57 Q70 70 50 78 Q30 70 30 57 L30 27 Z" 
+                          fill="url(#credGrad)" opacity="0.1"/>
+                    <circle cx="50" cy="45" r="8" fill="url(#credGrad)" opacity="0.8"/>
+                    <path d="M45 45 L48 48 L55 40" stroke="white" strokeWidth="2" fill="none"/>
+                  </svg>
+                </div>
+                <h4>Company Credentials & Certifications</h4>
+              </div>
+              <p className="credentials-subtitle">Trusted by businesses for reliable and secure solutions</p>
+              
+              {/* Company Information Grid */}
+              <div className="credentials-grid">
+                <div className="credential-item credential-primary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V6h12v2z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Legal Structure</strong>
+                    <span>Limited Liability Partnership (LLP)</span>
+                    <div className="credential-details">Incorporated under Indian Partnership Act</div>
+                  </div>
+                </div>
+
+                <div className="credential-item credential-primary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Founded</strong>
+                    <span>2025</span>
+                    <div className="credential-details">Next-generation digital solutions</div>
+                  </div>
+                </div>
+
+                <div className="credential-item credential-primary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Headquarters</strong>
+                    <span>Kharamakha, Mazbat, Assam, India</span>
+                    <div className="credential-details">Serving clients globally</div>
+                  </div>
+                </div>
+
+                <div className="credential-item credential-primary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53C16.17 17.98 14.21 19 12 19z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Core Expertise</strong>
+                    <span>SaaS Solutions & Custom Software Development</span>
+                    <div className="credential-details">Cloud-native architectures</div>
+                  </div>
+                </div>
+
+                <div className="credential-item credential-secondary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Security Standards</strong>
+                    <span>Enterprise-grade security protocols</span>
+                    <div className="credential-details">Data protection & compliance</div>
+                  </div>
+                </div>
+
+
+                <div className="credential-item credential-secondary">
+                  <div className="credential-icon">
+                    <svg viewBox="0 0 24 24" className="icon-svg">
+                      <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" 
+                            fill="url(#credGrad)"/>
+                    </svg>
+                  </div>
+                  <div className="credential-content">
+                    <strong>Performance</strong>
+                    <span>99.9% uptime guarantee</span>
+                    <div className="credential-details">Scalable & reliable solutions</div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Statistics Section */}
+              <div className="credentials-stats">
+                <div className="stats-item">
+                  <div className="stat-number">24/7</div>
+                  <div className="stat-label">Support</div>
+                </div>
+                <div className="stats-item">
+                  <div className="stat-number">100%</div>
+                  <div className="stat-label">Client Satisfaction</div>
+                </div>
+                <div className="stats-item">
+                  <div className="stat-number">∞</div>
+                  <div className="stat-label">Possibilities</div>
+                </div>
+                <div className="stats-item">
+                  <div className="stat-number">∞</div>
+                  <div className="stat-label">Innovation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="footer">
         <div className="container">
           <div className="footer-container">
             <div className="footer-brand">
-                          <div className="footer-logo">
-              <img src={logoImage} alt="CloudBamboo Digital" className="footer-logo-image" />
-              <span className="footer-logo-text" style={{color: '#FFFFFF'}}>
-                <span className="brand-cloud footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)'}}>Cloud</span>
-                <span className="brand-bamboo footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)', fontStyle: 'italic', transform: 'rotate(-2deg)', display: 'inline-block'}}>bamboo</span>
-                <span className="brand-digital">Digital</span>
-              </span>
-            </div>
+              <div className="footer-logo">
+                <img src={logoImage} alt="CloudBamboo Digital LLP" className="footer-logo-image" />
+                <div className="footer-logo-text" style={{color: '#FFFFFF'}}>
+                  <div className="footer-brand-line">
+                    <span className="brand-cloud footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)'}}>Cloud</span>
+                    <span className="brand-bamboo footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)', fontStyle: 'italic', transform: 'rotate(-2deg)', display: 'inline-block'}}>bamboo</span>
+                  </div>
+                  <div className="footer-digital-line">
+                    <span className="brand-digital">Digital LLP</span>
+                  </div>
+                </div>
+              </div>
               <p className="footer-description">
-                Building powerful SaaS solutions that transform how service-based
-                businesses operate and grow.
+                Building powerful SaaS solutions that transform how businesses
+                across all industries operate, scale, and grow.
               </p>
             </div>
-            <div className="footer-column">
+            
+            <div className="footer-column footer-legal">
               <h4>Legal</h4>
               <div className="footer-links">
                 <button 
-                  className="footer-link"
-                  onClick={() => setIsTermsModalOpen(true)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                  type="button"
+                  className="footer-link footer-link-enhanced"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsTermsModalOpen(true);
+                  }}
                 >
                   Terms & Conditions
                 </button>
                 <button 
-                  className="footer-link"
-                  onClick={() => setIsPrivacyModalOpen(true)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                  type="button"
+                  className="footer-link footer-link-enhanced"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsPrivacyModalOpen(true);
+                  }}
                 >
                   Privacy Policy
                 </button>
+              </div>
+            </div>
+            
+            <div className="footer-column footer-company">
+              <h4>Company Info</h4>
+              <div className="footer-company-details">
+                <p><strong>CloudBamboo</strong></p>
+                <p><strong>Digital LLP</strong></p>
+                <p>Limited Liability Partnership</p>
+                <p>Founded in 2025</p>
+                <p>Registered Office:</p>
+                <p>Kharamakha, Mazbat, Assam, India</p>
               </div>
             </div>
           </div>
           <div className="footer-bottom">
             <div className="footer-copyright">
               © 2025 CloudBamboo Digital LLP. All rights reserved.
+            </div>
+            <div className="footer-location">
+              Guwahati, Assam, India
             </div>
           </div>
         </div>
@@ -2059,3 +2400,4 @@ function App() {
 }
 
 export default App;
+

@@ -225,8 +225,8 @@ This inquiry was submitted through the WatchPoint website.`;
 					<div className="watchpoint-title-decoration right"></div>
 				</div>
 				<p className="section-subtitle">
-					<span className="subtitle-highlight">A powerful Workforce Management System</span> designed to streamline the
-					operations of a service-based business. WatchPoint provides a
+					<span className="subtitle-highlight">A powerful Workforce Management System</span> designed to streamline
+					operations for any business with workforce management needs. WatchPoint provides a
 					<span className="subtitle-emphasis"> centralized platform</span> for everything from
 					<span className="subtitle-feature">staff onboarding</span> and
 					<span className="subtitle-feature">real-time attendance</span> to

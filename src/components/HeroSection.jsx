@@ -14,7 +14,7 @@ const HeroSection = () => {
       <div className="hero-content">
         <h1 className="hero-title">We Build Software That Powers Your Entire Operation</h1>
         <p className="hero-subtitle">
-          CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions that automate workflows and provide critical business insights.
+          CloudBamboo Digital LLP architects robust, flexible, and scalable SaaS solutions that automate workflows and provide critical business insights.
         </p>
         <button className="hero-cta" onClick={scrollToWatchPoint}>
           Explore Our Solutions

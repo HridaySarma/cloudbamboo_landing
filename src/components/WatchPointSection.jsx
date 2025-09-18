@@ -25,7 +25,7 @@ const WatchPointSection = () => {
       <div className="watchpoint-container">
         <h2 className="section-title">WatchPoint: The All-in-One Command Center for Your Mobile Workforce</h2>
         <p className="section-description">
-          A powerful Workforce Management System designed to streamline the operations of a service-based business. 
+          A powerful Workforce Management System designed to streamline operations for any business with mobile workforce needs. 
           WatchPoint provides a centralized platform for everything from staff onboarding and real-time attendance to automated payroll and invoicing.
         </p>
         
