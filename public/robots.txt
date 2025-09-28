@@ -1,4 +1,59 @@
+# Robots.txt for CloudBamboo Digital LLP
+# Optimized for maximum search engine visibility
+
+# Allow all search engines to crawl everything
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /public/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+Allow: /*.pdf
 
+# Specific instructions for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# Block problematic bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
 Sitemap: https://cloudbamboo.com/sitemap.xml
+
+# Additional sitemaps (if you add them later)
+# Sitemap: https://cloudbamboo.com/sitemap-images.xml
+# Sitemap: https://cloudbamboo.com/sitemap-news.xml

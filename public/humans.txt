@@ -1,0 +1,34 @@
+# CloudBamboo Digital LLP - Humans.txt
+# A file that provides information about the people behind the website
+
+# TEAM
+    Developer: CloudBamboo Digital  Development Team
+    Contact: hq@cloudbamboo.in
+    Location: India
+
+# THANKS
+    Thanks to all the open source projects and communities that make our work possible.
+
+# SITE
+    Last update: 2024/01/01
+    Language: English
+    Doctype: HTML5
+    IDE: VS Code, Cursor
+
+# TECHNOLOGY STACK
+    Frontend: React.js, Vite
+    Styling: CSS3, Modern CSS Features
+    SEO: Comprehensive SEO Implementation
+    Performance: Core Web Vitals Optimized
+    Accessibility: WCAG 2.1 AA Compliant
+
+# SERVICES
+    SaaS Development
+    Workforce Management Systems
+    AI Chatbot Solutions
+    Custom Enterprise Software
+    Digital Transformation Consulting
+
+# PHILOSOPHY
+    We believe in building software that powers entire operations.
+    Our mission is to help businesses automate workflows and gain critical insights.
