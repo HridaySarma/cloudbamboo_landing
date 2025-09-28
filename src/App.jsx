@@ -321,7 +321,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
           <div className="header-content">
             <div className="title-section">
               <h2>Privacy Policy</h2>
-              <p className="subtitle">CloudBamboo Digital LLP - Limited Liability Partnership (Founded 2025)</p>
+              <p className="subtitle">CloudBamboo - Limited Liability Partnership (Founded 2025)</p>
               <div className="legal-badge">
                 <span className="badge-icon">🔒</span>
                 <span className="badge-text">Last Updated: January 2025</span>
@@ -1183,7 +1183,7 @@ function App() {
                 <span className="brand-bamboo">bamboo</span>
               </div>
               <div className="digital-line">
-                <span className="brand-digital">Digital LLP</span>
+                <span className="brand-digital">Digital</span>
               </div>
             </div>
           </div>
@@ -2330,10 +2330,10 @@ function App() {
                 <div className="footer-logo-text" style={{color: '#FFFFFF'}}>
                   <div className="footer-brand-line">
                     <span className="brand-cloud footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)'}}>Cloud</span>
-                    <span className="brand-bamboo footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)', fontStyle: 'italic', transform: 'rotate(-2deg)', display: 'inline-block'}}>bamboo</span>
+                    <span className="brand-bamboo footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)', display: 'inline-block'}}>Bamboo</span>
                   </div>
                   <div className="footer-digital-line">
-                    <span className="brand-digital">Digital LLP</span>
+                    <span className="brand-digital">Digital</span>
                   </div>
                 </div>
               </div>

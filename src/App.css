@@ -1693,9 +1693,7 @@ body.modal-open {
 .brand-bamboo {
   color: var(--gray-800);
   font-weight: 600;
-  font-style: italic;
   position: relative;
-  transform: rotate(-2deg);
 }
 
 /* Footer-specific brand styling - WHITE TEXT ONLY IN FOOTER */
@@ -1708,16 +1706,6 @@ body.modal-open {
   font-weight: 800 !important;
 }
 
-.footer .brand-bamboo,
-.footer .footer-logo-text .brand-bamboo,
-.footer-logo-text .brand-bamboo {
-  color: #FFFFFF !important;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.9) !important;
-  opacity: 1 !important;
-  font-weight: 600 !important;
-  font-style: italic !important;
-  transform: rotate(-2deg) !important;
-}
 
 .brand-digital {
   color: #ff0040;
@@ -1727,9 +1715,9 @@ body.modal-open {
   text-transform: uppercase;
   font-size: 0.9em;
   text-shadow: 
-    0 0 3px #ff0040,
-    0 0 6px #ff0040,
-    0 0 12px #ff0040;
+    0 0 1px #ff0040,
+    0 0 2px #ff0040,
+    0 0 4px #ff0040;
   animation: neon-glow 2s ease-in-out infinite alternate;
 }
 
@@ -1737,15 +1725,15 @@ body.modal-open {
 @keyframes neon-glow {
   0% {
     text-shadow: 
-      0 0 3px #ff0040,
-      0 0 6px #ff0040,
-      0 0 12px #ff0040;
+      0 0 1px #ff0040,
+      0 0 2px #ff0040,
+      0 0 4px #ff0040;
   }
   100% {
     text-shadow: 
-      0 0 2px #ff0040,
-      0 0 4px #ff0040,
-      0 0 8px #ff0040;
+      0 0 0.5px #ff0040,
+      0 0 1px #ff0040,
+      0 0 2px #ff0040;
   }
 }
 
@@ -1870,9 +1858,9 @@ body.modal-open {
   .logo-text .brand-digital {
     animation: none;
     text-shadow: 
+      0 0 1px #ff0040,
       0 0 2px #ff0040,
-      0 0 4px #ff0040,
-      0 0 6px #ff0040;
+      0 0 3px #ff0040;
   }
 }
 
@@ -1906,9 +1894,9 @@ body.modal-open {
   text-transform: uppercase;
   font-size: 0.9em;
   text-shadow: 
-    0 0 3px #ff0040,
-    0 0 6px #ff0040,
-    0 0 12px #ff0040;
+    0 0 1px #ff0040,
+    0 0 2px #ff0040,
+    0 0 4px #ff0040;
   animation: neon-glow 2s ease-in-out infinite alternate;
 }
 
@@ -3348,6 +3336,14 @@ body.modal-open {
   transform: translateY(-15px) scale(1.02);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 1);
+}
+
+.feature-card:hover .feature-title {
+  color: white;
+}
+
+.feature-card:hover .feature-description {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .feature-card:hover::before {
@@ -5984,8 +5980,6 @@ body.modal-open {
 .footer-logo-text .brand-bamboo {
   color: #FFFFFF !important;
   font-weight: 600 !important;
-  font-style: italic !important;
-  transform: rotate(-2deg) !important;
   text-shadow: 0 0 20px rgba(255, 255, 255, 1) !important;
   opacity: 1 !important;
   background: none !important;
@@ -5999,9 +5993,9 @@ body.modal-open {
   text-transform: uppercase;
   font-size: 0.9em;
   text-shadow: 
-    0 0 3px #ff0040,
-    0 0 6px #ff0040,
-    0 0 12px #ff0040;
+    0 0 1px #ff0040,
+    0 0 2px #ff0040,
+    0 0 4px #ff0040;
   animation: neon-glow 2s ease-in-out infinite alternate;
 }
 

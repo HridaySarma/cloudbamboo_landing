@@ -180,8 +180,7 @@ const Console = () => {
             <img src={logoImage} alt="CloudBamboo Digital LLP" className="logo-image" />
             <span className="logo-text">
               <span className="brand-cloud">Cloud</span>
-              <span className="brand-bamboo">bamboo</span>
-              <span className="brand-digital">Digital</span>
+              <span className="brand-bamboo">Bamboo</span>
             </span>
           </Link>
           <div className="console-user-info">
@@ -615,15 +614,15 @@ const Console = () => {
                 <div className="faq-list">
                   <div className="faq-item">
                     <h4>How do I integrate WatchPoint with my existing HR system?</h4>
-                    <p>WatchPoint offers API integration with popular HR systems. Navigate to Settings > Integrations in your WatchPoint dashboard to set up the connection.</p>
+                    <p>WatchPoint offers API integration with popular HR systems. Navigate to Settings <b>&gt;</b> Integrations in your WatchPoint dashboard to set up the connection.</p>
                   </div>
                   <div className="faq-item">
                     <h4>Can I customize my AI chatbot's responses?</h4>
-                    <p>Yes, you can train your AI chatbot with custom knowledge and response patterns through our training interface. Go to AI Assistant > Training in your dashboard.</p>
+                    <p>Yes, you can train your AI chatbot with custom knowledge and response patterns through our training interface. Go to AI Assistant <b>&gt;</b> Training in your dashboard.</p>
                   </div>
                   <div className="faq-item">
                     <h4>How do I add team members to my account?</h4>
-                    <p>You can invite team members by going to Account > Team Management and clicking on "Invite Member".</p>
+                    <p>You can invite team members by going to Account <b>&gt;</b> Team Management and clicking on "Invite Member".</p>
                   </div>
                 </div>
               </div>
