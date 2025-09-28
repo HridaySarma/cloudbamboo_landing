@@ -1319,7 +1319,7 @@ function App() {
         </div>
         <div className="container">
           <div className="section-header scroll-reveal">
-<h2 className="section-title">Our Solutions</h2>
+<h2 className="section-title">What we do ?</h2>
             <p className="section-subtitle">
               We build powerful operational SaaS platforms designed for businesses of all types that can benefit from cutting-edge software solutions.
             </p>
