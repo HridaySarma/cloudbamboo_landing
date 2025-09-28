@@ -1,9 +1,9 @@
-// CloudBamboo Digital LLP - SEO Configuration
+// CloudBamboo Digital - SEO Configuration
 // Comprehensive SEO settings for maximum search engine visibility
 
 export const seoConfig = {
   // Site Information
-  siteName: "CloudBamboo Digital LLP",
+  siteName: "CloudBamboo Digital",
   siteUrl: "https://cloudbamboo.com",
   siteDescription: "Leading SaaS development company specializing in workforce management systems, AI chatbots, and custom enterprise software solutions.",
   
@@ -15,7 +15,7 @@ export const seoConfig = {
     "custom software development",
     "enterprise software",
     "WatchPoint",
-    "CloudBamboo Digital LLP",
+    "CloudBamboo Digital",
     "business automation",
     "operational SaaS platforms",
     "digital transformation"
@@ -141,7 +141,7 @@ export const seoConfig = {
   
   // Local SEO (if applicable)
   localSeo: {
-    businessName: "CloudBamboo Digital LLP",
+    businessName: "CloudBamboo Digital",
     address: "India",
     phone: "", // Add phone number
     email: "", // Add email
@@ -159,7 +159,7 @@ export const seoConfig = {
   schema: {
     organization: {
       "@type": "Organization",
-      "name": "CloudBamboo Digital LLP",
+      "name": "CloudBamboo Digital",
       "url": "https://cloudbamboo.com",
       "logo": "https://cloudbamboo.com/cbd_logo_no_bg.png",
       "description": "Leading SaaS development company specializing in workforce management systems, AI chatbots, and custom enterprise software solutions.",

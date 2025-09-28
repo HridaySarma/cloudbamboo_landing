@@ -71,7 +71,7 @@ const TermsModal = ({ isOpen, onClose }) => {
           <div className="header-content">
             <div className="title-section">
               <h2>Terms and Conditions</h2>
-              <p className="subtitle">CloudBamboo Digital LLP - Limited Liability Partnership (Founded 2025)</p>
+              <p className="subtitle">CloudBamboo Digital (Founded 2025)</p>
               <div className="legal-badge">
                 <span className="badge-icon">📋</span>
                 <span className="badge-text">Last Updated: January 2025</span>
@@ -89,7 +89,7 @@ const TermsModal = ({ isOpen, onClose }) => {
             <section className="legal-section">
               <h3>1. Acceptance of Terms</h3>
               <p>
-                By accessing and using CloudBamboo Digital LLP's services, including but not limited to our WatchPoint platform, 
+                By accessing and using CloudBamboo Digital's services, including but not limited to our WatchPoint platform, 
                 consulting services, and custom software solutions, you agree to be bound by these Terms and Conditions. 
                 If you do not agree to these terms, please do not use our services.
               </p>
@@ -99,7 +99,7 @@ const TermsModal = ({ isOpen, onClose }) => {
               <h3>2. Services Description</h3>
               <h4>2.1 Software as a Service (SaaS)</h4>
               <p>
-                CloudBamboo Digital LLP provides cloud-based software solutions including workforce management systems, 
+                CloudBamboo Digital provides cloud-based software solutions including workforce management systems, 
                 attendance tracking, project management tools, and custom business applications.
               </p>
               
@@ -161,9 +161,9 @@ const TermsModal = ({ isOpen, onClose }) => {
 
             <section className="legal-section">
               <h3>5. Intellectual Property</h3>
-              <h4>5.1 CloudBamboo Digital LLP Property</h4>
+              <h4>5.1 CloudBamboo Digital Property</h4>
               <p>
-                All software, documentation, and related materials provided by CloudBamboo Digital LLP remain our 
+                All software, documentation, and related materials provided by CloudBamboo Digital remain our 
                 intellectual property. Users are granted a limited, non-exclusive license to use our services.
               </p>
               
@@ -206,7 +206,7 @@ const TermsModal = ({ isOpen, onClose }) => {
             <section className="legal-section">
               <h3>8. Limitation of Liability</h3>
               <p>
-                To the maximum extent permitted by law, CloudBamboo Digital LLP's liability for any claims arising from 
+                To the maximum extent permitted by law, CloudBamboo Digital's liability for any claims arising from 
                 or related to these terms or our services shall not exceed the amount paid by the customer 
                 for services in the 12 months preceding the claim.
               </p>
@@ -220,7 +220,7 @@ const TermsModal = ({ isOpen, onClose }) => {
                 the end of the current billing period.
               </p>
               
-              <h4>9.2 Termination by CloudBamboo Digital LLP</h4>
+              <h4>9.2 Termination by CloudBamboo Digital</h4>
               <p>
                 We may terminate services immediately if users violate these terms or for non-payment. 
                 We will provide reasonable notice when possible.
@@ -241,7 +241,7 @@ const TermsModal = ({ isOpen, onClose }) => {
                 For questions about these Terms and Conditions, please contact us at:
               </p>
               <div className="contact-info">
-                <p><strong>CloudBamboo Digital LLP</strong></p>
+                <p><strong>CloudBamboo Digital</strong></p>
                 <p>Limited Liability Partnership (Founded 2025)</p>
                 <p>Email: hq@cloudbamboo.com</p>
                 <p>Phone: +91 8399811340</p>
@@ -321,7 +321,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
           <div className="header-content">
             <div className="title-section">
               <h2>Privacy Policy</h2>
-              <p className="subtitle">CloudBamboo - Limited Liability Partnership (Founded 2025)</p>
+              <p className="subtitle">CloudBamboo Digital (Founded 2025)</p>
               <div className="legal-badge">
                 <span className="badge-icon">🔒</span>
                 <span className="badge-text">Last Updated: January 2025</span>
@@ -339,7 +339,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
             <section className="legal-section">
               <h3>1. Introduction</h3>
               <p>
-                CloudBamboo Digital LLP ("we," "our," or "us") is committed to protecting your privacy. 
+                CloudBamboo Digital ("we," "our," or "us") is committed to protecting your privacy. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard your information 
                 when you use our services, including our website and software applications.
               </p>
@@ -514,8 +514,8 @@ const PrivacyModal = ({ isOpen, onClose }) => {
                 please contact us:
               </p>
               <div className="contact-info">
-                <p><strong>CloudBamboo Digital LLP</strong></p>
-                <p>Limited Liability Partnership (Founded 2025)</p>
+                <p><strong>CloudBamboo Digital</strong></p>
+                <p>(Founded 2025)</p>
                 <p>Email: hq@cloudbamboo.com</p>
                 <p>Phone: +91 8399811340</p>
                 <p>Registered Office: Kharamakha, Mazbat, Assam, India</p>
@@ -1176,7 +1176,7 @@ function App() {
       <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-container">
           <div className="brand">
-            <img src={logoImage} alt="CloudBamboo Digital LLP" className="brand-logo" />
+            <img src={logoImage} alt="CloudBamboo Digital" className="brand-logo" />
             <div className="brand-name">
               <div className="brand-line">
                 <span className="brand-cloud">Cloud</span>
@@ -1214,7 +1214,7 @@ function App() {
               We Build Software That Powers Your Entire Operation
             </h1>
             <p className="hero-subtitle">
-              CloudBamboo Digital LLP architects robust, flexible, and scalable SaaS solutions
+              CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions
               that automate workflows and provide critical business insights.
             </p>
             <div className="hero-cta">
@@ -1706,7 +1706,7 @@ function App() {
                 <div className="chatbot-header">
                   <div className="chatbot-avatar">🤖</div>
                   <div className="chatbot-info">
-                    <h4>CloudBamboo Digital LLP AI Assistant</h4>
+                    <h4>CloudBamboo Digital AI Assistant</h4>
                     <span className="chatbot-status">● Online</span>
                   </div>
                 </div>
@@ -2048,7 +2048,7 @@ function App() {
       <section id="about" className="about-section">
         <div className="container">
           <div className="section-header scroll-reveal">
-            <h2 className="section-title">About CloudBamboo Digital LLP</h2>
+            <h2 className="section-title">About CloudBamboo Digital</h2>
             <p className="section-subtitle">
               A trusted Limited Liability Partnership building the future of business operations
             </p>
@@ -2173,7 +2173,7 @@ function App() {
               </div>
               <h3>Our Story</h3>
               <p>
-                Founded in 2025, <strong>CloudBamboo Digital LLP</strong> is a Limited Liability Partnership 
+                Founded in 2025, <strong>CloudBamboo Digital</strong> is a Limited Liability Partnership 
                 based in Assam, India. We specialize in architecting robust, flexible, and scalable 
                 SaaS solutions that automate workflows and provide critical business insights.
               </p>
@@ -2326,7 +2326,7 @@ function App() {
           <div className="footer-container">
             <div className="footer-brand">
               <div className="footer-logo">
-                <img src={logoImage} alt="CloudBamboo Digital LLP" className="footer-logo-image" />
+                <img src={logoImage} alt="CloudBamboo Digital" className="footer-logo-image" />
                 <div className="footer-logo-text" style={{color: '#FFFFFF'}}>
                   <div className="footer-brand-line">
                     <span className="brand-cloud footer-brand-text" style={{color: '#FFFFFF', textShadow: '0 0 10px rgba(255,255,255,0.8)'}}>Cloud</span>
