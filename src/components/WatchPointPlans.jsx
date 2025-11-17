@@ -6,7 +6,7 @@ const plans = [
 	{
 		name: 'Vigilance',
 		tagline: 'Essential Management & Tracking',
-		price: 299,
+		price: 99,
 		features: [
 			'Staff Onboarding',
 			'Attendance Tracking',
@@ -31,7 +31,7 @@ const plans = [
 	{
 		name: 'Sentinel',
 		tagline: 'Advanced Operations & Finance',
-		price: 499,
+		price: 199,
 		features: [
 			'All Vigilance Features',
 			'Payroll Automation',
@@ -55,7 +55,7 @@ const plans = [
 	{
 		name: 'Guardian',
 		tagline: 'Live Intelligence & Emergency Response',
-		price: 799,
+		price: 399,
 		features: [
 			'All Sentinel Features',
 			'Live Tracking (GPS)',

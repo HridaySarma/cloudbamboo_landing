@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
 import { initializeAnimations } from './utils/animations';
 import logoImage from './assets/logo_modern.png';
@@ -2346,26 +2347,24 @@ function App() {
             <div className="footer-column footer-legal">
               <h4>Legal</h4>
               <div className="footer-links">
-                <button 
-                  type="button"
+                <Link 
+                  to="/terms-and-conditions"
                   className="footer-link footer-link-enhanced"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsTermsModalOpen(true);
-                  }}
                 >
                   Terms & Conditions
-                </button>
-                <button 
-                  type="button"
+                </Link>
+                <Link 
+                  to="/privacy-policy"
                   className="footer-link footer-link-enhanced"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsPrivacyModalOpen(true);
-                  }}
                 >
                   Privacy Policy
-                </button>
+                </Link>
+                <Link 
+                  to="/refund-policy"
+                  className="footer-link footer-link-enhanced"
+                >
+                  Refund Policy
+                </Link>
               </div>
             </div>
             

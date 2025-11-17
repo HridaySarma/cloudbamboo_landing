@@ -130,7 +130,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}xw
+}
 
 html {
   font-size: 16px;
@@ -1487,6 +1487,110 @@ body.modal-open {
   font-weight: 600;
 }
 
+/* Terms of Service Page Styles */
+.terms-page {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 40px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.terms-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 168, 204, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 217, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.terms-page-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.terms-page-header {
+  background: linear-gradient(135deg, rgba(0, 168, 204, 0.15) 0%, rgba(102, 126, 234, 0.15) 50%, rgba(0, 217, 255, 0.1) 100%);
+  border: 2px solid rgba(0, 168, 204, 0.3);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.terms-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.terms-title-section h1 {
+  color: #00D9FF;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.terms-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.terms-back-link {
+  color: #00D9FF;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 24px;
+  border: 1px solid rgba(0, 168, 204, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 168, 204, 0.1);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.terms-back-link:hover {
+  background: rgba(0, 168, 204, 0.2);
+  border-color: rgba(0, 168, 204, 0.5);
+  transform: translateX(-4px);
+  color: #00D9FF;
+}
+
+.terms-page-body {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.terms-page-body .legal-content {
+  max-height: none;
+  padding: 0;
+}
+
 /* Footer button styles for legal links */
 .footer-link {
   font-family: inherit;
@@ -1495,6 +1599,8 @@ body.modal-open {
   text-align: left;
   padding: 0;
   margin: 0;
+  text-decoration: none;
+  color: inherit;
 }
 
 .footer-link:hover {
@@ -1529,6 +1635,40 @@ body.modal-open {
   
   .modal-header {
     padding: 20px 24px;
+  }
+
+  /* Terms Page Responsive */
+  .terms-page {
+    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .terms-page-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .terms-page-header {
+    padding: 24px 20px;
+  }
+
+  .terms-header-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .terms-title-section h1 {
+    font-size: 28px;
+  }
+
+  .terms-back-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .terms-page-body {
+    padding: 24px 20px;
   }
 
   .journey-timeline {
