@@ -20,7 +20,7 @@ const PhilosophySection = () => {
   ];
 
   return (
-    <section className="philosophy-section">
+    <section id="philosophy" className="philosophy-section">
       <div className="philosophy-container">
         <h2 className="section-title">Our Approach: Strength, Growth, and Flexibility</h2>
         <div className="philosophy-grid">

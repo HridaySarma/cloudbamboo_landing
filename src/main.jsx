@@ -7,6 +7,7 @@ import Console from './components/Console.jsx'
 import TermsOfService from './components/TermsOfService.jsx'
 import PrivacyPolicy from './components/PrivacyPolicy.jsx'
 import RefundPolicy from './components/RefundPolicy.jsx'
+import Services from './components/Services.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/console" element={<Console />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/terms-and-conditions" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />

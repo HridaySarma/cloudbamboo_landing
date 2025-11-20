@@ -1,10 +1,229 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import { initializeAnimations } from './utils/animations';
 import logoImage from './assets/logo_modern.png';
-import WatchPointPlans from './components/WatchPointPlans';
-import FounderSection from './components/FounderSection';
+import attendanceDemo from './assets/attendance_demo.png';
+import mobileHome from './assets/mobile_home.jpeg';
+import guardVideo from './assets/guard.mp4';
+import './components/WatchPointPlans.css';
+import PhilosophySection from './components/PhilosophySection';
+// import FounderSection from './components/FounderSection';
+
+
+const watchpointPillars = [
+  {
+    id: '01',
+    title: 'Verified Mobile Attendance',
+    description: 'Eliminate fake attendance without expensive hardware. Use our Android app for GPS-tagged, selfie-verified check-ins and QR scanning.',
+    badges: ['GPS Geofencing', 'Selfie Verification', 'No External Hardware']
+  },
+  {
+    id: '02',
+    title: 'Automated Payroll & Billing',
+    description: 'Stop calculating salaries manually. The system automatically converts verified attendance data into accurate payroll and client invoices.',
+    badges: ['Auto-Calculated Salaries', 'PF/ESI Compliant', 'One-Click Invoicing']
+  },
+  {
+    id: '03',
+    title: 'Real-Time Field Operations',
+    description: 'Ensure guards are active and alert. Digital patrol logs and instant incident reporting replace unreliable paper/WhatsApp updates.',
+    badges: ['Live Patrol Tracking', 'Instant Incident Alerts', 'Digital Daily Reports']
+  },
+  {
+    id: '04',
+    title: 'Operational Visibility',
+    description: 'The "Control Tower" for your business. Gain predictive insights into workforce performance, site profitability, and compliance status.',
+    badges: ['Central Command View', 'Performance Analytics', 'Client-Facing Reports']
+  }
+];
+
+const systemLayers = [
+  {
+    title: 'Unified Ingestion Layer',
+    subtitle: 'Aggregates data streams from thousands of mobile devices simultaneously. Whether it\'s a guard checking in or a patrol report, data is normalized and synced instantly.',
+    detail: 'Leverages secure API gateways and real-time WebSockets to handle high-concurrency streams with zero latency.'
+  },
+  {
+    title: 'Integrity & Validation',
+    subtitle: 'Algorithms that stop fraud at the source. We filter out location spoofing and unauthorized devices to ensure your payroll data is 100% accurate.',
+    detail: 'Built-in anti-spoofing logic and device fingerprinting guarantee 100% data authenticity.'
+  },
+  {
+    title: 'Operational Automation',
+    subtitle: 'The brain of the platform. Configurable rules engine that handles roster compliance, leave management, and payroll processing automatically.',
+    detail: 'A seamless rules engine processes complex reporting and payroll logic in the background.'
+  },
+  {
+    title: 'Decision Intelligence',
+    subtitle: 'Dashboards that give CXOs and Ops Managers instant context. From daily summaries to long-term profitability trends, get the data you need to decide fast.',
+    detail: 'Interactive, multi-tenant analytics architecture delivers role-aware operational insights in real-time.'
+  }
+];
+
+const watchpointPlans = [
+  {
+    name: 'Vigilance',
+    tagline: 'Essential Management & Tracking',
+    price: 99,
+    features: [
+      {
+        name: 'Staff Onboarding',
+        description: 'Streamlined employee onboarding process with digital forms, document collection, and automated workflows. Set up new staff members quickly with role-based access and training materials.'
+      },
+      {
+        name: 'Attendance Tracking',
+        description: 'Real-time attendance monitoring with biometric integration, QR code check-ins, and automated timesheet generation. Track attendance patterns and generate compliance reports.'
+      },
+      {
+        name: 'Scheduling & Assignments',
+        description: 'Intelligent shift scheduling with drag-and-drop interface, conflict detection, and automated assignment recommendations. Optimize workforce allocation across multiple sites.'
+      },
+      {
+        name: 'Client Management',
+        description: 'Comprehensive client database with contact management, service history, and communication logs. Track client requirements, contracts, and service agreements in one place.'
+      },
+      {
+        name: 'Basic Analytics & Reports',
+        description: 'Pre-built dashboards and reports for attendance, scheduling, and workforce metrics. Export data in multiple formats and schedule automated report delivery.'
+      },
+      {
+        name: 'User Roles & Permissions',
+        description: 'Granular access control with role-based permissions. Define custom roles and restrict access to sensitive data and features based on organizational hierarchy.'
+      },
+      {
+        name: 'Document Management',
+        description: 'Centralized document storage with version control, access tracking, and automated expiry reminders. Store employee documents, contracts, and compliance certificates securely.'
+      },
+      {
+        name: 'Shift Management',
+        description: 'Complete shift lifecycle management from creation to completion. Handle shift swaps, overtime approvals, and break time tracking with automated notifications.'
+      },
+      {
+        name: 'Leave Management',
+        description: 'Automated leave request workflow with approval chains, balance tracking, and calendar integration. Support multiple leave types and carry-forward policies.'
+      },
+      {
+        name: 'Resignation Management',
+        description: 'Streamlined resignation process with automated workflows, exit interviews, knowledge transfer tracking, and final settlement calculations. Manage employee offboarding efficiently with document collection and access revocation.'
+      },
+      {
+        name: 'Mobile App Access',
+        description: 'Native mobile applications for iOS and Android with full feature access. Offline capability, push notifications, and optimized mobile workflows for field operations.'
+      },
+      {
+        name: 'Geo-fencing',
+        description: 'Virtual boundary management with automatic check-in/check-out when staff enter or exit designated areas. Generate alerts for unauthorized access or absence.'
+      },
+    ],
+    icon: '🛡️',
+    color: '#667eea',
+    discounts: [
+      { users: 100, percent: 5 },
+      { users: 200, percent: 10 },
+      { users: 500, percent: 20 },
+      { users: 1000, percent: 30 },
+    ],
+  },
+  {
+    name: 'Sentinel',
+    tagline: 'Advanced Operations & Finance',
+    price: 199,
+    features: [
+      {
+        name: 'All Vigilance Features',
+        description: 'Everything included in the Vigilance plan plus advanced financial and operational capabilities.'
+      },
+      {
+        name: 'Notifications',
+        description: 'Multi-channel notifications via email, SMS, and in-app alerts. Customize notification preferences and set up automated reminders for important events.'
+      },
+      {
+        name: 'Payroll Automation',
+        description: 'Automated payroll processing with support for multiple pay structures, overtime calculations, and statutory deductions. Generate payslips and handle salary revisions seamlessly.'
+      },
+      {
+        name: 'Invoicing',
+        description: 'Professional invoice generation with customizable templates, automated numbering, and tax calculations. Track invoice status, send reminders, and manage payment receipts.'
+      },
+      {
+        name: 'Advance Salary Management',
+        description: 'Track and manage advance salaries to employees with automated deduction schedules. Set up repayment plans and generate advance reports for accounting.'
+      },
+      {
+        name: 'Sales Management',
+        description: 'Complete sales pipeline management with lead tracking, opportunity management, and sales forecasting. Monitor sales performance and generate revenue reports.'
+      },
+      {
+        name: 'Expense Tracking',
+        description: 'Employee expense submission and approval workflow with receipt capture, categorization, and reimbursement processing. Set expense policies and approval limits.'
+      },
+      {
+        name: 'Tax Calculations',
+        description: 'Automated tax calculations for income tax, GST, and other statutory requirements. Generate tax reports and ensure compliance with current tax regulations.'
+      },
+      {
+        name: 'Financial Dashboards',
+        description: 'Advanced financial analytics with revenue trends, expense analysis, profit margins, and cash flow visualization. Real-time financial health monitoring.'
+      },
+    ],
+    icon: '💳',
+    color: '#4ecdc4',
+    discounts: [
+      { users: 100, percent: 5 },
+      { users: 200, percent: 10 },
+      { users: 500, percent: 20 },
+      { users: 1000, percent: 30 },
+    ],
+  },
+  {
+    name: 'Guardian',
+    tagline: 'Live Intelligence & Emergency Response',
+    price: 399,
+    features: [
+      {
+        name: 'All Sentinel Features',
+        description: 'Complete access to all Sentinel plan features plus real-time intelligence and emergency response capabilities.'
+      },
+      {
+        name: 'Live Tracking (GPS)',
+        description: 'Real-time GPS tracking of field staff with location history, route optimization, and geofence alerts. Monitor movement patterns and ensure safety compliance.'
+      },
+      {
+        name: 'Live Reports & Dashboards',
+        description: 'Real-time operational dashboards with live data updates, interactive charts, and customizable widgets. Monitor KPIs and performance metrics in real-time.'
+      },
+      {
+        name: 'In-app Chat & Messaging',
+        description: 'Secure team communication with group chats, file sharing, and message broadcasting. Support for voice messages and read receipts for critical communications.'
+      },
+      {
+        name: 'Emergency Services (SOS, Panic Button)',
+        description: 'One-tap emergency alert system with automatic location sharing, escalation to emergency contacts, and integration with emergency services. Critical for field staff safety.'
+      },
+      {
+        name: 'Incident Reporting',
+        description: 'Comprehensive incident management with photo/video evidence, witness statements, and automated escalation workflows. Track incident resolution and generate reports.'
+      },
+      {
+        name: 'Real-time Alerts',
+        description: 'Instant alerts for attendance anomalies, location deviations, emergency situations, and system events. Customizable alert rules and notification channels.'
+      },
+      {
+        name: 'Video & Photo Uploads',
+        description: 'Capture and upload photos/videos directly from mobile devices with timestamp and location metadata. Useful for site inspections, incident documentation, and proof of work.'
+      },
+    ],
+    icon: '🚨',
+    color: '#ff6b6b',
+    discounts: [
+      { users: 100, percent: 5 },
+      { users: 200, percent: 10 },
+      { users: 500, percent: 20 },
+      { users: 1000, percent: 30 },
+    ],
+  },
+];
 
 // Terms and Conditions Modal Component
 const TermsModal = ({ isOpen, onClose }) => {
@@ -1111,13 +1330,31 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [expandedFeature, setExpandedFeature] = useState(null); // Format: "planIndex-featureIndex"
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      
+      // Close mobile menu on scroll
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
 
       // Update active section based on scroll position
-      const sections = ['features', 'watchpoint', 'philosophy', 'contact', 'about'];
+      const sections = ['features', 'watchpoint', 'philosophy', 'about', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -1134,7 +1371,28 @@ function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobileMenuOpen]);
+  
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (isMobileMenuOpen && !e.target.closest('.mobile-navigation') && !e.target.closest('.mobile-toggle')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('click', handleClickOutside);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     // Intersection Observer for scroll animations
@@ -1161,6 +1419,108 @@ function App() {
     initializeAnimations();
     // initializeCursor(); // Removed cursor tracking effect
   }, []);
+
+  const openFullscreen = useCallback(() => {
+    setIsFullscreen(true);
+  }, []);
+
+  const closeFullscreen = useCallback(() => {
+    setIsFullscreen(false);
+  }, []);
+
+  const openContactForm = useCallback((plan) => {
+    setSelectedPlan(plan);
+    setIsContactFormOpen(true);
+    setFormData(prev => ({
+      ...prev,
+      message: `I'm interested in the ${plan.name} plan (₹${plan.price}/user/month). Please get in touch with me.`
+    }));
+  }, []);
+
+  const closeContactForm = useCallback(() => {
+    setIsContactFormOpen(false);
+    setSelectedPlan(null);
+    setSubmitStatus(null);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      message: ''
+    });
+  }, []);
+
+  // Handle ESC key press for modals
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Escape') {
+        if (isContactFormOpen) {
+          closeContactForm();
+        } else if (isFullscreen) {
+          closeFullscreen();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isFullscreen, isContactFormOpen, closeContactForm, closeFullscreen]);
+
+  // Prevent body scroll when fullscreen or contact form is open
+  useEffect(() => {
+    if (isFullscreen || isContactFormOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isFullscreen, isContactFormOpen]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const subject = `WatchPoint ${selectedPlan.name} Plan Inquiry`;
+      const body = `Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Selected Plan: ${selectedPlan.name} (₹${selectedPlan.price}/user/month)
+
+Message:
+${formData.message}
+
+--
+This inquiry was submitted through the WatchPoint website.`;
+
+      const mailtoLink = `mailto:hq@cloudbamboo.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+
+      setSubmitStatus('success');
+      setTimeout(() => {
+        closeContactForm();
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="App">
@@ -1190,20 +1550,128 @@ function App() {
           </div>
           
           <nav className="navigation">
-            <a href="#features" className={`nav-item ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
-            <a href="#watchpoint" className={`nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}>WatchPoint</a>
-            <a href="#philosophy" className={`nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}>Philosophy</a>
-            <a href="#contact" className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
-            <a href="#about" className={`nav-item ${activeSection === 'about' ? 'active' : ''}`}>About</a>
+            <a 
+              href="#features" 
+              className={`nav-item ${activeSection === 'features' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Home
+            </a>
+            <a 
+              href="#watchpoint" 
+              className={`nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Pricing
+            </a>
+            <a 
+              href="#philosophy" 
+              className={`nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Philosophy
+            </a>
+            <a 
+              href="#about" 
+              className={`nav-item ${activeSection === 'about' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              About
+            </a>
+            <a 
+              href="#contact" 
+              className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Contact
+            </a>
           </nav>
           
           <div className="header-actions">
-            <button className="mobile-toggle" aria-label="Toggle menu">
+            <button 
+              className={`mobile-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+              aria-label="Toggle menu"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
               <span></span>
               <span></span>
               <span></span>
             </button>
           </div>
+          
+          {/* Mobile Navigation Menu */}
+          <nav className={`mobile-navigation ${isMobileMenuOpen ? 'open' : ''}`}>
+            <a 
+              href="#features" 
+              className={`mobile-nav-item ${activeSection === 'features' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Home
+            </a>
+            <a 
+              href="#watchpoint" 
+              className={`mobile-nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Pricing
+            </a>
+            <a 
+              href="#philosophy" 
+              className={`mobile-nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Philosophy
+            </a>
+            <a 
+              href="#about" 
+              className={`mobile-nav-item ${activeSection === 'about' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              About
+            </a>
+            <a 
+              href="#contact" 
+              className={`mobile-nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              Contact
+            </a>
+          </nav>
         </div>
       </header>
 
@@ -1212,12 +1680,10 @@ function App() {
         <div className="container">
           <div className="hero-content scroll-reveal">
             <h1 className="hero-title">
-              We Build Software That Powers Your Entire Operation
+              Command every shift with WatchPoint
             </h1>
             <p className="hero-subtitle">
-              CloudBamboo Digital architects robust, flexible, and scalable SaaS solutions
-              that automate workflows and provide critical business insights.
-            </p>
+Unite attendance tracking, automated payroll, and real-time field monitoring in one powerful platform. Stop managing paper—start managing your workforce.            </p>
             <div className="hero-cta">
               <div className="interactive-cta">
                 <div className="cta-orb-container">
@@ -1225,8 +1691,8 @@ function App() {
                     <div className="orb-content">
                       <div className="orb-icon">🚀</div>
                       <div className="orb-text">
-                        <span className="orb-title">Launch Solutions</span>
-                        <span className="orb-subtitle">Discover watchpoint</span>
+                        <span className="orb-title">Experience WatchPoint</span>
+                        <span className="orb-subtitle">See the live board</span>
                       </div>
                     </div>
                     <div className="orb-particles">
@@ -1242,8 +1708,8 @@ function App() {
                     <div className="orb-content">
                       <div className="orb-icon">💬</div>
                       <div className="orb-text">
-                        <span className="orb-title">Get in Touch</span>
-                        <span className="orb-subtitle">Contact our team</span>
+                        <span className="orb-title">Book a Call</span>
+                        <span className="orb-subtitle">Deploy in your org</span>
                       </div>
                     </div>
                     <div className="orb-particles">
@@ -1261,36 +1727,14 @@ function App() {
             </div>
           </div>
           <div className="hero-graphics">
-            <div className="floating-cards">
-              <div className="floating-card card-1 glow">
-                <div className="card-icon">⚡</div>
-                <h3 className="card-title">Lightning Fast</h3>
-                <p className="card-description">Sub-second response times</p>
-              </div>
-              <div className="floating-card card-2 glow">
-                <div className="card-icon">🔒</div>
-                <h3 className="card-title">Enterprise Security</h3>
-                <p className="card-description">Bank-grade encryption</p>
-              </div>
-              <div className="floating-card card-3 glow">
-                <div className="card-icon">📊</div>
-                <h3 className="card-title">Real-time Analytics</h3>
-                <p className="card-description">Actionable insights</p>
-              </div>
-              <div className="floating-card card-4 glow">
-                <div className="card-icon">🚀</div>
-                <h3 className="card-title">Scalable</h3>
-                <p className="card-description">Grows with your business</p>
-              </div>
-              <div className="floating-card card-5 glow">
-                <div className="card-icon">🌐</div>
-                <h3 className="card-title">Global Reach</h3>
-                <p className="card-description">Multi-region deployment</p>
-              </div>
-              <div className="floating-card card-6 glow">
-                <div className="card-icon">🤖</div>
-                <h3 className="card-title">AI-Powered</h3>
-                <p className="card-description">Smart automation</p>
+            <div className="mobile-screenshot-container">
+              <div className="mobile-screenshot-wrapper">
+                <img 
+                  src={mobileHome} 
+                  alt="WatchPoint Mobile Application" 
+                  className="mobile-screenshot"
+                />
+                <div className="mobile-screenshot-glow"></div>
               </div>
             </div>
             {/* Additional decorative elements */}
@@ -1311,378 +1755,476 @@ function App() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="features">
-        <div className="features-bg-shapes">
-          <div className="bg-shape"></div>
-          <div className="bg-shape"></div>
-          <div className="bg-shape"></div>
-        </div>
+
+      {/* WatchPoint Feature Matrix */}
+      <section id="features" className="watchpoint-features">
         <div className="container">
           <div className="section-header scroll-reveal">
-<h2 className="section-title">What we do ?</h2>
+            <p className="section-kicker">Product DNA</p>
+            <h2 className="section-title">Watchpoint: The Operating System for Modern Security Agencies</h2>
             <p className="section-subtitle">
-              We build powerful operational SaaS platforms designed for businesses of all types that can benefit from cutting-edge software solutions.
+              Built to replace registers and spreadsheets with a single, powerful mobile platform. Get total control over every guard, site, and shift.
             </p>
           </div>
-          <div className="features-grid">
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="securityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#3b82f6', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#1d4ed8', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#1e40af', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="securityShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Shield outline */}
-                  <path d="M50 15 L25 27 L25 55 Q25 72 50 82 Q75 72 75 55 L75 27 Z" 
-                        fill="url(#securityGrad)" 
-                        filter="url(#securityShadow)"
-                        className="shield-base"/>
-                  {/* Inner shield */}
-                  <path d="M50 20 L30 30 L30 52 Q30 65 50 73 Q70 65 70 52 L70 30 Z" 
-                        fill="rgba(255,255,255,0.2)" 
-                        className="shield-inner"/>
-                  {/* Lock symbol */}
-                  <rect x="43" y="42" width="14" height="10" rx="2" fill="rgba(255,255,255,0.9)" className="lock-body"/>
-                  <path d="M46 42 Q46 38 50 38 Q54 38 54 42" stroke="rgba(255,255,255,0.9)" strokeWidth="2" fill="none" className="lock-shackle"/>
-                  <circle cx="50" cy="47" r="2" fill="url(#securityGrad)" className="lock-hole"/>
-                </svg>
+          <div className="watchpoint-pillar-grid">
+            {watchpointPillars.map((pillar) => (
+              <div key={pillar.title} className="pillar-card scroll-reveal">
+                <span className="pillar-index">{pillar.id}</span>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.description}</p>
+                <div className="pillar-badges">
+                  {pillar.badges.map((badge) => (
+                    <span key={badge} className="pillar-badge">{badge}</span>
+                  ))}
               </div>
-              <h3 className="feature-title">Secure Infrastructure</h3>
-              <p className="feature-description">
-                Built with security best practices including encryption, secure hosting,
-                and regular backups to keep your data protected.
+            </div>
+            ))}
+              </div>
+            </div>
+      </section>
+
+      <section className="watchpoint-operating">
+        <div className="container">
+          <div className="operating-grid">
+            <div className="operating-intro scroll-reveal">
+              <p className="section-kicker">Architecture</p>
+              <h2 className="section-title">Built for Mission-Critical Operations</h2>
+              <p className="section-subtitle">
+              A robust, cloud-native stack that turns chaotic field data into clear operational intelligence. No hardware required—just smartphones and the cloud.
               </p>
             </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="lightningGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#fbbf24', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#f59e0b', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#d97706', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="lightningShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Lightning bolt */}
-                  <path d="M55 15 L35 45 L45 45 L40 75 L65 40 L52 40 L55 15 Z" 
-                        fill="url(#lightningGrad)" 
-                        filter="url(#lightningShadow)"
-                        className="lightning-bolt"/>
-                  {/* Lightning highlight */}
-                  <path d="M52 18 L38 42 L45 42 L42 65 L58 38 L52 38 L52 18 Z" 
-                        fill="rgba(255,255,255,0.4)" 
-                        className="lightning-highlight"/>
-                  {/* Energy sparks */}
-                  <circle cx="30" cy="25" r="2" fill="rgba(255,255,255,0.8)" className="spark-1"/>
-                  <circle cx="70" cy="35" r="1.5" fill="rgba(255,255,255,0.8)" className="spark-2"/>
-                  <circle cx="25" cy="65" r="1" fill="rgba(255,255,255,0.8)" className="spark-3"/>
-                  <circle cx="75" cy="70" r="1.5" fill="rgba(255,255,255,0.8)" className="spark-4"/>
-                </svg>
+            <div className="operating-layers">
+              {systemLayers.map((layer, index) => (
+                <div key={layer.title} className="operating-layer scroll-reveal">
+                  <div className="layer-index">0{index + 1}</div>
+                  <div className="layer-content">
+                    <h3>{layer.title}</h3>
+                    <span className="layer-subtitle">{layer.subtitle}</span>
+                    <p className="layer-detail">{layer.detail}</p>
               </div>
-              <h3 className="feature-title">Fast Performance</h3>
-              <p className="feature-description">
-                Optimized for speed with efficient code and smart caching
-                to ensure your applications run smoothly.
+            </div>
+              ))}
+              </div>
+            </div>
+              </div>
+      </section>
+
+      {/* Dashboard Showcase with Guard Video and Admin Panel */}
+      <section className="watchpoint-dashboard-showcase">
+        <div className="container">
+          <div className="dashboard-showcase scroll-reveal">
+            <div className="dashboard-section-header">
+              <p className="section-kicker">Live Operations</p>
+              <h2 className="section-title">See it in action, track it in real-time</h2>
+              <p className="section-subtitle">
+                When guards scan QR codes and capture selfies on-site, every action instantly appears in your admin dashboard. 
+                Watch the mobile workflow below and see how it reflects in the command center. The dashboard screenshot shows real attendance data from guards who have logged in.
               </p>
             </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="integrationGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#10b981', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#059669', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#047857', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="integrationShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Central hub */}
-                  <circle cx="50" cy="50" r="12" fill="url(#integrationGrad)" filter="url(#integrationShadow)" className="central-hub"/>
-                  <circle cx="50" cy="50" r="8" fill="rgba(255,255,255,0.3)" className="hub-inner"/>
-                  {/* Connection nodes */}
-                  <circle cx="25" cy="25" r="6" fill="url(#integrationGrad)" filter="url(#integrationShadow)" className="node-1"/>
-                  <circle cx="75" cy="25" r="6" fill="url(#integrationGrad)" filter="url(#integrationShadow)" className="node-2"/>
-                  <circle cx="25" cy="75" r="6" fill="url(#integrationGrad)" filter="url(#integrationShadow)" className="node-3"/>
-                  <circle cx="75" cy="75" r="6" fill="url(#integrationGrad)" filter="url(#integrationShadow)" className="node-4"/>
-                  {/* Connecting lines */}
-                  <path d="M31 31 Q40 40 42 42" stroke="rgba(255,255,255,0.8)" strokeWidth="2" fill="none" className="connection-1"/>
-                  <path d="M69 31 Q60 40 58 42" stroke="rgba(255,255,255,0.8)" strokeWidth="2" fill="none" className="connection-2"/>
-                  <path d="M31 69 Q40 60 42 58" stroke="rgba(255,255,255,0.8)" strokeWidth="2" fill="none" className="connection-3"/>
-                  <path d="M69 69 Q60 60 58 58" stroke="rgba(255,255,255,0.8)" strokeWidth="2" fill="none" className="connection-4"/>
-                  {/* Data flow indicators */}
-                  <circle cx="36" cy="36" r="1.5" fill="rgba(255,255,255,0.9)" className="data-flow-1"/>
-                  <circle cx="64" cy="36" r="1.5" fill="rgba(255,255,255,0.9)" className="data-flow-2"/>
-                  <circle cx="36" cy="64" r="1.5" fill="rgba(255,255,255,0.9)" className="data-flow-3"/>
-                  <circle cx="64" cy="64" r="1.5" fill="rgba(255,255,255,0.9)" className="data-flow-4"/>
-                </svg>
+            <div className="dashboard-video-panel-container">
+              <div className="guard-video-section">
+                <div className="guard-video-wrapper">
+                  <div className="video-label">
+                    <span className="video-label-icon">📱</span>
+                    <span className="video-label-text">Guard Mobile App</span>
+                  </div>
+                  <div className="guard-video-container">
+                    <video 
+                      src={guardVideo}
+                      className="guard-video"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      aria-label="Guard scanning QR code and capturing selfie for attendance"
+                    />
+                  </div>
+                  <div className="video-description">
+                    <p className="video-step">
+                      <span className="step-number">1</span>
+                      <span className="step-text">Guard scans QR code at site location</span>
+                    </p>
+                    <p className="video-step">
+                      <span className="step-number">2</span>
+                      <span className="step-text">Selfie captured for verification</span>
+                    </p>
+                    <p className="video-step">
+                      <span className="step-number">3</span>
+                      <span className="step-text">Attendance logged instantly</span>
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="feature-title">Easy Integration</h3>
-              <p className="feature-description">
-                Connect with your existing tools through APIs and webhooks.
-                We can build custom integrations to fit your workflow.
-              </p>
+              <div className="dashboard-preview-sophisticated">
+                <div className="dashboard-mockup-enhanced">
+                  <div className="mockup-header-enhanced">
+                    <div className="mockup-dots">
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                    </div>
+                    <div className="mockup-url-bar-enhanced">
+                      <div className="mockup-lock-icon">🔒</div>
+                      <span className="url-text">greywolf.watchpoint.in</span>
+                      <div className="mockup-status-indicator"></div>
+                    </div>
+                  </div>
+                  <div className="mockup-iframe-container-enhanced">
+                    <div className="screenshot-overlay">
+                      <div className="screenshot-glow"></div>
+                      <img
+                        src={attendanceDemo}
+                        className="mockup-iframe-enhanced"
+                        alt="WatchPoint Admin Dashboard showing real-time attendance data from guards who have logged in"
+                        loading="lazy"
+                        onClick={openFullscreen}
+                        style={{ cursor: 'pointer' }}
+                        title="Real attendance data from guards who have logged in - Click to view fullscreen"
+                      />
+                      <div className="screenshot-hover-effect">
+                        <span className="hover-text">Click to expand</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dashboard-label">
+                    <div>
+                      <span className="dashboard-label-icon">🖥️</span>
+                      <span className="dashboard-label-text">WatchPoint Command Center - Real-Time Dashboard</span>
+                    </div>
+                    <span className="dashboard-label-note">Live data from guards who have logged in</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="scaleGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" style={{stopColor:'#8b5cf6', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#a855f7', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#c084fc', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="scaleShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Chart bars showing growth */}
-                  <rect x="20" y="65" width="8" height="15" fill="url(#scaleGrad)" filter="url(#scaleShadow)" className="bar-1"/>
-                  <rect x="32" y="55" width="8" height="25" fill="url(#scaleGrad)" filter="url(#scaleShadow)" className="bar-2"/>
-                  <rect x="44" y="40" width="8" height="40" fill="url(#scaleGrad)" filter="url(#scaleShadow)" className="bar-3"/>
-                  <rect x="56" y="25" width="8" height="55" fill="url(#scaleGrad)" filter="url(#scaleShadow)" className="bar-4"/>
-                  <rect x="68" y="15" width="8" height="65" fill="url(#scaleGrad)" filter="url(#scaleShadow)" className="bar-5"/>
-                  {/* Growth arrow */}
-                  <path d="M25 60 Q40 45 55 30 Q65 20 75 15" stroke="rgba(255,255,255,0.9)" strokeWidth="3" fill="none" className="growth-line"/>
-                  <path d="M75 15 L70 12 L70 18 L75 15 L78 12 L78 18 Z" fill="rgba(255,255,255,0.9)" className="arrow-head"/>
-                  {/* Scale indicators */}
-                  <circle cx="30" cy="50" r="2" fill="rgba(255,255,255,0.8)" className="scale-point-1"/>
-                  <circle cx="48" cy="35" r="2" fill="rgba(255,255,255,0.8)" className="scale-point-2"/>
-                  <circle cx="65" cy="20" r="2" fill="rgba(255,255,255,0.8)" className="scale-point-3"/>
-                </svg>
+            <div className="dashboard-features">
+              <div className="dashboard-feature">
+                <div className="feature-check">✓</div>
+                <div className="feature-content">
+                  <h4>Instant Sync</h4>
+                  <p>
+                    Every QR scan and selfie capture from the mobile app appears instantly in your admin dashboard. 
+                    No delays, no manual entry.
+                  </p>
+                </div>
               </div>
-              <h3 className="feature-title">Scalable Solutions</h3>
-              <p className="feature-description">
-                Built to grow with your business using modern frameworks
-                that can handle increased usage as you expand.
-              </p>
-            </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#06b6d4', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#0891b2', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#0e7490', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="aiShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Brain/AI core */}
-                  <circle cx="50" cy="45" r="20" fill="url(#aiGrad)" filter="url(#aiShadow)" className="ai-brain"/>
-                  <circle cx="50" cy="45" r="15" fill="rgba(255,255,255,0.2)" className="brain-inner"/>
-                  {/* Neural network connections */}
-                  <path d="M35 35 Q45 40 50 45 Q55 40 65 35" stroke="rgba(255,255,255,0.6)" strokeWidth="2" fill="none" className="neural-1"/>
-                  <path d="M35 55 Q45 50 50 45 Q55 50 65 55" stroke="rgba(255,255,255,0.6)" strokeWidth="2" fill="none" className="neural-2"/>
-                  <path d="M40 30 Q45 35 50 40" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" fill="none" className="neural-3"/>
-                  <path d="M60 30 Q55 35 50 40" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" fill="none" className="neural-4"/>
-                  {/* AI nodes */}
-                  <circle cx="35" cy="35" r="3" fill="rgba(255,255,255,0.8)" className="ai-node-1"/>
-                  <circle cx="65" cy="35" r="3" fill="rgba(255,255,255,0.8)" className="ai-node-2"/>
-                  <circle cx="35" cy="55" r="3" fill="rgba(255,255,255,0.8)" className="ai-node-3"/>
-                  <circle cx="65" cy="55" r="3" fill="rgba(255,255,255,0.8)" className="ai-node-4"/>
-                  {/* Data streams */}
-                  <circle cx="25" cy="25" r="2" fill="rgba(255,255,255,0.9)" className="data-stream-1"/>
-                  <circle cx="75" cy="25" r="2" fill="rgba(255,255,255,0.9)" className="data-stream-2"/>
-                  <circle cx="25" cy="65" r="2" fill="rgba(255,255,255,0.9)" className="data-stream-3"/>
-                  <circle cx="75" cy="65" r="2" fill="rgba(255,255,255,0.9)" className="data-stream-4"/>
-                  {/* Central processing indicator */}
-                  <circle cx="50" cy="45" r="4" fill="rgba(255,255,255,0.9)" className="ai-core"/>
-                </svg>
+              <div className="dashboard-feature">
+                <div className="feature-check">✓</div>
+                <div className="feature-content">
+                  <h4>Verified Attendance</h4>
+                  <p>
+                    Selfie verification ensures the right person is at the right location. 
+                    All verification data is automatically logged and visible in real-time.
+                  </p>
+                </div>
               </div>
-              <h3 className="feature-title">Smart Analytics</h3>
-              <p className="feature-description">
-                Get valuable insights from your data with analytics and reporting
-                features that help you make informed business decisions.
-              </p>
-            </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="globalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#22c55e', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#16a34a', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#15803d', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="globalShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Globe base */}
-                  <circle cx="50" cy="50" r="25" fill="url(#globalGrad)" filter="url(#globalShadow)" className="globe-base"/>
-                  {/* Continental shapes */}
-                  <path d="M35 35 Q45 30 55 35 Q60 40 55 45 Q45 50 35 45 Z" fill="rgba(255,255,255,0.3)" className="continent-1"/>
-                  <path d="M45 55 Q55 50 65 55 Q70 60 65 65 Q55 70 45 65 Z" fill="rgba(255,255,255,0.3)" className="continent-2"/>
-                  <ellipse cx="30" cy="60" rx="8" ry="5" fill="rgba(255,255,255,0.3)" className="continent-3"/>
-                  {/* Network points */}
-                  <circle cx="40" cy="40" r="2" fill="rgba(255,255,255,0.9)" className="network-point-1"/>
-                  <circle cx="60" cy="35" r="2" fill="rgba(255,255,255,0.9)" className="network-point-2"/>
-                  <circle cx="45" cy="60" r="2" fill="rgba(255,255,255,0.9)" className="network-point-3"/>
-                  <circle cx="65" cy="55" r="2" fill="rgba(255,255,255,0.9)" className="network-point-4"/>
-                  <circle cx="30" cy="55" r="2" fill="rgba(255,255,255,0.9)" className="network-point-5"/>
-                  {/* Connection lines */}
-                  <path d="M40 40 Q50 35 60 35" stroke="rgba(255,255,255,0.6)" strokeWidth="1" fill="none" className="global-connection-1"/>
-                  <path d="M45 60 Q55 55 65 55" stroke="rgba(255,255,255,0.6)" strokeWidth="1" fill="none" className="global-connection-2"/>
-                  <path d="M30 55 Q37 50 40 40" stroke="rgba(255,255,255,0.6)" strokeWidth="1" fill="none" className="global-connection-3"/>
-                  {/* Globe highlight */}
-                  <ellipse cx="42" cy="42" rx="8" ry="6" fill="rgba(255,255,255,0.2)" className="globe-highlight"/>
-                </svg>
+              <div className="dashboard-feature">
+                <div className="feature-check">✓</div>
+                <div className="feature-content">
+                  <h4>Complete Visibility</h4>
+                  <p>
+                    Track every guard action, check-in time, location, and verification status 
+                    from a single command center dashboard.
+                  </p>
+                </div>
               </div>
-              <h3 className="feature-title">Reliable Hosting</h3>
-              <p className="feature-description">
-                Hosted on reliable cloud infrastructure with good uptime
-                and monitoring to keep your applications running smoothly.
-              </p>
-            </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="privacyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#dc2626', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#b91c1c', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#991b1b', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="privacyShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Lock body */}
-                  <rect x="35" y="45" width="30" height="35" rx="4" fill="url(#privacyGrad)" filter="url(#privacyShadow)" className="lock-body"/>
-                  <rect x="38" y="48" width="24" height="29" rx="2" fill="rgba(255,255,255,0.2)" className="lock-inner"/>
-                  {/* Lock shackle */}
-                  <path d="M40 45 Q40 30 50 30 Q60 30 60 45" stroke="url(#privacyGrad)" strokeWidth="4" fill="none" filter="url(#privacyShadow)" className="lock-shackle"/>
-                  <path d="M42 45 Q42 32 50 32 Q58 32 58 45" stroke="rgba(255,255,255,0.3)" strokeWidth="2" fill="none" className="shackle-highlight"/>
-                  {/* Keyhole */}
-                  <circle cx="50" cy="60" r="4" fill="rgba(255,255,255,0.9)" className="keyhole-circle"/>
-                  <path d="M50 64 L48 72 L52 72 Z" fill="rgba(255,255,255,0.9)" className="keyhole-slot"/>
-                  {/* Security indicators */}
-                  <circle cx="25" cy="30" r="2" fill="rgba(255,255,255,0.8)" className="security-dot-1"/>
-                  <circle cx="75" cy="30" r="2" fill="rgba(255,255,255,0.8)" className="security-dot-2"/>
-                  <circle cx="20" cy="70" r="1.5" fill="rgba(255,255,255,0.8)" className="security-dot-3"/>
-                  <circle cx="80" cy="70" r="1.5" fill="rgba(255,255,255,0.8)" className="security-dot-4"/>
-                  {/* Encryption waves */}
-                  <path d="M15 50 Q25 45 35 50" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" className="encryption-wave-1"/>
-                  <path d="M65 50 Q75 45 85 50" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" className="encryption-wave-2"/>
-                </svg>
-              </div>
-              <h3 className="feature-title">Data Privacy</h3>
-              <p className="feature-description">
-                We follow privacy best practices with secure data handling,
-                regular backups, and proper access controls.
-              </p>
-            </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="mobileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#6366f1', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#4f46e5', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#4338ca', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="mobileShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Main phone */}
-                  <rect x="35" y="15" width="30" height="55" rx="6" fill="url(#mobileGrad)" filter="url(#mobileShadow)" className="phone-body"/>
-                  <rect x="38" y="20" width="24" height="40" rx="2" fill="rgba(255,255,255,0.2)" className="phone-screen"/>
-                  {/* Screen content */}
-                  <rect x="40" y="22" width="20" height="3" rx="1" fill="rgba(255,255,255,0.8)" className="screen-header"/>
-                  <rect x="40" y="27" width="15" height="2" rx="1" fill="rgba(255,255,255,0.6)" className="screen-line-1"/>
-                  <rect x="40" y="31" width="18" height="2" rx="1" fill="rgba(255,255,255,0.6)" className="screen-line-2"/>
-                  <rect x="40" y="35" width="12" height="2" rx="1" fill="rgba(255,255,255,0.6)" className="screen-line-3"/>
-                  {/* Apps icons */}
-                  <rect x="42" y="42" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-1"/>
-                  <rect x="48" y="42" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-2"/>
-                  <rect x="54" y="42" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-3"/>
-                  <rect x="42" y="48" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-4"/>
-                  <rect x="48" y="48" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-5"/>
-                  <rect x="54" y="48" width="4" height="4" rx="1" fill="rgba(255,255,255,0.8)" className="app-6"/>
-                  {/* Home button */}
-                  <circle cx="50" cy="65" r="2" fill="rgba(255,255,255,0.8)" className="home-button"/>
-                  {/* Tablet companion */}
-                  <rect x="15" y="35" width="18" height="25" rx="3" fill="url(#mobileGrad)" filter="url(#mobileShadow)" className="tablet-body" opacity="0.7"/>
-                  <rect x="17" y="38" width="14" height="19" rx="1" fill="rgba(255,255,255,0.2)" className="tablet-screen"/>
-                  {/* Responsive indicators */}
-                  <circle cx="75" cy="25" r="2" fill="rgba(255,255,255,0.8)" className="responsive-dot-1"/>
-                  <circle cx="80" cy="35" r="1.5" fill="rgba(255,255,255,0.8)" className="responsive-dot-2"/>
-                  <circle cx="85" cy="45" r="1" fill="rgba(255,255,255,0.8)" className="responsive-dot-3"/>
-                </svg>
-              </div>
-              <h3 className="feature-title">Mobile Ready</h3>
-              <p className="feature-description">
-                Responsive web design that works great on mobile devices.
-                Native apps available when needed for your specific requirements.
-              </p>
-            </div>
-            <div className="feature-card scroll-reveal stagger-item">
-              <div className="feature-icon">
-                <svg viewBox="0 0 100 100" className="icon-3d" style={{width: '100%', height: '100%'}}>
-                  <defs>
-                    <linearGradient id="customGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#ec4899', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#db2777', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#be185d', stopOpacity:1}} />
-                    </linearGradient>
-                    <filter id="customShadow" x="-50%" y="-50%" width="200%" height="200%">
-                      <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                    </filter>
-                  </defs>
-                  {/* Target rings */}
-                  <circle cx="50" cy="50" r="25" fill="none" stroke="url(#customGrad)" strokeWidth="3" filter="url(#customShadow)" className="target-ring-1"/>
-                  <circle cx="50" cy="50" r="18" fill="none" stroke="url(#customGrad)" strokeWidth="2.5" className="target-ring-2"/>
-                  <circle cx="50" cy="50" r="12" fill="none" stroke="url(#customGrad)" strokeWidth="2" className="target-ring-3"/>
-                  <circle cx="50" cy="50" r="6" fill="url(#customGrad)" filter="url(#customShadow)" className="target-center"/>
-                  {/* Crosshairs */}
-                  <path d="M50 25 L50 35" stroke="rgba(255,255,255,0.8)" strokeWidth="2" className="crosshair-top"/>
-                  <path d="M50 65 L50 75" stroke="rgba(255,255,255,0.8)" strokeWidth="2" className="crosshair-bottom"/>
-                  <path d="M25 50 L35 50" stroke="rgba(255,255,255,0.8)" strokeWidth="2" className="crosshair-left"/>
-                  <path d="M65 50 L75 50" stroke="rgba(255,255,255,0.8)" strokeWidth="2" className="crosshair-right"/>
-                  {/* Precision indicators */}
-                  <circle cx="50" cy="50" r="3" fill="rgba(255,255,255,0.9)" className="bullseye"/>
-                  {/* Custom solution markers */}
-                  <path d="M35 35 L40 30 L45 35 L40 40 Z" fill="rgba(255,255,255,0.7)" className="custom-marker-1"/>
-                  <path d="M65 35 L60 30 L55 35 L60 40 Z" fill="rgba(255,255,255,0.7)" className="custom-marker-2"/>
-                  <path d="M35 65 L40 60 L45 65 L40 70 Z" fill="rgba(255,255,255,0.7)" className="custom-marker-3"/>
-                  <path d="M65 65 L60 60 L55 65 L60 70 Z" fill="rgba(255,255,255,0.7)" className="custom-marker-4"/>
-                  {/* Targeting beam */}
-                  <circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.8)" className="targeting-dot-1"/>
-                  <circle cx="80" cy="20" r="1.5" fill="rgba(255,255,255,0.8)" className="targeting-dot-2"/>
-                  <circle cx="20" cy="80" r="1.5" fill="rgba(255,255,255,0.8)" className="targeting-dot-3"/>
-                  <circle cx="80" cy="80" r="1.5" fill="rgba(255,255,255,0.8)" className="targeting-dot-4"/>
-                </svg>
-              </div>
-              <h3 className="feature-title">Custom Development</h3>
-              <p className="feature-description">
-                We build solutions tailored to your specific business needs
-                and can customize features to match your workflow.
-              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* WatchPoint Section */}
-      <WatchPointPlans />
+      {/* WatchPoint Plans Section - Redesigned */}
+      <section id="watchpoint" className="watchpoint-plans-section">
+        <div className="container">
+          <div className="watchpoint-plans scroll-reveal">
+            <div className="plans-header-section">
+              <p className="section-kicker">Pricing</p>
+              <h2 className="section-title">Choose Your WatchPoint Power Plan</h2>
+              <p className="section-subtitle">
+                Select the perfect plan for your operations. Each plan includes powerful features designed to streamline your workforce management.
+              </p>
+            </div>
+
+            <div className="plans-grid redesigned-plans-grid">
+              {watchpointPlans.map((plan, planIdx) => (
+                <div
+                  className={`plan-card redesigned-plan-card${
+                    planIdx === 2 ? ' recommended' : ''
+                  }`}
+                  key={plan.name}
+                  style={{ '--plan-color': plan.color }}
+                >
+                  <div className="plan-header">
+                    <div className="plan-icon-wrapper">
+                      <span
+                        className="plan-icon"
+                        style={{
+                          background: `linear-gradient(135deg, ${plan.color} 60%, #fff 100%)`,
+                        }}
+                      >
+                        {plan.icon}
+                      </span>
+                    </div>
+                    <h4 className="plan-name">{plan.name}</h4>
+                    <span className="plan-tagline">{plan.tagline}</span>
+                    {planIdx === 2 && (
+                      <span className="plan-badge">Most Popular</span>
+                    )}
+
+                    <div className="price-container">
+                      <span className="price-currency">₹</span>
+                      <span className="price-amount">{plan.price}</span>
+                      <div className="price-details">
+                        <span className="price-period">per user / month</span>
+                      </div>
+                    </div>
+
+                    <div className="discount-container">
+                      <div className="discount-toggle">
+                        <span>Volume Discounts</span>
+                        <span className="discount-arrow">▼</span>
+                      </div>
+                      <div className="discount-table">
+                        {plan.discounts.map((discount, i) => (
+                          <div className="discount-row" key={i}>
+                            <span className="discount-users">
+                              {discount.users}+ users
+                            </span>
+                            <span className="discount-percent">
+                              {discount.percent}% off
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <ul className="plan-features redesigned-features">
+                    {plan.features.map((feature, featureIdx) => {
+                      const featureKey = `${planIdx}-${featureIdx}`;
+                      const isExpanded = expandedFeature === featureKey;
+                      const featureName = typeof feature === 'string' ? feature : feature.name;
+                      const featureDesc = typeof feature === 'string' ? '' : feature.description;
+                      
+                      return (
+                        <li key={featureIdx} className="plan-feature redesigned-feature">
+                          <div className="feature-main">
+                            <span className="feature-check">✔</span>
+                            <span className="feature-text">{featureName}</span>
+                            {featureDesc && (
+                              <button
+                                className="feature-info-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedFeature(isExpanded ? null : featureKey);
+                                }}
+                                aria-label={`Learn more about ${featureName}`}
+                              >
+                                <span className="info-icon">ℹ</span>
+                              </button>
+                            )}
+                          </div>
+                          {isExpanded && featureDesc && (
+                            <div className="feature-details">
+                              <p>{featureDesc}</p>
+                              <button
+                                className="feature-close-btn"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setExpandedFeature(null);
+                                }}
+                              >
+                                Close
+                              </button>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <div className="plan-footer">
+                    <button 
+                      className="plan-cta-btn"
+                      onClick={() => openContactForm(plan)}
+                    >
+                      Get Started
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      {/* <PhilosophySection /> */}
 
       {/* Founder Section */}
-      <FounderSection />
+      {/* <FounderSection /> */}
+
+      {/* Fullscreen Modal */}
+      {isFullscreen && (
+        <div 
+          className="fullscreen-modal"
+          onClick={closeFullscreen}
+        >
+          <div 
+            className="fullscreen-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="fullscreen-close"
+              onClick={closeFullscreen}
+              aria-label="Close fullscreen"
+            >
+              ×
+            </button>
+            <img
+              src={attendanceDemo}
+              alt="WatchPoint Attendance Dashboard Demo - Fullscreen"
+              className="fullscreen-image"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Contact Form Modal */}
+      {isContactFormOpen && (
+        <div 
+          className="contact-form-modal"
+          onClick={closeContactForm}
+        >
+          <div 
+            className="contact-form-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="contact-form-header">
+              <h3 className="contact-form-title">
+                Get Started with {selectedPlan?.name}
+              </h3>
+              <p className="contact-form-subtitle">
+                Fill out the form below and we'll get back to you shortly
+              </p>
+              <button 
+                className="contact-form-close"
+                onClick={closeContactForm}
+                aria-label="Close contact form"
+              >
+                ×
+              </button>
+            </div>
+
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="name" className="form-label">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="email" className="form-label">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Enter your email address"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="phone" className="form-label">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="message" className="form-label">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    className="form-textarea"
+                    placeholder="Tell us about your requirements..."
+                    rows="4"
+                  />
+                </div>
+              </div>
+
+              {submitStatus && (
+                <div className={`form-status ${submitStatus}`}>
+                  {submitStatus === 'success' ? (
+                    <>
+                      <span className="status-icon">✓</span>
+                      Thank you! Your email client should open shortly with your inquiry.
+                    </>
+                  ) : (
+                    <>
+                      <span className="status-icon">⚠</span>
+                      Something went wrong. Please try again or contact us directly.
+                    </>
+                  )}
+                </div>
+              )}
+
+              <div className="form-actions">
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={closeContactForm}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  disabled={isSubmitting || !formData.name || !formData.email}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner"></span>
+                      Submitting...
+                    </>
+                  ) : (
+                    'Send Inquiry'
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Chatbot Section - Hidden for now */}
       {/* 
@@ -1806,148 +2348,6 @@ function App() {
       </section>
       */}
 
-      {/* Philosophy Section - Enhanced */}
-      <section id="philosophy" className="philosophy">
-        <div className="philosophy-particles"></div>
-        <div className="container">
-          <div className="section-header scroll-reveal">
-            <h2 className="section-title">Our Approach: Strength, Growth, and Flexibility</h2>
-            <p className="section-subtitle">
-              We don't just build software - we build the foundation for your business success.
-            </p>
-          </div>
-          <div className="philosophy-grid">
-            <div className="philosophy-card scroll-reveal">
-              <div className="philosophy-icon-container">
-                <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">
-                  <svg viewBox="0 0 100 100" className="icon-3d">
-                    <defs>
-                      <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style={{stopColor:'#4f46e5', stopOpacity:1}} />
-                        <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
-                        <stop offset="100%" style={{stopColor:'#2563eb', stopOpacity:1}} />
-                      </linearGradient>
-                      <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                      </filter>
-                    </defs>
-                    {/* Shield base */}
-                    <path d="M50 10 L20 25 L20 55 Q20 75 50 85 Q80 75 80 55 L80 25 Z" 
-                          fill="url(#shieldGrad)" 
-                          filter="url(#shadow)"
-                          className="shield-base"/>
-                    {/* Shield highlight */}
-                    <path d="M50 15 L25 27 L25 52 Q25 68 50 76 Q75 68 75 52 L75 27 Z" 
-                          fill="rgba(255,255,255,0.2)"
-                          className="shield-highlight"/>
-                    {/* Center emblem */}
-                    <circle cx="50" cy="45" r="8" fill="rgba(255,255,255,0.8)" className="emblem"/>
-                    <circle cx="50" cy="45" r="4" fill="url(#shieldGrad)" className="emblem-inner"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="philosophy-title">Strong Foundations</h3>
-              <p className="philosophy-description">
-                We build robust, reliable, and secure software. Our platforms are engineered
-                to be the dependable backbone of your operations, with 99.99% uptime guaranteed.
-              </p>
-            </div>
-            <div className="philosophy-card scroll-reveal">
-              <div className="philosophy-icon-container">
-                <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">
-                  <svg viewBox="0 0 100 100" className="icon-3d">
-                    <defs>
-                      <linearGradient id="growthGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" style={{stopColor:'#059669', stopOpacity:1}} />
-                        <stop offset="50%" style={{stopColor:'#10b981', stopOpacity:1}} />
-                        <stop offset="100%" style={{stopColor:'#34d399', stopOpacity:1}} />
-                      </linearGradient>
-                      <filter id="growthShadow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                      </filter>
-                    </defs>
-                    {/* Chart bars */}
-                    <rect x="15" y="65" width="8" height="20" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-1"/>
-                    <rect x="28" y="55" width="8" height="30" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-2"/>
-                    <rect x="41" y="45" width="8" height="40" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-3"/>
-                    <rect x="54" y="30" width="8" height="55" fill="url(#growthGrad)" filter="url(#growthShadow)" className="bar-4"/>
-                    {/* Growth arrow */}
-                    <path d="M65 60 L85 25 L80 30 L85 20 L90 25 L85 25" 
-                          stroke="url(#growthGrad)" 
-                          strokeWidth="3" 
-                          fill="url(#growthGrad)" 
-                          filter="url(#growthShadow)"
-                          className="growth-arrow"/>
-                    {/* Arrow head highlight */}
-                    <path d="M85 20 L90 25 L85 25" 
-                          fill="rgba(255,255,255,0.3)" 
-                          className="arrow-highlight"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="philosophy-title">Designed for Growth</h3>
-              <p className="philosophy-description">
-                Our solutions are designed to scale with your business. As you grow,
-                our software grows with you, effortlessly handling increased demand.
-              </p>
-            </div>
-            <div className="philosophy-card scroll-reveal">
-              <div className="philosophy-icon-container">
-                <div className="philosophy-icon-bg"></div>
-                <div className="philosophy-icon">
-                  <svg viewBox="0 0 100 100" className="icon-3d">
-                    <defs>
-                      <linearGradient id="flexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style={{stopColor:'#dc2626', stopOpacity:1}} />
-                        <stop offset="50%" style={{stopColor:'#f59e0b', stopOpacity:1}} />
-                        <stop offset="100%" style={{stopColor:'#eab308', stopOpacity:1}} />
-                      </linearGradient>
-                      <filter id="flexShadow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="rgba(0,0,0,0.3)"/>
-                      </filter>
-                    </defs>
-                    {/* Main gear */}
-                    <g filter="url(#flexShadow)">
-                      <circle cx="40" cy="45" r="18" fill="url(#flexGrad)" className="gear-main"/>
-                      <circle cx="40" cy="45" r="12" fill="rgba(255,255,255,0.2)" className="gear-inner"/>
-                      <circle cx="40" cy="45" r="6" fill="url(#flexGrad)" className="gear-center"/>
-                      {/* Gear teeth */}
-                      <rect x="38" y="25" width="4" height="6" fill="url(#flexGrad)"/>
-                      <rect x="38" y="57" width="4" height="6" fill="url(#flexGrad)"/>
-                      <rect x="22" y="43" width="6" height="4" fill="url(#flexGrad)"/>
-                      <rect x="54" y="43" width="6" height="4" fill="url(#flexGrad)"/>
-                    </g>
-                    {/* Secondary gear */}
-                    <g filter="url(#flexShadow)">
-                      <circle cx="65" cy="30" r="12" fill="url(#flexGrad)" className="gear-secondary"/>
-                      <circle cx="65" cy="30" r="8" fill="rgba(255,255,255,0.2)" className="gear-inner-2"/>
-                      <circle cx="65" cy="30" r="4" fill="url(#flexGrad)" className="gear-center-2"/>
-                      {/* Small gear teeth */}
-                      <rect x="63" y="16" width="4" height="4" fill="url(#flexGrad)"/>
-                      <rect x="63" y="40" width="4" height="4" fill="url(#flexGrad)"/>
-                      <rect x="51" y="28" width="4" height="4" fill="url(#flexGrad)"/>
-                      <rect x="75" y="28" width="4" height="4" fill="url(#flexGrad)"/>
-                    </g>
-                    {/* Connection nodes */}
-                    <circle cx="25" cy="65" r="4" fill="url(#flexGrad)" filter="url(#flexShadow)" className="node-1"/>
-                    <circle cx="75" cy="60" r="4" fill="url(#flexGrad)" filter="url(#flexShadow)" className="node-2"/>
-                    {/* Connection lines */}
-                    <path d="M40 60 Q32 62 25 65" stroke="url(#flexGrad)" strokeWidth="2" fill="none" className="connection-1"/>
-                    <path d="M65 42 Q70 51 75 60" stroke="url(#flexGrad)" strokeWidth="2" fill="none" className="connection-2"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="philosophy-title">Ultimate Flexibility</h3>
-              <p className="philosophy-description">
-                We understand that no two businesses are the same. Our systems are built
-                to be adaptable to your unique workflows and requirements.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Contact Section - Enhanced */}
       <section id="contact" className="contact">
@@ -1981,14 +2381,12 @@ function App() {
         <div className="container">
           <div className="contact-container">
             <div className="contact-info scroll-reveal">
-              <h2>Have a Project in Mind</h2>
+              <h2>Deploy WatchPoint</h2>
               <p>
-                Whether you're interested in WatchPoint or have a unique challenge that requires
-                a custom software solution, our team is ready to talk.
+                WatchPoint is engineered for operations that refuse to slow down. Tell us how your workforce runs today and we'll plug in a command-grade control center.
               </p>
               <p>
-                We're here to help you transform your business operations with cutting-edge
-                software solutions tailored to your specific needs.
+                Our pilots move fast: blueprint the policy, wire the data sources, and give your leadership team a live view within days.
               </p>
               <div className="contact-details">
                 <div className="contact-item">
@@ -2021,11 +2419,11 @@ function App() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="interest">I'm interested in...</label>
-                  <select id="interest" defaultValue="demo">
-                    <option value="demo">A Demo of WatchPoint</option>
-                    <option value="custom">Custom Software Development</option>
-                    <option value="consulting">Consulting Services</option>
-                    <option value="other">Other Inquiry</option>
+                  <select id="interest" defaultValue="pilot">
+                    <option value="pilot">Pilot deployment of WatchPoint</option>
+                    <option value="pricing">Pricing & plan guidance</option>
+                    <option value="integration">Integration & rollout support</option>
+                    <option value="other">Partnership / other</option>
                   </select>
                 </div>
                 <div className="form-group">
@@ -2049,9 +2447,9 @@ function App() {
       <section id="about" className="about-section">
         <div className="container">
           <div className="section-header scroll-reveal">
-            <h2 className="section-title">About CloudBamboo Digital</h2>
+            <h2 className="section-title">About WatchPoint & CloudBamboo</h2>
             <p className="section-subtitle">
-              A trusted Limited Liability Partnership building the future of business operations
+              We are the product studio behind the boldest workforce intelligence OS in India.
             </p>
           </div>
           
@@ -2096,9 +2494,7 @@ function App() {
                 </div>
                 <h3>Our Mission</h3>
                 <p>
-                  Our mission is to empower businesses of all types by providing powerful, 
-                  intuitive, and affordable SaaS solutions that streamline operations, 
-                  automate workflows, and drive sustainable growth.
+                  WatchPoint exists to give operations teams a hardened system that tracks every guard, shift and escalation without breaking a sweat.
                 </p>
               </div>
               
@@ -2144,9 +2540,7 @@ function App() {
                 </div>
                 <h3>Our Vision</h3>
                 <p>
-                  Our vision is to become the leading technology partner for businesses 
-                  across India and beyond, enabling them to scale efficiently and compete 
-                  in the digital economy through innovative software solutions.
+                  We are building the most trusted workforce command platform for India and beyond, blending industrial strength with artful design.
                 </p>
               </div>
             </div>
@@ -2174,13 +2568,10 @@ function App() {
               </div>
               <h3>Our Story</h3>
               <p>
-                Founded in 2025, <strong>CloudBamboo Digital</strong> is a Limited Liability Partnership 
-                based in Assam, India. We specialize in architecting robust, flexible, and scalable 
-                SaaS solutions that automate workflows and provide critical business insights.
+                Founded in 2025, <strong>CloudBamboo Digital</strong> crafts WatchPoint from Assam, India with a singular mission—own the control room for workforce-heavy companies.
               </p>
               <p>
-                Our team combines deep technical expertise with practical business understanding 
-                to create software that doesn't just work—it transforms how businesses operate.
+                We combine product intuition, security discipline, and relentless polish to ship software that feels bold and behaves relentlessly.
               </p>
             </div>
             
@@ -2261,8 +2652,8 @@ function App() {
                   </div>
                   <div className="credential-content">
                     <strong>Core Expertise</strong>
-                    <span>SaaS Solutions & Custom Software Development</span>
-                    <div className="credential-details">Cloud-native architectures</div>
+                    <span>WatchPoint Workforce Intelligence</span>
+                    <div className="credential-details">Cloud-native command centers</div>
                   </div>
                 </div>
 
@@ -2339,8 +2730,7 @@ function App() {
                 </div>
               </div>
               <p className="footer-description">
-                Building powerful SaaS solutions that transform how businesses
-                across all industries operate, scale, and grow.
+                WatchPoint by CloudBamboo Digital LLP keeps your workforce sharp, compliant, and revenue-ready every single day.
               </p>
             </div>
             
