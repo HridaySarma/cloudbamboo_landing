@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './App.css';
 import { initializeAnimations } from './utils/animations';
 import logoImage from './assets/logo_modern.png';
@@ -8,6 +8,8 @@ import mobileHome from './assets/mobile_home.jpeg';
 import guardVideo from './assets/guard.mp4';
 import './components/WatchPointPlans.css';
 import PhilosophySection from './components/PhilosophySection';
+import WatchpointSOS from './components/WatchpointSOS';
+import HeroSection from './components/HeroSection';
 // import FounderSection from './components/FounderSection';
 
 
@@ -115,6 +117,14 @@ const watchpointPlans = [
         name: 'Geo-fencing',
         description: 'Virtual boundary management with automatic check-in/check-out when staff enter or exit designated areas. Generate alerts for unauthorized access or absence.'
       },
+      {
+        name: 'Incident Reporting',
+        description: 'Comprehensive incident management with photo/video evidence, witness statements, and automated escalation workflows. Track incident resolution and generate reports.'
+      },
+      {
+        name: 'Photo Uploads',
+        description: 'Capture and upload photos directly from mobile devices with timestamp and location metadata. Useful for site inspections, incident documentation, and proof of work.'
+      },
     ],
     icon: '🛡️',
     color: '#667eea',
@@ -149,14 +159,6 @@ const watchpointPlans = [
       {
         name: 'Advance Salary Management',
         description: 'Track and manage advance salaries to employees with automated deduction schedules. Set up repayment plans and generate advance reports for accounting.'
-      },
-      {
-        name: 'Sales Management',
-        description: 'Complete sales pipeline management with lead tracking, opportunity management, and sales forecasting. Monitor sales performance and generate revenue reports.'
-      },
-      {
-        name: 'Expense Tracking',
-        description: 'Employee expense submission and approval workflow with receipt capture, categorization, and reimbursement processing. Set expense policies and approval limits.'
       },
       {
         name: 'Tax Calculations',
@@ -202,16 +204,12 @@ const watchpointPlans = [
         description: 'One-tap emergency alert system with automatic location sharing, escalation to emergency contacts, and integration with emergency services. Critical for field staff safety.'
       },
       {
-        name: 'Incident Reporting',
-        description: 'Comprehensive incident management with photo/video evidence, witness statements, and automated escalation workflows. Track incident resolution and generate reports.'
-      },
-      {
         name: 'Real-time Alerts',
         description: 'Instant alerts for attendance anomalies, location deviations, emergency situations, and system events. Customizable alert rules and notification channels.'
       },
       {
-        name: 'Video & Photo Uploads',
-        description: 'Capture and upload photos/videos directly from mobile devices with timestamp and location metadata. Useful for site inspections, incident documentation, and proof of work.'
+        name: 'Video Uploads',
+        description: 'Capture and upload videos directly from mobile devices with timestamp and location metadata. Useful for site inspections, incident documentation, and proof of work.'
       },
     ],
     icon: '🚨',
@@ -1325,6 +1323,7 @@ const JourneyModal = ({ isOpen, onClose }) => {
 };
 
 function App() {
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -1343,6 +1342,7 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [expandedFeature, setExpandedFeature] = useState(null); // Format: "planIndex-featureIndex"
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1560,25 +1560,61 @@ This inquiry was submitted through the WatchPoint website.`;
             >
               Home
             </a>
+            <div 
+              className="nav-item nav-dropdown"
+              onMouseEnter={() => setIsProductsDropdownOpen(true)}
+              onMouseLeave={() => setIsProductsDropdownOpen(false)}
+            >
+              <span className="nav-dropdown-trigger">
+                Products
+                <svg className="dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                  <path d="M6 8L2 4h8L6 8z"/>
+                </svg>
+              </span>
+              {isProductsDropdownOpen && (
+                <div className="nav-dropdown-menu">
+                  <a 
+                    href="#watchpoint"
+                    className="nav-dropdown-item"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsProductsDropdownOpen(false);
+                      document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                  >
+                    <span className="dropdown-item-icon">💼</span>
+                    <div className="dropdown-item-content">
+                      <strong>Watchpoint Management</strong>
+                      <small>Workforce & Asset Management</small>
+                    </div>
+                  </a>
+                  <a 
+                    href="#watchpoint-sos"
+                    className="nav-dropdown-item"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsProductsDropdownOpen(false);
+                      document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                  >
+                    <span className="dropdown-item-icon">🛡️</span>
+                    <div className="dropdown-item-content">
+                      <strong>Watchpoint SOS</strong>
+                      <small>Personal Safety & Protection</small>
+                    </div>
+                  </a>
+                </div>
+              )}
+            </div>
             <a 
-              href="#watchpoint" 
-              className={`nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}
+              href="#contact" 
+              className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              Pricing
-            </a>
-            <a 
-              href="#philosophy" 
-              className={`nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-            >
-              Philosophy
+              Contact
             </a>
             <a 
               href="#about" 
@@ -1591,15 +1627,33 @@ This inquiry was submitted through the WatchPoint website.`;
               About
             </a>
             <a 
-              href="#contact" 
-              className={`nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+              href="#watchpoint-sos" 
+              className="nav-download-sos-btn"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              Contact
+              <svg className="sos-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span className="sos-text">
+                <span className="sos-main">Get SOS</span>
+                <span className="sos-pulse">🚨</span>
+              </span>
+              <div className="sos-btn-glow"></div>
             </a>
+            <Link to="/login" className="nav-login-btn">
+              <svg className="login-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              <span>Login</span>
+              <div className="login-btn-shine"></div>
+            </Link>
           </nav>
           
           <div className="header-actions">
@@ -1627,27 +1681,43 @@ This inquiry was submitted through the WatchPoint website.`;
             >
               Home
             </a>
+            <div className="mobile-nav-section">
+              <div className="mobile-nav-section-title">Products</div>
+              <a 
+                href="#watchpoint"
+                className="mobile-nav-item mobile-nav-subitem"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                  document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                <span className="mobile-nav-icon">💼</span>
+                Watchpoint Management
+              </a>
+              <a 
+                href="#watchpoint-sos"
+                className="mobile-nav-item mobile-nav-subitem"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(false);
+                  document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                <span className="mobile-nav-icon">🛡️</span>
+                Watchpoint SOS
+              </a>
+            </div>
             <a 
-              href="#watchpoint" 
-              className={`mobile-nav-item ${activeSection === 'watchpoint' ? 'active' : ''}`}
+              href="#contact" 
+              className={`mobile-nav-item ${activeSection === 'contact' ? 'active' : ''}`}
               onClick={(e) => {
                 e.preventDefault();
                 setIsMobileMenuOpen(false);
-                document.getElementById('watchpoint')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              Pricing
-            </a>
-            <a 
-              href="#philosophy" 
-              className={`mobile-nav-item ${activeSection === 'philosophy' ? 'active' : ''}`}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMobileMenuOpen(false);
-                document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-            >
-              Philosophy
+              Contact
             </a>
             <a 
               href="#about" 
@@ -1661,99 +1731,44 @@ This inquiry was submitted through the WatchPoint website.`;
               About
             </a>
             <a 
-              href="#contact" 
-              className={`mobile-nav-item ${activeSection === 'contact' ? 'active' : ''}`}
+              href="#watchpoint-sos" 
+              className="mobile-nav-download-sos-btn"
               onClick={(e) => {
                 e.preventDefault();
                 setIsMobileMenuOpen(false);
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              Contact
+              <svg className="sos-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span className="sos-text">
+                <span className="sos-main">Download WatchPoint SOS</span>
+                <span className="sos-pulse">🚨</span>
+              </span>
+              <div className="sos-btn-glow"></div>
             </a>
+            <Link 
+              to="/login" 
+              className="mobile-nav-login-btn"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <svg className="login-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              <span>Login</span>
+              <div className="login-btn-shine"></div>
+            </Link>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="hero parallax" data-speed="0.5">
-        <div className="container">
-          <div className="hero-content scroll-reveal">
-            <h1 className="hero-title">
-              Command every shift with WatchPoint
-            </h1>
-            <p className="hero-subtitle">
-Unite attendance tracking, automated payroll, and real-time field monitoring in one powerful platform. Stop managing paper—start managing your workforce.            </p>
-            <div className="hero-cta">
-              <div className="interactive-cta">
-                <div className="cta-orb-container">
-                  <div className="cta-orb primary-orb" onClick={() => document.getElementById('watchpoint').scrollIntoView({ behavior: 'smooth' })}>
-                    <div className="orb-content">
-                      <div className="orb-icon">🚀</div>
-                      <div className="orb-text">
-                        <span className="orb-title">Experience WatchPoint</span>
-                        <span className="orb-subtitle">See the live board</span>
-                      </div>
-                    </div>
-                    <div className="orb-particles">
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                    </div>
-                    <div className="orb-glow"></div>
-                  </div>
-
-                  <div className="cta-orb secondary-orb" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-                    <div className="orb-content">
-                      <div className="orb-icon">💬</div>
-                      <div className="orb-text">
-                        <span className="orb-title">Book a Call</span>
-                        <span className="orb-subtitle">Deploy in your org</span>
-                      </div>
-                    </div>
-                    <div className="orb-particles">
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                      <div className="particle"></div>
-                    </div>
-                    <div className="orb-glow"></div>
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
-          </div>
-          <div className="hero-graphics">
-            <div className="mobile-screenshot-container">
-              <div className="mobile-screenshot-wrapper">
-                <img 
-                  src={mobileHome} 
-                  alt="WatchPoint Mobile Application" 
-                  className="mobile-screenshot"
-                />
-                <div className="mobile-screenshot-glow"></div>
-              </div>
-            </div>
-            {/* Additional decorative elements */}
-            <div className="hero-decoration">
-              <svg className="hero-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#00D9FF" stopOpacity="0.2" />
-                    <stop offset="100%" stopColor="#00A8CC" stopOpacity="0.2" />
-                  </linearGradient>
-                </defs>
-                <circle cx="300" cy="300" r="250" fill="none" stroke="url(#gradient1)" strokeWidth="2" strokeDasharray="10 5" className="rotating-circle" />
-                <circle cx="300" cy="300" r="200" fill="none" stroke="url(#gradient1)" strokeWidth="1" strokeDasharray="5 10" className="rotating-circle-reverse" />
-                <circle cx="300" cy="300" r="150" fill="none" stroke="url(#gradient1)" strokeWidth="1" strokeDasharray="15 5" className="rotating-circle" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
 
       {/* WatchPoint Feature Matrix */}
@@ -1781,32 +1796,6 @@ Unite attendance tracking, automated payroll, and real-time field monitoring in 
             ))}
               </div>
             </div>
-      </section>
-
-      <section className="watchpoint-operating">
-        <div className="container">
-          <div className="operating-grid">
-            <div className="operating-intro scroll-reveal">
-              <p className="section-kicker">Architecture</p>
-              <h2 className="section-title">Built for Mission-Critical Operations</h2>
-              <p className="section-subtitle">
-              A robust, cloud-native stack that turns chaotic field data into clear operational intelligence. No hardware required—just smartphones and the cloud.
-              </p>
-            </div>
-            <div className="operating-layers">
-              {systemLayers.map((layer, index) => (
-                <div key={layer.title} className="operating-layer scroll-reveal">
-                  <div className="layer-index">0{index + 1}</div>
-                  <div className="layer-content">
-                    <h3>{layer.title}</h3>
-                    <span className="layer-subtitle">{layer.subtitle}</span>
-                    <p className="layer-detail">{layer.detail}</p>
-              </div>
-            </div>
-              ))}
-              </div>
-            </div>
-              </div>
       </section>
 
       {/* Dashboard Showcase with Guard Video and Admin Panel */}
@@ -2043,7 +2032,7 @@ Unite attendance tracking, automated payroll, and real-time field monitoring in 
                   <div className="plan-footer">
                     <button 
                       className="plan-cta-btn"
-                      onClick={() => openContactForm(plan)}
+                      onClick={() => navigate('/login')}
                     >
                       Get Started
                     </button>
@@ -2054,6 +2043,9 @@ Unite attendance tracking, automated payroll, and real-time field monitoring in 
           </div>
         </div>
       </section>
+
+      {/* Watchpoint SOS Section */}
+      <WatchpointSOS />
 
       {/* Philosophy Section */}
       {/* <PhilosophySection /> */}
@@ -2349,93 +2341,145 @@ Unite attendance tracking, automated payroll, and real-time field monitoring in 
       */}
 
 
-      {/* Contact Section - Enhanced */}
-      <section id="contact" className="contact">
-        <div className="contact-3d-elements">
-          <div className="shape-3d">
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-          </div>
-          <div className="shape-3d">
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-          </div>
-          <div className="shape-3d">
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-            <div className="shape-face"></div>
-          </div>
+      {/* Contact Section - Modern Redesign */}
+      <section id="contact" className="contact-section-modern">
+        {/* Animated Background */}
+        <div className="contact-bg">
+          <div className="contact-orb contact-orb-1"></div>
+          <div className="contact-orb contact-orb-2"></div>
+          <div className="contact-grid-pattern"></div>
         </div>
-        <div className="contact-creative-text">THINK OUTSIDE THE BOX</div>
-        <div className="container">
-          <div className="contact-container">
-            <div className="contact-info scroll-reveal">
-              <h2>Deploy WatchPoint</h2>
-              <p>
-                WatchPoint is engineered for operations that refuse to slow down. Tell us how your workforce runs today and we'll plug in a command-grade control center.
-              </p>
-              <p>
-                Our pilots move fast: blueprint the policy, wire the data sources, and give your leadership team a live view within days.
-              </p>
-              <div className="contact-details">
-                <div className="contact-item">
-                  <span className="contact-icon">📧</span>
-                  <span>hq@cloudbamboo.com</span>
+
+        <div className="contact-wrapper">
+          {/* Header */}
+          <div className="contact-header scroll-reveal">
+            <div className="contact-badge">
+              <span className="badge-pulse-dot"></span>
+              <span>LET'S CONNECT</span>
+            </div>
+            <h2 className="contact-title">
+              Ready to Deploy <span className="title-gradient">WatchPoint?</span>
+            </h2>
+            <p className="contact-subtitle">
+              WatchPoint is engineered for operations that refuse to slow down. 
+              Tell us how your workforce runs today and we'll plug in a command-grade control center.
+            </p>
+          </div>
+
+          <div className="contact-content-grid">
+            {/* Left Side - Contact Info */}
+            <div className="contact-info-panel scroll-reveal">
+              <div className="info-card">
+                <h3 className="info-title">Get in Touch</h3>
+                <p className="info-desc">
+                  Our pilots move fast: blueprint the policy, wire the data sources, 
+                  and give your leadership team a live view within days.
+                </p>
+
+                <div className="contact-methods">
+                  <a href="mailto:hq@cloudbamboo.in" className="contact-method-card">
+                    <div className="method-icon">📧</div>
+                    <div className="method-content">
+                      <span className="method-label">Email</span>
+                      <span className="method-value">hq@cloudbamboo.in</span>
+                    </div>
+                    <svg className="method-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+
+                  <a href="tel:+918399811340" className="contact-method-card">
+                    <div className="method-icon">📱</div>
+                    <div className="method-content">
+                      <span className="method-label">Phone</span>
+                      <span className="method-value">+91 8399811340</span>
+                    </div>
+                    <svg className="method-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+
+                  <div className="contact-method-card">
+                    <div className="method-icon">📍</div>
+                    <div className="method-content">
+                      <span className="method-label">Location</span>
+                      <span className="method-value">Kharamakha, Mazbat, Assam, India</span>
+                    </div>
+                    <svg className="method-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
                 </div>
-                <div className="contact-item">
-                  <span className="contact-icon">📱</span>
-                  <span>+91 8399811340</span>
-                </div>
-                <div className="contact-item">
-                  <span className="contact-icon">📍</span>
-                  <span>Kharamakha, Mazbat, Assam, India</span>
+
+                <div className="info-features">
+                  <div className="info-feature-item">
+                    <span className="feature-check">✓</span>
+                    <span>Free consultation & demo</span>
+                  </div>
+                  <div className="info-feature-item">
+                    <span className="feature-check">✓</span>
+                    <span>Fast deployment in days</span>
+                  </div>
+                  <div className="info-feature-item">
+                    <span className="feature-check">✓</span>
+                    <span>24/7 support available</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="contact-form scroll-reveal">
-              <form>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <input type="text" id="name" placeholder="Your Name" required />
+
+            {/* Right Side - Form */}
+            <div className="contact-form-panel scroll-reveal">
+              <form className="modern-contact-form">
+                <div className="form-row">
+                  <div className="modern-form-group">
+                    <label htmlFor="name">Full Name</label>
+                    <input type="text" id="name" required />
+                    <div className="input-glow"></div>
+                  </div>
+
+                  <div className="modern-form-group">
+                    <label htmlFor="company">Company</label>
+                    <input type="text" id="company" required />
+                    <div className="input-glow"></div>
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="company">Company</label>
-                  <input type="text" id="company" placeholder="Company Name" required />
+
+                <div className="modern-form-group">
+                  <label htmlFor="email">Email Address</label>
+                  <input type="email" id="email" required />
+                  <div className="input-glow"></div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input type="email" id="email" placeholder="your@email.com" required />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="interest">I'm interested in...</label>
+
+                <div className="modern-form-group">
+                  <label htmlFor="interest">I'm Interested In</label>
                   <select id="interest" defaultValue="pilot">
                     <option value="pilot">Pilot deployment of WatchPoint</option>
                     <option value="pricing">Pricing & plan guidance</option>
                     <option value="integration">Integration & rollout support</option>
                     <option value="other">Partnership / other</option>
                   </select>
+                  <div className="input-glow"></div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="message">Message</label>
+
+                <div className="modern-form-group">
+                  <label htmlFor="message">Your Message</label>
                   <textarea
                     id="message"
-                    placeholder="Tell us about your project or questions..."
                     rows="4"
+                    placeholder="Tell us about your project or questions..."
                   ></textarea>
+                  <div className="input-glow"></div>
                 </div>
-                <button type="submit" className="btn btn-primary form-submit">
-                  Send Message
+
+                <button type="submit" className="modern-submit-btn">
+                  <span className="btn-content">
+                    <span className="btn-text">Send Message</span>
+                    <svg className="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                  </span>
+                  <div className="btn-glow"></div>
                 </button>
               </form>
             </div>
@@ -2444,269 +2488,152 @@ Unite attendance tracking, automated payroll, and real-time field monitoring in 
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="about-section">
-        <div className="container">
-          <div className="section-header scroll-reveal">
-            <h2 className="section-title">About WatchPoint & CloudBamboo</h2>
-            <p className="section-subtitle">
-              We are the product studio behind the boldest workforce intelligence OS in India.
+      {/* About CloudBamboo Digital - Modern Redesign */}
+      <section id="about" className="about-modern-section">
+        {/* Background */}
+        <div className="about-bg">
+          <div className="about-orb about-orb-1"></div>
+          <div className="about-orb about-orb-2"></div>
+          <div className="about-grid-lines"></div>
+        </div>
+
+        <div className="about-modern-wrapper">
+          {/* Header */}
+          <div className="about-modern-header scroll-reveal">
+            <div className="about-badge">
+              <span className="badge-sparkle">✨</span>
+              <span>WHO WE ARE</span>
+            </div>
+            <h2 className="about-modern-title">
+              Meet <span className="title-highlight">CloudBamboo Digital</span>
+            </h2>
+            <p className="about-modern-subtitle">
+              A product studio crafting bold, enterprise-grade software from Assam, India. 
+              We build tools that companies depend on every single day.
             </p>
           </div>
-          
-          <div className="about-content">
-            <div className="mission-vision-grid">
-              <div className="mission-card scroll-reveal">
-                <div className="card-icon-container">
-                  <div className="card-icon-bg"></div>
-                  <div className="card-icon">
-                    <svg viewBox="0 0 100 100" className="icon-svg">
-                      <defs>
-                        <linearGradient id="missionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" style={{stopColor:'#4f46e5', stopOpacity:1}} />
-                          <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
-                          <stop offset="100%" style={{stopColor:'#2563eb', stopOpacity:1}} />
-                        </linearGradient>
-                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                          <feMerge> 
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                      </defs>
-                      {/* Target circles */}
-                      <circle cx="50" cy="50" r="40" fill="none" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.3" className="target-ring-1"/>
-                      <circle cx="50" cy="50" r="30" fill="none" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.5" className="target-ring-2"/>
-                      <circle cx="50" cy="50" r="20" fill="none" stroke="url(#missionGrad)" strokeWidth="3" opacity="0.7" className="target-ring-3"/>
-                      <circle cx="50" cy="50" r="8" fill="url(#missionGrad)" filter="url(#glow)" className="target-center"/>
-                      {/* Crosshairs */}
-                      <line x1="10" y1="50" x2="40" y2="50" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
-                      <line x1="60" y1="50" x2="90" y2="50" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
-                      <line x1="50" y1="10" x2="50" y2="40" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
-                      <line x1="50" y1="60" x2="50" y2="90" stroke="url(#missionGrad)" strokeWidth="2" opacity="0.6"/>
-                    </svg>
-                  </div>
-                  <div className="icon-particles">
-                    <div className="particle"></div>
-                    <div className="particle"></div>
-                    <div className="particle"></div>
-                  </div>
-                </div>
-                <h3>Our Mission</h3>
-                <p>
-                  WatchPoint exists to give operations teams a hardened system that tracks every guard, shift and escalation without breaking a sweat.
-                </p>
-              </div>
-              
-              <div className="vision-card scroll-reveal">
-                <div className="card-icon-container">
-                  <div className="card-icon-bg"></div>
-                  <div className="card-icon">
-                    <svg viewBox="0 0 100 100" className="icon-svg">
-                      <defs>
-                        <linearGradient id="visionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" style={{stopColor:'#059669', stopOpacity:1}} />
-                          <stop offset="50%" style={{stopColor:'#0891b2', stopOpacity:1}} />
-                          <stop offset="100%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
-                        </linearGradient>
-                        <filter id="visionGlow" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                          <feMerge> 
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                      </defs>
-                      {/* Rocket body */}
-                      <path d="M45 70 L55 70 L52 20 L48 20 Z" fill="url(#visionGrad)" filter="url(#visionGlow)"/>
-                      {/* Rocket tip */}
-                      <path d="M48 20 L52 20 L50 10 Z" fill="url(#visionGrad)" opacity="0.9"/>
-                      {/* Fins */}
-                      <path d="M45 65 L40 75 L45 70 Z" fill="url(#visionGrad)" opacity="0.7"/>
-                      <path d="M55 65 L60 75 L55 70 Z" fill="url(#visionGrad)" opacity="0.7"/>
-                      {/* Flames */}
-                      <path d="M45 70 L42 85 L50 82 L58 85 L55 70" fill="#ff6b35" opacity="0.8" className="rocket-flame"/>
-                      {/* Growth arrows */}
-                      <path d="M25 45 L35 35 M30 35 L35 35 L35 40" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-1"/>
-                      <path d="M65 35 L75 25 M70 25 L75 25 L75 30" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-2"/>
-                      <path d="M20 25 L30 15 M25 15 L30 15 L30 20" stroke="url(#visionGrad)" strokeWidth="2" fill="none" opacity="0.6" className="growth-arrow-3"/>
-                    </svg>
-                  </div>
-                  <div className="icon-particles">
-                    <div className="particle"></div>
-                    <div className="particle"></div>
-                    <div className="particle"></div>
-                  </div>
-                </div>
-                <h3>Our Vision</h3>
-                <p>
-                  We are building the most trusted workforce command platform for India and beyond, blending industrial strength with artful design.
-                </p>
-              </div>
-            </div>
-            
-            <div className="company-story scroll-reveal">
-              <div className="story-icon-container">
-                <svg viewBox="0 0 100 100" className="story-icon">
-                  <defs>
-                    <linearGradient id="storyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'#f59e0b', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'#ef4444', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'#8b5cf6', stopOpacity:1}} />
-                    </linearGradient>
-                  </defs>
-                  {/* Book/Story icon */}
-                  <rect x="25" y="20" width="50" height="60" rx="4" fill="none" stroke="url(#storyGrad)" strokeWidth="2"/>
-                  <rect x="30" y="25" width="40" height="50" rx="2" fill="url(#storyGrad)" opacity="0.1"/>
-                  <line x1="35" y1="35" x2="65" y2="35" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
-                  <line x1="35" y1="42" x2="60" y2="42" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
-                  <line x1="35" y1="49" x2="65" y2="49" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
-                  <line x1="35" y1="56" x2="55" y2="56" stroke="url(#storyGrad)" strokeWidth="1.5" opacity="0.7"/>
-                  <circle cx="20" cy="50" r="8" fill="url(#storyGrad)" opacity="0.3"/>
-                  <circle cx="80" cy="50" r="6" fill="url(#storyGrad)" opacity="0.4"/>
-                </svg>
-              </div>
-              <h3>Our Story</h3>
-              <p>
-                Founded in 2025, <strong>CloudBamboo Digital</strong> crafts WatchPoint from Assam, India with a singular mission—own the control room for workforce-heavy companies.
+
+          {/* Story Section */}
+          <div className="about-story-section scroll-reveal">
+            <div className="story-content">
+              <div className="story-year">EST. 2025</div>
+              <h3 className="story-title">Our Story</h3>
+              <p className="story-text">
+                <strong>CloudBamboo Digital LLP</strong> was founded with a singular vision: 
+                to create software that doesn't just work—it excels. We're a Limited Liability Partnership 
+                based in Kharamakha, Mazbat, Assam, India, building products that combine industrial 
+                strength with artful design.
               </p>
-              <p>
-                We combine product intuition, security discipline, and relentless polish to ship software that feels bold and behaves relentlessly.
+              <p className="story-text">
+                Our flagship product, WatchPoint, represents everything we stand for: 
+                relentless polish, security discipline, and software that feels bold while behaving flawlessly.
               </p>
             </div>
-            
-            <div className="company-credentials scroll-reveal">
-              <div className="credentials-header">
-                <div className="credentials-icon">
-                  <svg viewBox="0 0 100 100" className="credentials-svg">
-                    <defs>
-                      <linearGradient id="credGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style={{stopColor:'#1e40af', stopOpacity:1}} />
-                        <stop offset="50%" style={{stopColor:'#7c3aed', stopOpacity:1}} />
-                        <stop offset="100%" style={{stopColor:'#059669', stopOpacity:1}} />
-                      </linearGradient>
-                    </defs>
-                    {/* Certificate/Shield shape */}
-                    <path d="M50 10 L75 25 L75 60 Q75 75 50 85 Q25 75 25 60 L25 25 Z" 
-                          fill="none" stroke="url(#credGrad)" strokeWidth="2"/>
-                    <path d="M50 15 L70 27 L70 57 Q70 70 50 78 Q30 70 30 57 L30 27 Z" 
-                          fill="url(#credGrad)" opacity="0.1"/>
-                    <circle cx="50" cy="45" r="8" fill="url(#credGrad)" opacity="0.8"/>
-                    <path d="M45 45 L48 48 L55 40" stroke="white" strokeWidth="2" fill="none"/>
-                  </svg>
-                </div>
-                <h4>Company Credentials & Certifications</h4>
+            <div className="story-visual">
+              <div className="story-card">
+                <div className="card-glow"></div>
+                <div className="card-icon">🏢</div>
+                <div className="card-label">Limited Liability Partnership</div>
+                <div className="card-value">Incorporated 2025</div>
               </div>
-              <p className="credentials-subtitle">Trusted by businesses for reliable and secure solutions</p>
-              
-              {/* Company Information Grid */}
-              <div className="credentials-grid">
-                <div className="credential-item credential-primary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V6h12v2z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Legal Structure</strong>
-                    <span>Limited Liability Partnership (LLP)</span>
-                    <div className="credential-details">Incorporated under Indian Partnership Act</div>
-                  </div>
-                </div>
-
-                <div className="credential-item credential-primary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Founded</strong>
-                    <span>2025</span>
-                    <div className="credential-details">Next-generation digital solutions</div>
-                  </div>
-                </div>
-
-                <div className="credential-item credential-primary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Headquarters</strong>
-                    <span>Kharamakha, Mazbat, Assam, India</span>
-                    <div className="credential-details">Serving clients globally</div>
-                  </div>
-                </div>
-
-                <div className="credential-item credential-primary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53C16.17 17.98 14.21 19 12 19z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Core Expertise</strong>
-                    <span>WatchPoint Workforce Intelligence</span>
-                    <div className="credential-details">Cloud-native command centers</div>
-                  </div>
-                </div>
-
-                <div className="credential-item credential-secondary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Security Standards</strong>
-                    <span>Enterprise-grade security protocols</span>
-                    <div className="credential-details">Data protection & compliance</div>
-                  </div>
-                </div>
-
-
-                <div className="credential-item credential-secondary">
-                  <div className="credential-icon">
-                    <svg viewBox="0 0 24 24" className="icon-svg">
-                      <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" 
-                            fill="url(#credGrad)"/>
-                    </svg>
-                  </div>
-                  <div className="credential-content">
-                    <strong>Performance</strong>
-                    <span>99.9% uptime guarantee</span>
-                    <div className="credential-details">Scalable & reliable solutions</div>
-                  </div>
-                </div>
-
+              <div className="story-card">
+                <div className="card-glow"></div>
+                <div className="card-icon">📍</div>
+                <div className="card-label">Headquarters</div>
+                <div className="card-value">Assam, India</div>
               </div>
+              <div className="story-card">
+                <div className="card-glow"></div>
+                <div className="card-icon">🚀</div>
+                <div className="card-label">Mission</div>
+                <div className="card-value">Enterprise Excellence</div>
+              </div>
+            </div>
+          </div>
 
-              {/* Statistics Section */}
-              <div className="credentials-stats">
-                <div className="stats-item">
-                  <div className="stat-number">24/7</div>
-                  <div className="stat-label">Support</div>
-                </div>
-                <div className="stats-item">
-                  <div className="stat-number">100%</div>
-                  <div className="stat-label">Client Satisfaction</div>
-                </div>
-                <div className="stats-item">
-                  <div className="stat-number">∞</div>
-                  <div className="stat-label">Possibilities</div>
-                </div>
-                <div className="stats-item">
-                  <div className="stat-number">∞</div>
-                  <div className="stat-label">Innovation</div>
+          {/* What We Do */}
+          <div className="about-services-section scroll-reveal">
+            <h3 className="services-title">What We Do</h3>
+            <div className="services-grid">
+              <div className="service-card">
+                <div className="service-icon">💼</div>
+                <h4>Product Development</h4>
+                <p>We build enterprise-grade SaaS products that scale with your business needs.</p>
+              </div>
+              <div className="service-card">
+                <div className="service-icon">🎨</div>
+                <h4>Custom Software</h4>
+                <p>Bespoke solutions tailored to your unique challenges and workflows.</p>
+              </div>
+              <div className="service-card">
+                <div className="service-icon">🔒</div>
+                <h4>Security First</h4>
+                <p>Enterprise-grade security protocols built into every line of code.</p>
+              </div>
+              <div className="service-card">
+                <div className="service-icon">⚡</div>
+                <h4>Performance</h4>
+                <p>Lightning-fast, reliable systems with 99.9% uptime guarantee.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Values */}
+          <div className="about-values-section scroll-reveal">
+            <h3 className="values-title">Our Values</h3>
+            <div className="values-list">
+              <div className="value-item">
+                <div className="value-number">01</div>
+                <div className="value-content">
+                  <h4>Relentless Polish</h4>
+                  <p>Every pixel, every interaction, every line of code—crafted with obsessive attention to detail.</p>
                 </div>
               </div>
+              <div className="value-item">
+                <div className="value-number">02</div>
+                <div className="value-content">
+                  <h4>Security Discipline</h4>
+                  <p>We build systems you can trust with your most critical operations and sensitive data.</p>
+                </div>
+              </div>
+              <div className="value-item">
+                <div className="value-number">03</div>
+                <div className="value-content">
+                  <h4>Bold Innovation</h4>
+                  <p>We don't follow trends—we set them. Our products push boundaries while staying practical.</p>
+                </div>
+              </div>
+              <div className="value-item">
+                <div className="value-number">04</div>
+                <div className="value-content">
+                  <h4>Client Success</h4>
+                  <p>Your success is our success. We're partners in your growth, not just vendors.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="about-stats-section scroll-reveal">
+            <div className="stat-box">
+              <div className="stat-icon">🎯</div>
+              <div className="stat-value">100%</div>
+              <div className="stat-label">Client Satisfaction</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-icon">⚡</div>
+              <div className="stat-value">99.9%</div>
+              <div className="stat-label">Uptime Guarantee</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-icon">🛡️</div>
+              <div className="stat-value">24/7</div>
+              <div className="stat-label">Support Available</div>
+            </div>
+            <div className="stat-box">
+              <div className="stat-icon">🌏</div>
+              <div className="stat-value">Global</div>
+              <div className="stat-label">Client Reach</div>
             </div>
           </div>
         </div>

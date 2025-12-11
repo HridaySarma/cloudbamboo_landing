@@ -20,6 +20,8 @@ const plans = [
 			'Resignation Management',
 			'Mobile App Access',
 			'Geo-fencing',
+			'Incident Reporting',
+			'Photo Uploads',
 		],
 		icon: '🛡️',
 		color: '#667eea',
@@ -40,8 +42,6 @@ const plans = [
 			'Payroll Automation',
 			'Invoicing',
 			'Advance Salary Management',
-			'Sales Management',
-			'Expense Tracking',
 			'Tax Calculations',
 			'Financial Dashboards',
 		],
@@ -64,9 +64,8 @@ const plans = [
 			'Live Reports & Dashboards',
 			'In-app Chat & Messaging',
 			'Emergency Services (SOS, Panic Button)',
-			'Incident Reporting',
 			'Real-time Alerts',
-			'Video & Photo Uploads',
+			'Video Uploads',
 		],
 		icon: '🚨',
 		color: '#ff6b6b',
@@ -291,88 +290,82 @@ This inquiry was submitted through the WatchPoint website.`;
 					</div>
 				</div>
 			</div>
-			{/* Enhanced Plans Section */}
-			<div className="watchpoint-plans scroll-reveal">
-				<h3 className="plans-title">
-					<span className="plans-title-decoration">
-						<span className="plans-title-line"></span>
-						<span className="plans-title-icon">⚡</span>
-						<span className="plans-title-line"></span>
-					</span>
-					<span className="plans-title-text">
-						<span className="plans-title-choose">Choose Your</span>
-						<span className="plans-title-watchpoint">WatchPoint</span>
-						<span className="plans-title-power">Power Plan</span>
-					</span>
-				</h3>
+			{/* Modern Plans Section */}
+			<div className="modern-plans-section scroll-reveal">
+				<div className="plans-header-modern">
+					<span className="plans-kicker">Pricing Plans</span>
+					<h3 className="plans-title-modern">
+						Choose Your <span className="title-highlight">WatchPoint</span> Plan
+					</h3>
+					<p className="plans-description-modern">
+						Flexible pricing that scales with your business. All plans include core features with volume discounts available.
+					</p>
+				</div>
 
-				<div className="plans-grid">
+				<div className="plans-grid-modern">
 					{plans.map((plan, idx) => (
 						<div
-							className={`plan-card enhanced-plan-card${
-								idx === 2 ? ' recommended' : ''
-							}`}
+							className={`plan-card-modern${idx === 2 ? ' featured' : ''}`}
 							key={plan.name}
-							style={{ '--plan-color': plan.color }}
+							style={{ '--plan-accent': plan.color }}
 						>
-							<div className="plan-header">
-								<span
-									className="plan-icon"
-									style={{
-										background: `linear-gradient(135deg, ${plan.color} 60%, #fff 100%)`,
-									}}
-								>
-									{plan.icon}
-								</span>
-								<h4 className="plan-name">{plan.name}</h4>
-								<span className="plan-tagline">{plan.tagline}</span>
-								{idx === 2 && (
-									<span className="plan-badge">Most Popular</span>
-								)}
-
-								<div className="price-container">
-									<span className="price-currency">₹</span>
-									<span className="price-amount">{plan.price}</span>
-									<div className="price-details">
-										<span className="price-period">per user / month</span>
-									</div>
+							{idx === 2 && (
+								<div className="featured-badge">
+									<span>Most Popular</span>
 								</div>
+							)}
+							
+							<div className="plan-header-modern">
+								<div className="plan-icon-modern">
+									<span>{plan.icon}</span>
+								</div>
+								<h4 className="plan-name-modern">{plan.name}</h4>
+								<p className="plan-tagline-modern">{plan.tagline}</p>
+							</div>
 
-								<div className="discount-container">
-									<div className="discount-toggle">
-										<span>Volume Discounts</span>
-										<span className="discount-arrow">▼</span>
-									</div>
-									<div className="discount-table">
-										{plan.discounts.map((discount, i) => (
-											<div className="discount-row" key={i}>
-												<span className="discount-users">
-													{discount.users}+ users
-												</span>
-												<span className="discount-percent">
-													{discount.percent}% off
-												</span>
-											</div>
-										))}
-									</div>
+							<div className="plan-pricing-modern">
+								<div className="price-main">
+									<span className="currency">₹</span>
+									<span className="amount">{plan.price}</span>
+								</div>
+								<span className="price-period-modern">per user / month</span>
+							</div>
+
+							<div className="volume-discounts-modern">
+								<div className="discount-header-modern">
+									<span className="discount-icon">💰</span>
+									<span>Volume Discounts</span>
+								</div>
+								<div className="discount-chips">
+									{plan.discounts.map((discount, i) => (
+										<span className="discount-chip" key={i}>
+											{discount.users}+ → {discount.percent}% off
+										</span>
+									))}
 								</div>
 							</div>
-							<ul className="plan-features">
-								{plan.features.map((feature, i) => (
-									<li key={i} className="plan-feature">
-										<span className="feature-check">✔</span>
-										<span className="feature-text">{feature}</span>
+
+							<ul className="plan-features-modern">
+								{plan.features.slice(0, 8).map((feature, i) => (
+									<li key={i} className="feature-item-modern">
+										<span className="feature-check-modern">✓</span>
+										<span>{feature}</span>
 									</li>
 								))}
+								{plan.features.length > 8 && (
+									<li className="feature-more">
+										+{plan.features.length - 8} more features
+									</li>
+								)}
 							</ul>
-							<div className="plan-footer">
-								<button 
-									className="plan-cta-btn"
-									onClick={() => openContactForm(plan)}
-								>
-									Get Started
-								</button>
-							</div>
+
+							<button 
+								className="plan-cta-modern"
+								onClick={() => openContactForm(plan)}
+							>
+								<span>Get Started</span>
+								<span className="cta-arrow">→</span>
+							</button>
 						</div>
 					))}
 				</div>
