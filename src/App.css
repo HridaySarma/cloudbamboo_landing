@@ -7181,12 +7181,13 @@ body.modal-open {
 
 .story-card {
   position: relative;
-  padding: 2rem;
+  padding: 3rem 2rem;
   background: linear-gradient(145deg, rgba(20, 20, 35, 0.6) 0%, rgba(15, 15, 25, 0.8) 100%);
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 1.5rem;
   transition: all 0.3s ease;
   overflow: hidden;
+  text-align: center;
 }
 
 .story-card:hover {
@@ -7207,8 +7208,15 @@ body.modal-open {
 }
 
 .card-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 4.5rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4));
+  transition: all 0.3s ease;
+}
+
+.story-card:hover .card-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 20px rgba(139, 92, 246, 0.6));
 }
 
 .card-label {
