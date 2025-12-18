@@ -26,18 +26,13 @@ export const AuthProvider = ({ children }) => {
           displayName: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
           emailVerified: firebaseUser.emailVerified,
+          phoneNumber: firebaseUser.phoneNumber,
         });
         
-        // Check if phone is verified from localStorage
-        const storedPhoneData = localStorage.getItem(`phoneVerified_${firebaseUser.uid}`);
-        if (storedPhoneData) {
-          const { verified, phone } = JSON.parse(storedPhoneData);
-          setIsPhoneVerified(verified);
-          setPhoneNumber(phone);
-        } else {
-          setIsPhoneVerified(false);
-          setPhoneNumber(null);
-        }
+        // Phone is verified if phoneNumber exists in Firebase user
+        const phoneVerified = !!firebaseUser.phoneNumber;
+        setIsPhoneVerified(phoneVerified);
+        setPhoneNumber(firebaseUser.phoneNumber);
       } else {
         setUser(null);
         setIsPhoneVerified(false);
@@ -48,18 +43,6 @@ export const AuthProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, []);
-
-  const setPhoneVerified = (phone) => {
-    if (user) {
-      localStorage.setItem(`phoneVerified_${user.uid}`, JSON.stringify({
-        verified: true,
-        phone: phone,
-        verifiedAt: new Date().toISOString(),
-      }));
-      setIsPhoneVerified(true);
-      setPhoneNumber(phone);
-    }
-  };
 
   const signOut = async () => {
     try {
@@ -80,7 +63,6 @@ export const AuthProvider = ({ children }) => {
     phoneNumber,
     isAuthenticated: !!user && isPhoneVerified,
     isPartiallyAuthenticated: !!user && !isPhoneVerified,
-    setPhoneVerified,
     signOut,
   };
 

@@ -1,25 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { sendOTP, verifyOTP, resendOTP, getOTPExpiryTime } from '../../services/otpService';
+import { 
+  initializeRecaptcha, 
+  sendPhoneVerification, 
+  verifyPhoneCode, 
+  formatPhoneNumber,
+  cleanupRecaptcha 
+} from '../../services/firebase';
 import logoImage from '../../assets/logo_modern.png';
 import './PhoneVerification.css';
 
 const PhoneVerification = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, isPartiallyAuthenticated, setPhoneVerified, signOut } = useAuth();
+  const { user, isAuthenticated, isPartiallyAuthenticated, signOut } = useAuth();
   
   const [step, setStep] = useState('phone'); // 'phone' or 'otp'
   const [phone, setPhone] = useState('');
   const [countryCode, setCountryCode] = useState('91');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [confirmationResult, setConfirmationResult] = useState(null);
+  const [recaptchaVerifier, setRecaptchaVerifier] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
-  const [debugOTP, setDebugOTP] = useState(null);
   
   const otpInputRefs = useRef([]);
+
+  // Initialize RecaptchaVerifier on component mount
+  useEffect(() => {
+    const initRecaptcha = () => {
+      try {
+        console.log('Initializing reCAPTCHA...');
+        // Clean up any existing verifier first
+        if (recaptchaVerifier) {
+          console.log('Cleaning up existing reCAPTCHA verifier');
+          cleanupRecaptcha(recaptchaVerifier);
+        }
+        
+        const verifier = initializeRecaptcha('recaptcha-container');
+        console.log('reCAPTCHA initialized successfully');
+        setRecaptchaVerifier(verifier);
+      } catch (error) {
+        console.error('Failed to initialize reCAPTCHA:', error);
+        setError('Failed to initialize verification. Please refresh the page.');
+      }
+    };
+
+    initRecaptcha();
+
+    // Cleanup on unmount
+    return () => {
+      if (recaptchaVerifier) {
+        console.log('Cleaning up reCAPTCHA on unmount');
+        cleanupRecaptcha(recaptchaVerifier);
+      }
+    };
+  }, []); // Only run once on mount
 
   // Redirect logic
   useEffect(() => {
@@ -57,25 +95,44 @@ const PhoneVerification = () => {
       return;
     }
 
+    if (!recaptchaVerifier) {
+      setError('Verification not ready. Please refresh the page.');
+      return;
+    }
+
     setLoading(true);
     setError('');
+    console.log('Sending OTP to:', `+${countryCode}${phone}`);
 
     try {
-      const result = await sendOTP(phone, countryCode);
-      if (result.success) {
-        setStep('otp');
-        setResendTimer(30);
-        setSuccess(result.message);
-        // For development/testing
-        if (result.debugOTP) {
-          setDebugOTP(result.debugOTP);
-        }
-        setTimeout(() => setSuccess(''), 3000);
-      } else {
-        setError(result.message);
-      }
+      const formattedPhone = formatPhoneNumber(phone, countryCode);
+      console.log('Formatted phone:', formattedPhone);
+      console.log('Calling sendPhoneVerification...');
+      
+      const result = await sendPhoneVerification(formattedPhone, recaptchaVerifier);
+      console.log('OTP sent successfully, confirmation result received');
+      
+      setConfirmationResult(result);
+      setStep('otp');
+      setResendTimer(30);
+      setSuccess('OTP sent successfully!');
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
+      console.error('Error sending OTP:', err);
       setError(err.message);
+      
+      // If reCAPTCHA fails, reinitialize it
+      if (err.code === 'auth/captcha-check-failed' || err.code === 'auth/missing-app-credential') {
+        console.log('reCAPTCHA failed, reinitializing...');
+        try {
+          cleanupRecaptcha(recaptchaVerifier);
+          const newVerifier = initializeRecaptcha('recaptcha-container');
+          setRecaptchaVerifier(newVerifier);
+          console.log('reCAPTCHA reinitialized');
+        } catch (reinitError) {
+          console.error('Failed to reinitialize reCAPTCHA:', reinitError);
+        }
+      }
     } finally {
       setLoading(false);
     }
@@ -122,25 +179,25 @@ const PhoneVerification = () => {
       return;
     }
 
+    if (!confirmationResult) {
+      setError('Verification session expired. Please request a new code.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
-      const result = verifyOTP(phone, countryCode, otpValue);
-      if (result.success) {
-        setSuccess(result.message);
-        setPhoneVerified(`+${countryCode}${phone}`);
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 1000);
-      } else {
-        setError(result.message);
-        // Clear OTP on error
-        setOtp(['', '', '', '', '', '']);
-        otpInputRefs.current[0]?.focus();
-      }
+      await verifyPhoneCode(confirmationResult, otpValue);
+      setSuccess('Phone verified successfully!');
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1000);
     } catch (err) {
       setError(err.message);
+      // Clear OTP on error
+      setOtp(['', '', '', '', '', '']);
+      otpInputRefs.current[0]?.focus();
     } finally {
       setLoading(false);
     }
@@ -154,20 +211,30 @@ const PhoneVerification = () => {
     setOtp(['', '', '', '', '', '']);
 
     try {
-      const result = await resendOTP(phone, countryCode);
-      if (result.success) {
-        setResendTimer(30);
-        setSuccess('New OTP sent successfully!');
-        if (result.debugOTP) {
-          setDebugOTP(result.debugOTP);
-        }
-        setTimeout(() => setSuccess(''), 3000);
-        otpInputRefs.current[0]?.focus();
-      } else {
-        setError(result.message);
-      }
+      // Reinitialize reCAPTCHA for resend
+      cleanupRecaptcha(recaptchaVerifier);
+      const newVerifier = initializeRecaptcha('recaptcha-container');
+      setRecaptchaVerifier(newVerifier);
+      
+      const formattedPhone = formatPhoneNumber(phone, countryCode);
+      const result = await sendPhoneVerification(formattedPhone, newVerifier);
+      setConfirmationResult(result);
+      setResendTimer(30);
+      setSuccess('New OTP sent successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+      otpInputRefs.current[0]?.focus();
     } catch (err) {
       setError(err.message);
+      
+      // If reCAPTCHA fails, try to reinitialize it again
+      if (err.code === 'auth/captcha-check-failed' || err.code === 'auth/missing-app-credential') {
+        try {
+          const retryVerifier = initializeRecaptcha('recaptcha-container');
+          setRecaptchaVerifier(retryVerifier);
+        } catch (reinitError) {
+          console.error('Failed to reinitialize reCAPTCHA:', reinitError);
+        }
+      }
     } finally {
       setLoading(false);
     }
@@ -176,9 +243,9 @@ const PhoneVerification = () => {
   const handleBackToPhone = () => {
     setStep('phone');
     setOtp(['', '', '', '', '', '']);
+    setConfirmationResult(null);
     setError('');
     setSuccess('');
-    setDebugOTP(null);
   };
 
   const handleLogout = async () => {
@@ -229,12 +296,8 @@ const PhoneVerification = () => {
           {error && <div className="verify-error">{error}</div>}
           {success && <div className="verify-success">{success}</div>}
           
-          {/* Debug OTP display for development */}
-          {debugOTP && import.meta.env.DEV && (
-            <div className="verify-debug">
-              <strong>Debug OTP:</strong> {debugOTP}
-            </div>
-          )}
+          {/* Hidden div for RecaptchaVerifier attachment */}
+          <div id="recaptcha-container"></div>
 
           {step === 'phone' ? (
             <form onSubmit={handleSendOTP} className="verify-form">

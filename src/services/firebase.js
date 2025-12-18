@@ -8,6 +8,10 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
+  PhoneAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  linkWithCredential,
 } from 'firebase/auth';
 
 // Firebase configuration - replace with your actual config
@@ -180,7 +184,7 @@ export const getCurrentUser = () => {
  * @param {object} error 
  * @returns {Error}
  */
-const formatAuthError = (error) => {
+export const formatAuthError = (error) => {
   const errorMessages = {
     'auth/email-already-in-use': 'This email is already registered. Please sign in instead.',
     'auth/invalid-email': 'Please enter a valid email address.',
@@ -193,12 +197,165 @@ const formatAuthError = (error) => {
     'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
     'auth/popup-closed-by-user': 'Sign-in was cancelled. Please try again.',
     'auth/network-request-failed': 'Network error. Please check your connection.',
+    // Phone auth error codes
+    'auth/invalid-phone-number': 'Invalid phone number format. Please check and try again.',
+    'auth/missing-phone-number': 'Please enter a phone number.',
+    'auth/quota-exceeded': 'SMS quota exceeded. Please try again later.',
+    'auth/user-disabled': 'This account has been disabled.',
+    'auth/operation-not-allowed': 'Phone authentication is not enabled.',
+    'auth/invalid-verification-code': 'Invalid verification code. Please check and try again.',
+    'auth/invalid-verification-id': 'Verification session expired. Please request a new code.',
+    'auth/code-expired': 'Verification code has expired. Please request a new code.',
+    'auth/credential-already-in-use': 'This phone number is already linked to another account.',
+    'auth/provider-already-linked': 'Phone number is already linked to this account.',
+    'auth/captcha-check-failed': 'reCAPTCHA verification failed. Please try again.',
+    'auth/missing-app-credential': 'reCAPTCHA verification failed. Please refresh and try again.',
   };
 
   const message = errorMessages[error.code] || error.message || 'An error occurred. Please try again.';
   const formattedError = new Error(message);
   formattedError.code = error.code;
   return formattedError;
+};
+
+/**
+ * Format phone number to E.164 format
+ * @param {string} phone - 10-digit phone number
+ * @param {string} countryCode - Country code without '+'
+ * @returns {string} - Formatted phone number (e.g., "+919876543210")
+ */
+export const formatPhoneNumber = (phone, countryCode) => {
+  if (!phone || !countryCode) {
+    throw new Error('Phone number and country code are required');
+  }
+  
+  // Remove any non-digit characters
+  const cleanPhone = phone.replace(/\D/g, '');
+  const cleanCountryCode = countryCode.replace(/\D/g, '');
+  
+  if (!cleanPhone || !cleanCountryCode) {
+    throw new Error('Invalid phone number or country code');
+  }
+  
+  return `+${cleanCountryCode}${cleanPhone}`;
+};
+
+/**
+ * Initialize reCAPTCHA verifier for phone authentication
+ * @param {string} containerId - DOM element ID for reCAPTCHA
+ * @returns {RecaptchaVerifier}
+ */
+export const initializeRecaptcha = (containerId) => {
+  if (!isFirebaseConfigured || !auth) {
+    throw new Error('Firebase is not configured. Please set up environment variables in .env file.');
+  }
+  
+  try {
+    const recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+      size: 'invisible',
+      callback: (response) => {
+        // reCAPTCHA solved, can proceed with phone auth
+        console.log('reCAPTCHA verified');
+      },
+      'expired-callback': () => {
+        // Response expired, user needs to solve reCAPTCHA again
+        console.warn('reCAPTCHA expired');
+      }
+    });
+    
+    return recaptchaVerifier;
+  } catch (error) {
+    console.error('RecaptchaVerifier initialization error:', error);
+    throw formatAuthError(error);
+  }
+};
+
+/**
+ * Send SMS verification code to phone number
+ * @param {string} phoneNumber - Phone number in E.164 format (e.g., "+919876543210")
+ * @param {RecaptchaVerifier} recaptchaVerifier - Initialized reCAPTCHA verifier
+ * @returns {Promise<ConfirmationResult>}
+ */
+export const sendPhoneVerification = async (phoneNumber, recaptchaVerifier) => {
+  if (!isFirebaseConfigured || !auth) {
+    throw new Error('Firebase is not configured. Please set up environment variables in .env file.');
+  }
+  
+  if (!phoneNumber) {
+    throw new Error('Phone number is required');
+  }
+  
+  if (!recaptchaVerifier) {
+    throw new Error('RecaptchaVerifier is required');
+  }
+  
+  try {
+    console.log('Firebase: Sending phone verification to', phoneNumber);
+    const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    console.log('Firebase: Phone verification sent successfully');
+    return confirmationResult;
+  } catch (error) {
+    console.error('Firebase: Phone verification error:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
+    throw formatAuthError(error);
+  }
+};
+
+/**
+ * Verify SMS code and link phone credential to current user
+ * @param {ConfirmationResult} confirmationResult - Result from sendPhoneVerification
+ * @param {string} code - 6-digit verification code
+ * @returns {Promise<UserCredential>}
+ */
+export const verifyPhoneCode = async (confirmationResult, code) => {
+  if (!isFirebaseConfigured || !auth) {
+    throw new Error('Firebase is not configured. Please set up environment variables in .env file.');
+  }
+  
+  if (!confirmationResult) {
+    throw new Error('ConfirmationResult is required');
+  }
+  
+  if (!code) {
+    throw new Error('Verification code is required');
+  }
+  
+  try {
+    // Verify the code
+    const result = await confirmationResult.confirm(code);
+    
+    // If there's a current user and they're different from the phone auth user,
+    // we need to link the credential
+    const currentUser = auth.currentUser;
+    if (currentUser && currentUser.uid !== result.user.uid) {
+      const credential = PhoneAuthProvider.credential(
+        confirmationResult.verificationId,
+        code
+      );
+      const linkedResult = await linkWithCredential(currentUser, credential);
+      return linkedResult;
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('Phone code verification error:', error);
+    throw formatAuthError(error);
+  }
+};
+
+/**
+ * Clean up reCAPTCHA verifier
+ * @param {RecaptchaVerifier} verifier - Verifier to clean up
+ */
+export const cleanupRecaptcha = (verifier) => {
+  if (verifier) {
+    try {
+      verifier.clear();
+    } catch (error) {
+      console.error('RecaptchaVerifier cleanup error:', error);
+    }
+  }
 };
 
 export { auth };
