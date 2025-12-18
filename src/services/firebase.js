@@ -12,6 +12,8 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
   linkWithCredential,
+  setPersistence,
+  browserLocalPersistence,
 } from 'firebase/auth';
 
 // Firebase configuration - replace with your actual config
@@ -35,6 +37,20 @@ let googleProvider = null;
 if (isFirebaseConfigured) {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
+  
+  // Set session persistence to LOCAL (persists even when browser is closed)
+  // This ensures user sessions last until explicitly signed out
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+      console.log('Firebase Auth persistence set to LOCAL');
+    })
+    .catch((error) => {
+      console.error('Failed to set Firebase Auth persistence:', error);
+    });
+  
+  // Set language for phone auth SMS
+  auth.useDeviceLanguage();
+  
   googleProvider = new GoogleAuthProvider();
   
   // Configure Google provider
@@ -198,10 +214,10 @@ export const formatAuthError = (error) => {
     'auth/popup-closed-by-user': 'Sign-in was cancelled. Please try again.',
     'auth/network-request-failed': 'Network error. Please check your connection.',
     // Phone auth error codes
+    'auth/billing-not-enabled': 'Phone authentication requires Firebase Blaze plan. Please upgrade your Firebase project or use test phone numbers for development.',
     'auth/invalid-phone-number': 'Invalid phone number format. Please check and try again.',
     'auth/missing-phone-number': 'Please enter a phone number.',
     'auth/quota-exceeded': 'SMS quota exceeded. Please try again later.',
-    'auth/user-disabled': 'This account has been disabled.',
     'auth/operation-not-allowed': 'Phone authentication is not enabled.',
     'auth/invalid-verification-code': 'Invalid verification code. Please check and try again.',
     'auth/invalid-verification-id': 'Verification session expired. Please request a new code.',
@@ -243,24 +259,39 @@ export const formatPhoneNumber = (phone, countryCode) => {
 /**
  * Initialize reCAPTCHA verifier for phone authentication
  * @param {string} containerId - DOM element ID for reCAPTCHA
+ * @param {object} options - Optional reCAPTCHA configuration
  * @returns {RecaptchaVerifier}
  */
-export const initializeRecaptcha = (containerId) => {
+export const initializeRecaptcha = (containerId, options = {}) => {
   if (!isFirebaseConfigured || !auth) {
     throw new Error('Firebase is not configured. Please set up environment variables in .env file.');
   }
   
   try {
-    const recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+    const defaultOptions = {
       size: 'invisible',
       callback: (response) => {
         // reCAPTCHA solved, can proceed with phone auth
-        console.log('reCAPTCHA verified');
+        console.log('reCAPTCHA verified successfully');
       },
       'expired-callback': () => {
         // Response expired, user needs to solve reCAPTCHA again
-        console.warn('reCAPTCHA expired');
+        console.warn('reCAPTCHA expired, please try again');
       }
+    };
+    
+    const recaptchaVerifier = new RecaptchaVerifier(
+      auth,
+      containerId,
+      { ...defaultOptions, ...options }
+    );
+    
+    // Pre-render to catch initialization errors early
+    recaptchaVerifier.render().then((widgetId) => {
+      window.recaptchaWidgetId = widgetId;
+      console.log('reCAPTCHA rendered with widget ID:', widgetId);
+    }).catch((error) => {
+      console.error('reCAPTCHA render error:', error);
     });
     
     return recaptchaVerifier;
@@ -298,6 +329,17 @@ export const sendPhoneVerification = async (phoneNumber, recaptchaVerifier) => {
     console.error('Firebase: Phone verification error:', error);
     console.error('Error code:', error.code);
     console.error('Error message:', error.message);
+    
+    // Reset reCAPTCHA on error as per Firebase docs
+    if (window.recaptchaWidgetId !== undefined) {
+      try {
+        window.grecaptcha.reset(window.recaptchaWidgetId);
+        console.log('reCAPTCHA reset after error');
+      } catch (resetError) {
+        console.error('Failed to reset reCAPTCHA:', resetError);
+      }
+    }
+    
     throw formatAuthError(error);
   }
 };

@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -26,6 +27,26 @@ const Dashboard = () => {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+  // Handle browser back button
+  useEffect(() => {
+    const handlePopState = (e) => {
+      e.preventDefault();
+      setShowLogoutConfirm(true);
+      // Push state back to keep user on dashboard
+      window.history.pushState(null, '', window.location.pathname);
+    };
+
+    // Push initial state
+    window.history.pushState(null, '', window.location.pathname);
+    
+    // Listen for back button
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   // Fetch data
   useEffect(() => {
@@ -63,6 +84,15 @@ const Dashboard = () => {
     } catch (err) {
       console.error('Sign out error:', err);
     }
+  };
+
+  const handleConfirmLogout = async () => {
+    setShowLogoutConfirm(false);
+    await handleSignOut();
+  };
+
+  const handleCancelLogout = () => {
+    setShowLogoutConfirm(false);
   };
 
   if (loading) {
@@ -245,6 +275,25 @@ const Dashboard = () => {
           <span>Upgrade</span>
         </button>
       </nav>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="logout-modal-overlay" onClick={handleCancelLogout}>
+          <div className="logout-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="logout-modal-icon">🚪</div>
+            <h3>Log Out?</h3>
+            <p>Are you sure you want to log out of your account?</p>
+            <div className="logout-modal-actions">
+              <button className="btn-cancel" onClick={handleCancelLogout}>
+                Cancel
+              </button>
+              <button className="btn-logout" onClick={handleConfirmLogout}>
+                Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

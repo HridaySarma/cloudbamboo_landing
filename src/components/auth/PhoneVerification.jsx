@@ -30,7 +30,7 @@ const PhoneVerification = () => {
 
   // Initialize RecaptchaVerifier on component mount
   useEffect(() => {
-    const initRecaptcha = () => {
+    const initRecaptcha = async () => {
       try {
         console.log('Initializing reCAPTCHA...');
         // Clean up any existing verifier first
@@ -48,10 +48,14 @@ const PhoneVerification = () => {
       }
     };
 
-    initRecaptcha();
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      initRecaptcha();
+    }, 100);
 
     // Cleanup on unmount
     return () => {
+      clearTimeout(timer);
       if (recaptchaVerifier) {
         console.log('Cleaning up reCAPTCHA on unmount');
         cleanupRecaptcha(recaptchaVerifier);
@@ -121,17 +125,13 @@ const PhoneVerification = () => {
       console.error('Error sending OTP:', err);
       setError(err.message);
       
-      // If reCAPTCHA fails, reinitialize it
+      // If reCAPTCHA fails, try to reset it
       if (err.code === 'auth/captcha-check-failed' || err.code === 'auth/missing-app-credential') {
-        console.log('reCAPTCHA failed, reinitializing...');
-        try {
-          cleanupRecaptcha(recaptchaVerifier);
-          const newVerifier = initializeRecaptcha('recaptcha-container');
-          setRecaptchaVerifier(newVerifier);
-          console.log('reCAPTCHA reinitialized');
-        } catch (reinitError) {
-          console.error('Failed to reinitialize reCAPTCHA:', reinitError);
-        }
+        console.log('reCAPTCHA failed. Please check:');
+        console.log('1. Is your domain authorized in Firebase Console?');
+        console.log('2. Are you using localhost or a valid domain?');
+        console.log('3. Is phone auth enabled in Firebase Console?');
+        setError(err.message + ' Please check Firebase Console settings.');
       }
     } finally {
       setLoading(false);
@@ -211,13 +211,8 @@ const PhoneVerification = () => {
     setOtp(['', '', '', '', '', '']);
 
     try {
-      // Reinitialize reCAPTCHA for resend
-      cleanupRecaptcha(recaptchaVerifier);
-      const newVerifier = initializeRecaptcha('recaptcha-container');
-      setRecaptchaVerifier(newVerifier);
-      
       const formattedPhone = formatPhoneNumber(phone, countryCode);
-      const result = await sendPhoneVerification(formattedPhone, newVerifier);
+      const result = await sendPhoneVerification(formattedPhone, recaptchaVerifier);
       setConfirmationResult(result);
       setResendTimer(30);
       setSuccess('New OTP sent successfully!');
@@ -225,16 +220,7 @@ const PhoneVerification = () => {
       otpInputRefs.current[0]?.focus();
     } catch (err) {
       setError(err.message);
-      
-      // If reCAPTCHA fails, try to reinitialize it again
-      if (err.code === 'auth/captcha-check-failed' || err.code === 'auth/missing-app-credential') {
-        try {
-          const retryVerifier = initializeRecaptcha('recaptcha-container');
-          setRecaptchaVerifier(retryVerifier);
-        } catch (reinitError) {
-          console.error('Failed to reinitialize reCAPTCHA:', reinitError);
-        }
-      }
+      console.error('Resend OTP error:', err);
     } finally {
       setLoading(false);
     }
