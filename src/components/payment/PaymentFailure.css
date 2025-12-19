@@ -1,0 +1,136 @@
+/* Payment Failure Page Styles */
+.failure-page {
+  background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+}
+
+.failure-page .orb-1 {
+  background: #ff8787;
+}
+
+.failure-page .orb-2 {
+  background: #fa5252;
+}
+
+/* Failure Animation */
+.failure-animation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.failure-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: shake 0.5s ease-in-out, scaleIn 0.5s ease-out;
+  box-shadow: 0 10px 30px rgba(250, 82, 82, 0.3);
+}
+
+.failure-icon {
+  font-size: 3rem;
+  animation: fadeIn 0.5s ease-out 0.3s both;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+/* Failure Result Specific Styles */
+.failure-result .result-title {
+  color: #c92a2a;
+}
+
+.failure-result .result-subtitle {
+  color: #e03131;
+  font-weight: 500;
+}
+
+.status-badge.failed {
+  background: #ffe3e3;
+  color: #c92a2a;
+}
+
+.error-code {
+  font-family: 'Courier New', monospace;
+  color: #c92a2a;
+  font-weight: 700;
+}
+
+/* Help Card */
+.help-card {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s ease-out 0.6s both;
+  border: 2px solid #ffc9c9;
+}
+
+.help-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.help-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.help-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.help-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Reference Note */
+.reference-note {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #4a5568;
+}
+
+.reference-note strong {
+  color: #c92a2a;
+  font-family: 'Courier New', monospace;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .failure-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .failure-icon {
+    font-size: 2.5rem;
+  }
+}

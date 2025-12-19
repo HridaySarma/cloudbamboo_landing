@@ -5,7 +5,8 @@ import { getSubscription, getUsageStats, getPlans } from '../../services/api';
 import SubscriptionCard from './SubscriptionCard';
 import UserStats from './UserStats';
 import PlanUpgrade from './PlanUpgrade';
-import logoImage from '../../assets/logo_modern.png';
+import ActivityLogs from './ActivityLogs';
+import logoImage from '../../assets/watchpoint_logo.png';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -110,7 +111,8 @@ const Dashboard = () => {
       <aside className="dashboard-sidebar">
         <div className="sidebar-header">
           <Link to="/" className="sidebar-logo">
-            <img src={logoImage} alt="WatchPoint" />
+            <img src={logoImage} alt="Watchpoint Console" />
+            <span className="sidebar-title"></span>
           </Link>
         </div>
 
@@ -189,13 +191,19 @@ const Dashboard = () => {
         <div className="dashboard-content">
           {activeTab === 'overview' && (
             <>
-              <div className="overview-grid">
-                <SubscriptionCard 
-                  subscription={subscription} 
-                  onUpgrade={() => setActiveTab('plans')}
-                />
-                <UserStats stats={stats} />
+              <div className="overview-layout">
+                <div className="overview-left">
+                  <SubscriptionCard 
+                    subscription={subscription} 
+                    onUpgrade={() => setActiveTab('plans')}
+                  />
+                </div>
+                <div className="overview-right">
+                  <UserStats stats={stats} />
+                </div>
               </div>
+              
+              <ActivityLogs userId={user?.uid} />
               
               <div className="quick-actions">
                 <h3>Quick Actions</h3>

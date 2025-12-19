@@ -277,8 +277,12 @@ export const getUsageStats = async (userId) => {
   
   // Mock response for development
   return {
-    totalUsers: 48,
+    totalUsers: 50,
     activeUsers: 45,
+    activeQRCodes: 28,
+    totalQRCodes: 35,
+    activeShifts: 12,
+    totalShifts: 15,
     totalClients: 12,
     totalSites: 28,
     attendanceToday: {

@@ -14,6 +14,9 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import Login from './components/auth/Login.jsx'
 import PhoneVerification from './components/auth/PhoneVerification.jsx'
 import Dashboard from './components/dashboard/Dashboard.jsx'
+import Checkout from './components/checkout/Checkout.jsx'
+import PaymentSuccess from './components/payment/PaymentSuccess.jsx'
+import PaymentFailure from './components/payment/PaymentFailure.jsx'
 import ProtectedRoute, { PublicRoute, PhoneVerificationRoute } from './components/auth/ProtectedRoute.jsx'
 
 createRoot(document.getElementById('root')).render(
@@ -53,6 +56,30 @@ createRoot(document.getElementById('root')).render(
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/checkout" 
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/payment/success" 
+            element={
+              <ProtectedRoute>
+                <PaymentSuccess />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/payment/failure" 
+            element={
+              <ProtectedRoute>
+                <PaymentFailure />
               </ProtectedRoute>
             } 
           />
