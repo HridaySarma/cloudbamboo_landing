@@ -1,9 +1,13 @@
-import React from 'react';
+import { useState } from 'react';
 import './WatchpointSOS.css';
-import droneVideo from '../assets/Drone_Intervenes_in_Stalker_Scenario.mp4';
 import sosHome from '../assets/sos_home.png';
 
 const WatchpointSOS = () => {
+	const [expandedPlan, setExpandedPlan] = useState(null);
+
+	const togglePlan = (plan) => {
+		setExpandedPlan(expandedPlan === plan ? null : plan);
+	};
 	return (
 		<section id="watchpoint-sos" className="watchpoint-sos-section">
 			{/* Animated Background Elements */}
@@ -24,8 +28,7 @@ const WatchpointSOS = () => {
 					<p className="section-kicker">Watchpoint SOS</p>
 					<h2 className="section-title">The Uber for Security</h2>
 					<p className="section-subtitle">
-						A revolutionary on-demand security platform that's never been done before. 
-						Trained guards at your fingertips, AI-powered drones in the sky — protection reimagined for the modern world.
+						On-demand guards and AI drones at your fingertips — protection reimagined.
 					</p>
 				</div>
 
@@ -324,43 +327,8 @@ const WatchpointSOS = () => {
 					</div>
 				</div>
 
-				{/* Video Showcase */}
-				<div className="video-showcase scroll-reveal">
-					<div className="video-header">
-						<div className="video-badge">
-							<span className="video-live-dot"></span>
-							SEE IT IN ACTION
-						</div>
-						<h3 className="video-title">Drone Intervention Demo</h3>
-						<p className="video-subtitle">Watch how our AI-powered drone responds to a real stalker scenario</p>
-					</div>
-					<div className="video-container">
-						<div className="video-glow"></div>
-						<video 
-							className="demo-video"
-							controls
-							playsInline
-							poster=""
-						>
-							<source src={droneVideo} type="video/mp4" />
-							Your browser does not support the video tag.
-						</video>
-						<div className="video-features">
-							<div className="video-feature">
-								<span>📹</span> HD Recording
-							</div>
-							<div className="video-feature">
-								<span>🚨</span> Siren Activated
-							</div>
-							<div className="video-feature">
-								<span>💡</span> Spotlight On
-							</div>
-						</div>
-					</div>
-				</div>
-
 				{/* Evidence & Police Coordination */}
-				<div className="evidence-section scroll-reveal">
+				{/* <div className="evidence-section scroll-reveal">
 					<div className="evidence-card">
 						<div className="evidence-icon">
 							<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -394,10 +362,10 @@ const WatchpointSOS = () => {
 						<h4>Secure Storage</h4>
 						<p>All evidence encrypted and stored in compliance with legal requirements</p>
 					</div>
-				</div>
+				</div> */}
 
 				{/* Key Message */}
-				<div className="sos-key-point scroll-reveal">
+				{/* <div className="sos-key-point scroll-reveal">
 					<div className="key-point-glow"></div>
 					<div className="key-point-content">
 						<div className="key-point-icon">
@@ -414,7 +382,7 @@ const WatchpointSOS = () => {
 							</p>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				{/* B2C Pricing Section */}
 				<div className="pricing-section scroll-reveal">
@@ -425,212 +393,187 @@ const WatchpointSOS = () => {
 						</div>
 						<h3 className="pricing-title">Choose Your Safety Plan</h3>
 						<p className="pricing-subtitle">Flexible protection plans designed for your lifestyle and safety needs</p>
+						<div className="bulk-discounts-banner">
+							<span className="discount-icon">💰</span>
+							<span className="discount-text">Bulk Discounts:</span>
+							<span className="discount-tag">Buy 3 → 10-18% OFF</span>
+							<span className="discount-tag">Buy 5+ → 20-30% OFF</span>
+						</div>
 					</div>
 
-					<div className="pricing-grid">
+					<div className="pricing-grid expandable">
 						{/* Simple Safety Plan */}
-						<div className="pricing-card simple-plan">
-							<div className="plan-header">
-								<div className="plan-icon">🔹</div>
-								<h4 className="plan-name">SIMPLE SAFETY</h4>
-								<div className="plan-price">
+						<div className={`pricing-card simple-plan expandable-card ${expandedPlan === 'simple' ? 'expanded' : ''}`}>
+							<div className="plan-header clickable" onClick={() => togglePlan('simple')}>
+								<div className="plan-header-top">
+									<div className="plan-icon-badge simple-badge">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+											<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+										</svg>
+									</div>
+									<h4 className="plan-name">SIMPLE SAFETY</h4>
+									<div className="expand-icon">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points={expandedPlan === 'simple' ? "18 15 12 9 6 15" : "6 9 12 15 18 9"}/>
+										</svg>
+									</div>
+								</div>
+								<div className="plan-price-row">
 									<span className="currency">₹</span>
 									<span className="amount">199</span>
 									<span className="period">/month</span>
 								</div>
 							</div>
-							<div className="plan-features">
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Simple SOS</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Trained guard assistance</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Real-time tracking</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>24/7 support</span>
-								</div>
-							</div>
-							<div className="plan-examples">
-								<h5>Perfect for:</h5>
-								<ul>
-									<li>Feeling unsafe</li>
-									<li>Someone following you</li>
-									<li>Need escort home</li>
-									<li>Cab ride discomfort</li>
-									<li>Domestic tension (non-violent)</li>
-									<li>Loud disturbance</li>
-								</ul>
-							</div>
-							<div className="plan-best-for">
-								<strong>Best for:</strong> Low-risk situations with no physical danger
-							</div>
-							<div className="plan-discounts">
-								<div className="discount-header">
-									<span className="discount-icon">💰</span>
-									<span>Bulk Purchase Discounts</span>
-								</div>
-								<div className="discount-options">
-									<div className="discount-option">
-										<span className="discount-duration">Buy 3 Plans</span>
-										<span className="discount-value">10% OFF</span>
+							<div className="plan-expandable-content">
+								<div className="plan-features">
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Simple SOS</span>
 									</div>
-									<div className="discount-option">
-										<span className="discount-duration">Buy 5+ Plans</span>
-										<span className="discount-value">20% OFF</span>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Trained guard assistance</span>
 									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Real-time tracking</span>
+									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>24/7 support</span>
+									</div>
+								</div>
+								<div className="plan-best-for">
+									<strong>Best for:</strong> Low-risk situations with no physical danger
 								</div>
 							</div>
 						</div>
 
 						{/* Critical Safety Plan */}
-						<div className="pricing-card critical-plan">
-							<div className="plan-header">
-								<div className="plan-icon">🔸</div>
-								<h4 className="plan-name">CRITICAL SAFETY</h4>
-								<div className="plan-price">
+						<div className={`pricing-card critical-plan expandable-card ${expandedPlan === 'critical' ? 'expanded' : ''}`}>
+							<div className="plan-header clickable" onClick={() => togglePlan('critical')}>
+								<div className="plan-header-top">
+									<div className="plan-icon-badge critical-badge">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+											<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+										</svg>
+									</div>
+									<h4 className="plan-name">CRITICAL SAFETY</h4>
+									<div className="expand-icon">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points={expandedPlan === 'critical' ? "18 15 12 9 6 15" : "6 9 12 15 18 9"}/>
+										</svg>
+									</div>
+								</div>
+								<div className="plan-price-row">
 									<span className="currency">₹</span>
 									<span className="amount">599</span>
 									<span className="period">/month</span>
 								</div>
 							</div>
-							<div className="plan-features">
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Critical SOS</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Drone-assisted monitoring</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Elite guard dispatch</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Bodycam evidence</span>
-								</div>
-							</div>
-							<div className="plan-examples critical-examples">
-								<h5>Life-Threatening Situations:</h5>
-								<ul>
-									<li>Assault attempt</li>
-									<li>Break-in</li>
-									<li>Stalker aggression</li>
-									<li>Kidnap attempt</li>
-									<li>Threat with weapon</li>
-									<li>Midnight street danger</li>
-								</ul>
-							</div>
-							<div className="plan-best-for">
-								<strong>Best for:</strong> Severe, life-threatening situations
-							</div>
-							<div className="plan-discounts">
-								<div className="discount-header">
-									<span className="discount-icon">💰</span>
-									<span>Bulk Purchase Discounts</span>
-								</div>
-								<div className="discount-options">
-									<div className="discount-option">
-										<span className="discount-duration">Buy 3 Plans</span>
-										<span className="discount-value">15% OFF</span>
+							<div className="plan-expandable-content">
+								<div className="plan-features">
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Critical SOS</span>
 									</div>
-									<div className="discount-option">
-										<span className="discount-duration">Buy 5+ Plans</span>
-										<span className="discount-value">25% OFF</span>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Drone-assisted monitoring</span>
 									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Elite guard dispatch</span>
+									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Bodycam evidence</span>
+									</div>
+								</div>
+								<div className="plan-best-for">
+									<strong>Best for:</strong> Severe, life-threatening situations
 								</div>
 							</div>
 						</div>
 
 						{/* Super Safety Plan */}
-						<div className="pricing-card super-plan featured">
+						<div className={`pricing-card super-plan featured expandable-card ${expandedPlan === 'super' ? 'expanded' : ''}`}>
 							<div className="featured-badge">MOST POPULAR</div>
-							<div className="plan-header">
-								<div className="plan-icon">🔷</div>
-								<h4 className="plan-name">SUPER SAFETY</h4>
-								<div className="plan-price">
+							<div className="plan-header clickable" onClick={() => togglePlan('super')}>
+								<div className="plan-header-top">
+									<div className="plan-icon-badge super-badge">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+											<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+										</svg>
+									</div>
+									<h4 className="plan-name">SUPER SAFETY</h4>
+									<div className="expand-icon">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points={expandedPlan === 'super' ? "18 15 12 9 6 15" : "6 9 12 15 18 9"}/>
+										</svg>
+									</div>
+								</div>
+								<div className="plan-price-row">
 									<span className="currency">₹</span>
 									<span className="amount">799</span>
 									<span className="period">/month</span>
 								</div>
 							</div>
-							<div className="plan-features">
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>1 Critical SOS</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>1 Simple SOS</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Amber alerts unlimited</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Priority routing</span>
-								</div>
-								<div className="feature-item">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-										<polyline points="20 6 9 17 4 12"/>
-									</svg>
-									<span>Dedicated safety monitoring</span>
-								</div>
-							</div>
-							<div className="plan-highlight">
-								<div className="highlight-icon">⭐</div>
-								<p>Use Simple SOS without burning Critical SOS — maximum flexibility for all situations</p>
-							</div>
-							<div className="plan-best-for">
-								<strong>Best for:</strong> Complete protection with flexible response options
-							</div>
-							<div className="plan-discounts">
-								<div className="discount-header">
-									<span className="discount-icon">💰</span>
-									<span>Bulk Purchase Discounts</span>
-								</div>
-								<div className="discount-options">
-									<div className="discount-option">
-										<span className="discount-duration">Buy 3 Plans</span>
-										<span className="discount-value">18% OFF</span>
+							<div className="plan-expandable-content">
+								<div className="plan-features">
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>1 Critical SOS</span>
 									</div>
-									<div className="discount-option">
-										<span className="discount-duration">Buy 5+ Plans</span>
-										<span className="discount-value">30% OFF</span>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>1 Simple SOS</span>
 									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Amber alerts unlimited</span>
+									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Priority routing</span>
+									</div>
+									<div className="feature-item">
+										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+											<polyline points="20 6 9 17 4 12"/>
+										</svg>
+										<span>Dedicated safety monitoring</span>
+									</div>
+								</div>
+								<div className="plan-highlight">
+									<div className="highlight-icon">⭐</div>
+									<p>Use Simple SOS without burning Critical SOS — maximum flexibility for all situations</p>
+								</div>
+								<div className="plan-best-for">
+									<strong>Best for:</strong> Complete protection with flexible response options
 								</div>
 							</div>
 						</div>
@@ -638,7 +581,7 @@ const WatchpointSOS = () => {
 				</div>
 
 				{/* Elite Guard Equipment Section */}
-				<div className="elite-guard-section scroll-reveal">
+				{/* <div className="elite-guard-section scroll-reveal">
 					<div className="elite-guard-header">
 						<div className="elite-badge">
 							<span>🛡️</span>
@@ -673,10 +616,10 @@ const WatchpointSOS = () => {
 						<div className="guarantee-icon">✓</div>
 						<p><strong>The guard will always have those. He will never be caught lacking.</strong></p>
 					</div>
-				</div>
+				</div> */}
 
 				{/* Guard Payment Model */}
-				<div className="guard-payment-section scroll-reveal">
+				{/* <div className="guard-payment-section scroll-reveal">
 					<div className="payment-header">
 						<h3 className="payment-title">How Guards Are Paid</h3>
 						<p className="payment-subtitle">Fair, transparent earnings for our security professionals</p>
@@ -725,10 +668,10 @@ const WatchpointSOS = () => {
 							<span>Guards only get paid when they perform</span>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				{/* App Download Section */}
-				<div className="app-download-section scroll-reveal">
+				{/* <div className="app-download-section scroll-reveal">
 					<div className="download-glow"></div>
 					<div className="download-content">
 						<div className="download-header">
@@ -791,10 +734,10 @@ const WatchpointSOS = () => {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 
 				{/* B2B Pricing Section */}
-				<div className="b2b-pricing-section scroll-reveal">
+				{/* <div className="b2b-pricing-section scroll-reveal">
 					<div className="b2b-header">
 						<div className="b2b-badge">
 							<span>🏢</span>
@@ -857,7 +800,30 @@ const WatchpointSOS = () => {
 							<p className="b2b-note">Custom pricing based on your fleet size and requirements</p>
 						</div>
 					</div>
+				</div> */}
+
+				{/* SOS CTA Section */}
+				<div className="sos-cta-section scroll-reveal">
+					<div className="sos-cta-card">
+						<div className="sos-cta-content">
+							<h3>Ready to Feel Safe?</h3>
+							<p>Get started with Watchpoint SOS today and experience next-generation personal safety.</p>
+						</div>
+						<a 
+							href="https://watchpoint.in" 
+							target="_blank" 
+							rel="noopener noreferrer"
+							className="sos-cta-btn"
+						>
+							<span>Get Started</span>
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+								<line x1="5" y1="12" x2="19" y2="12"/>
+								<polyline points="12 5 19 12 12 19"/>
+							</svg>
+						</a>
+					</div>
 				</div>
+
 			</div>
 		</section>
 	);

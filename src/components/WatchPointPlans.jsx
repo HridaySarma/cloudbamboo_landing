@@ -82,6 +82,7 @@ const WatchPointPlans = () => {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [isContactFormOpen, setIsContactFormOpen] = useState(false);
 	const [selectedPlan, setSelectedPlan] = useState(null);
+	const [expandedPlan, setExpandedPlan] = useState(null);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -295,79 +296,96 @@ This inquiry was submitted through the WatchPoint website.`;
 				<div className="plans-header-modern">
 					<span className="plans-kicker">Pricing Plans</span>
 					<h3 className="plans-title-modern">
-						Choose Your <span className="title-highlight">WatchPoint</span> Plan
+						Choose Your <span className="title-highlight">WatchPoint Power</span> Plan
 					</h3>
 					<p className="plans-description-modern">
-						Flexible pricing that scales with your business. All plans include core features with volume discounts available.
+						Select the perfect plan for your operations. Volume discounts available.
 					</p>
 				</div>
 
-				<div className="plans-grid-modern">
-					{plans.map((plan, idx) => (
-						<div
-							className={`plan-card-modern${idx === 2 ? ' featured' : ''}`}
-							key={plan.name}
-							style={{ '--plan-accent': plan.color }}
-						>
-							{idx === 2 && (
-								<div className="featured-badge">
-									<span>Most Popular</span>
-								</div>
-							)}
-							
-							<div className="plan-header-modern">
-								<div className="plan-icon-modern">
-									<span>{plan.icon}</span>
-								</div>
-								<h4 className="plan-name-modern">{plan.name}</h4>
-								<p className="plan-tagline-modern">{plan.tagline}</p>
-							</div>
-
-							<div className="plan-pricing-modern">
-								<div className="price-main">
-									<span className="currency">₹</span>
-									<span className="amount">{plan.price}</span>
-								</div>
-								<span className="price-period-modern">per user / month</span>
-							</div>
-
-							<div className="volume-discounts-modern">
-								<div className="discount-header-modern">
-									<span className="discount-icon">💰</span>
-									<span>Volume Discounts</span>
-								</div>
-								<div className="discount-chips">
-									{plan.discounts.map((discount, i) => (
-										<span className="discount-chip" key={i}>
-											{discount.users}+ → {discount.percent}% off
-										</span>
-									))}
-								</div>
-							</div>
-
-							<ul className="plan-features-modern">
-								{plan.features.slice(0, 8).map((feature, i) => (
-									<li key={i} className="feature-item-modern">
-										<span className="feature-check-modern">✓</span>
-										<span>{feature}</span>
-									</li>
-								))}
-								{plan.features.length > 8 && (
-									<li className="feature-more">
-										+{plan.features.length - 8} more features
-									</li>
-								)}
-							</ul>
-
-							<button 
-								className="plan-cta-modern"
-								onClick={() => openContactForm(plan)}
+				<div className="plans-grid-compact">
+					{plans.map((plan, idx) => {
+						const isExpanded = expandedPlan === plan.name;
+						const displayFeatures = isExpanded ? plan.features : plan.features.slice(0, 4);
+						
+						return (
+							<div
+								className={`plan-card-compact${idx === 2 ? ' featured' : ''}`}
+								key={plan.name}
+								style={{ '--plan-accent': plan.color }}
 							>
-								<span>Get Started</span>
-								<span className="cta-arrow">→</span>
-							</button>
-						</div>
-					))}
+								{idx === 2 && (
+									<div className="featured-badge-compact">Most Popular</div>
+								)}
+								
+								<div className="plan-header-compact">
+									<span className="plan-icon-compact">{plan.icon}</span>
+									<div className="plan-info">
+										<h4 className="plan-name-compact">{plan.name}</h4>
+										<p className="plan-tagline-compact">{plan.tagline}</p>
+									</div>
+								</div>
+
+								<div className="plan-pricing-compact">
+									<div className="price-display">
+										<span className="currency-compact">₹</span>
+										<span className="amount-compact">{plan.price}</span>
+										<span className="period-compact">/user/mo</span>
+									</div>
+								</div>
+
+								<div className="volume-discounts-compact">
+									<button 
+										className="discount-toggle"
+										onClick={() => setExpandedPlan(isExpanded ? null : plan.name)}
+									>
+										<span className="discount-label">💰 Volume Discounts</span>
+										<span className={`toggle-icon ${isExpanded ? 'expanded' : ''}`}>▼</span>
+									</button>
+									{isExpanded && (
+										<div className="discount-list">
+											{plan.discounts.map((discount, i) => (
+												<div className="discount-item" key={i}>
+													<span>{discount.users}+ users</span>
+													<span className="discount-value">{discount.percent}% off</span>
+												</div>
+											))}
+										</div>
+									)}
+								</div>
+
+								<div className="plan-features-compact">
+									<ul className="features-list-compact">
+										{displayFeatures.map((feature, i) => (
+											<li key={i} className="feature-item-compact">
+												<span className="check-icon">✓</span>
+												<span>{feature}</span>
+											</li>
+										))}
+									</ul>
+									{plan.features.length > 4 && (
+										<button 
+											className="features-toggle"
+											onClick={() => setExpandedPlan(isExpanded ? null : plan.name)}
+										>
+											{isExpanded ? (
+												<>Show Less <span className="toggle-arrow">↑</span></>
+											) : (
+												<>+{plan.features.length - 4} More Features <span className="toggle-arrow">↓</span></>
+											)}
+										</button>
+									)}
+								</div>
+
+								<button 
+									className="plan-cta-compact"
+									onClick={() => openContactForm(plan)}
+								>
+									Get Started →
+								</button>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 			{/* ...existing code for workflow, modules, CTA... */}

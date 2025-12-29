@@ -18,25 +18,51 @@ const watchpointPillars = [
     id: '01',
     title: 'Verified Mobile Attendance',
     description: 'Eliminate fake attendance without expensive hardware. Use our Android app for GPS-tagged, selfie-verified check-ins and QR scanning.',
-    badges: ['GPS Geofencing', 'Selfie Verification', 'No External Hardware']
+    badges: ['GPS Geofencing', 'Selfie Verification', 'No External Hardware'],
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    )
   },
   {
     id: '02',
     title: 'Automated Payroll & Billing',
     description: 'Stop calculating salaries manually. The system automatically converts verified attendance data into accurate payroll and client invoices.',
-    badges: ['Auto-Calculated Salaries', 'PF/ESI Compliant', 'One-Click Invoicing']
+    badges: ['Auto-Calculated Salaries', 'PF/ESI Compliant', 'One-Click Invoicing'],
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="M12 8v8"/>
+        <path d="M8 12h8"/>
+        <circle cx="12" cy="12" r="2"/>
+      </svg>
+    )
   },
   {
     id: '03',
     title: 'Real-Time Field Operations',
     description: 'Ensure guards are active and alert. Digital patrol logs and instant incident reporting replace unreliable paper/WhatsApp updates.',
-    badges: ['Live Patrol Tracking', 'Instant Incident Alerts', 'Digital Daily Reports']
+    badges: ['Live Patrol Tracking', 'Instant Incident Alerts', 'Digital Daily Reports'],
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    )
   },
   {
     id: '04',
     title: 'Operational Visibility',
     description: 'The "Control Tower" for your business. Gain predictive insights into workforce performance, site profitability, and compliance status.',
-    badges: ['Central Command View', 'Performance Analytics', 'Client-Facing Reports']
+    badges: ['Central Command View', 'Performance Analytics', 'Client-Facing Reports'],
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+    )
   }
 ];
 
@@ -1627,21 +1653,17 @@ This inquiry was submitted through the WatchPoint website.`;
               About
             </a>
             <a 
-              href="#watchpoint-sos" 
+              href="https://watchpoint.in" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="nav-download-sos-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
             >
               <svg className="sos-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
               </svg>
               <span className="sos-text">
-                <span className="sos-main">Get SOS</span>
-                <span className="sos-pulse">🚨</span>
+                <span className="sos-main">Get Started</span>
+                <span className="sos-pulse">🚀</span>
               </span>
               <div className="sos-btn-glow"></div>
             </a>
@@ -1731,22 +1753,18 @@ This inquiry was submitted through the WatchPoint website.`;
               About
             </a>
             <a 
-              href="#watchpoint-sos" 
+              href="https://watchpoint.in" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="mobile-nav-download-sos-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMobileMenuOpen(false);
-                document.getElementById('watchpoint-sos')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <svg className="sos-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
               </svg>
               <span className="sos-text">
-                <span className="sos-main">Download WatchPoint SOS</span>
-                <span className="sos-pulse">🚨</span>
+                <span className="sos-main">Get Started</span>
+                <span className="sos-pulse">🚀</span>
               </span>
               <div className="sos-btn-glow"></div>
             </a>
@@ -1776,30 +1794,38 @@ This inquiry was submitted through the WatchPoint website.`;
         <div className="container">
           <div className="section-header scroll-reveal">
             <p className="section-kicker">Product DNA</p>
-            <h2 className="section-title">Watchpoint: The Operating System for Modern Security Agencies</h2>
-            <p className="section-subtitle">
-              Built to replace registers and spreadsheets with a single, powerful mobile platform. Get total control over every guard, site, and shift.
-            </p>
+            <h2 className="section-title">The OS for Security Agencies</h2>
           </div>
           <div className="watchpoint-pillar-grid">
-            {watchpointPillars.map((pillar) => (
-              <div key={pillar.title} className="pillar-card scroll-reveal">
-                <span className="pillar-index">{pillar.id}</span>
-                <h3>{pillar.title}</h3>
-                <p>{pillar.description}</p>
-                <div className="pillar-badges">
-                  {pillar.badges.map((badge) => (
-                    <span key={badge} className="pillar-badge">{badge}</span>
-                  ))}
+            {watchpointPillars.map((pillar, index) => (
+              <div 
+                key={pillar.title} 
+                className="pillar-card-container scroll-reveal"
+              >
+                <div className="pillar-card-flipper">
+                  <div className="pillar-card pillar-card-front">
+                    <div className="pillar-icon">{pillar.icon}</div>
+                    <span className="pillar-index">{pillar.id}</span>
+                    <h3>{pillar.title}</h3>
+                    <p>{pillar.description}</p>
+                    <div className="pillar-badges">
+                      {pillar.badges.map((badge) => (
+                        <span key={badge} className="pillar-badge">{badge}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="pillar-card pillar-card-back">
+                    <img src={attendanceDemo} alt={pillar.title} className="pillar-card-back-image" />
+                  </div>
+                </div>
               </div>
-            </div>
             ))}
               </div>
             </div>
       </section>
 
-      {/* Dashboard Showcase with Guard Video and Admin Panel */}
-      <section className="watchpoint-dashboard-showcase">
+      {/* Dashboard Showcase with Guard Video and Admin Panel - COMMENTED OUT */}
+      {/* <section className="watchpoint-dashboard-showcase">
         <div className="container">
           <div className="dashboard-showcase scroll-reveal">
             <div className="dashboard-section-header">
@@ -1919,9 +1945,9 @@ This inquiry was submitted through the WatchPoint website.`;
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* WatchPoint Plans Section - Redesigned */}
+      {/* WatchPoint Plans Section - Compact Redesign */}
       <section id="watchpoint" className="watchpoint-plans-section">
         <div className="container">
           <div className="watchpoint-plans scroll-reveal">
@@ -1933,112 +1959,132 @@ This inquiry was submitted through the WatchPoint website.`;
               </p>
             </div>
 
-            <div className="plans-grid redesigned-plans-grid">
-              {watchpointPlans.map((plan, planIdx) => (
-                <div
-                  className={`plan-card redesigned-plan-card${
-                    planIdx === 2 ? ' recommended' : ''
-                  }`}
-                  key={plan.name}
-                  style={{ '--plan-color': plan.color }}
-                >
-                  <div className="plan-header">
-                    <div className="plan-icon-wrapper">
+            <div className="plans-grid-compact-v2">
+              {watchpointPlans.map((plan, planIdx) => {
+                const isExpanded = expandedFeature === `plan-${planIdx}`;
+                const displayFeatures = isExpanded ? plan.features : plan.features.slice(0, 4);
+                
+                return (
+                  <div
+                    className={`plan-card-compact-v2${
+                      planIdx === 2 ? ' recommended' : ''
+                    }`}
+                    key={plan.name}
+                    style={{ '--plan-color': plan.color }}
+                  >
+                    {planIdx === 2 && (
+                      <div className="featured-badge-v2">Most Popular</div>
+                    )}
+                    
+                    <div className="plan-header-compact-v2">
                       <span
-                        className="plan-icon"
+                        className="plan-icon-compact-v2"
                         style={{
-                          background: `linear-gradient(135deg, ${plan.color} 60%, #fff 100%)`,
+                          background: `linear-gradient(135deg, ${plan.color} 60%, rgba(255,255,255,0.2) 100%)`,
                         }}
                       >
                         {plan.icon}
                       </span>
-                    </div>
-                    <h4 className="plan-name">{plan.name}</h4>
-                    <span className="plan-tagline">{plan.tagline}</span>
-                    {planIdx === 2 && (
-                      <span className="plan-badge">Most Popular</span>
-                    )}
-
-                    <div className="price-container">
-                      <span className="price-currency">₹</span>
-                      <span className="price-amount">{plan.price}</span>
-                      <div className="price-details">
-                        <span className="price-period">per user / month</span>
+                      <div className="plan-info-compact-v2">
+                        <h4 className="plan-name-compact-v2">{plan.name}</h4>
+                        <span className="plan-tagline-compact-v2">{plan.tagline}</span>
                       </div>
                     </div>
 
-                    <div className="discount-container">
-                      <div className="discount-toggle">
-                        <span>Volume Discounts</span>
-                        <span className="discount-arrow">▼</span>
-                      </div>
-                      <div className="discount-table">
-                        {plan.discounts.map((discount, i) => (
-                          <div className="discount-row" key={i}>
-                            <span className="discount-users">
-                              {discount.users}+ users
-                            </span>
-                            <span className="discount-percent">
-                              {discount.percent}% off
-                            </span>
-                          </div>
-                        ))}
+                    <div className="price-container-compact-v2">
+                      <div className="price-display-compact-v2">
+                        <span className="price-currency-v2">₹</span>
+                        <span className="price-amount-v2">{plan.price}</span>
+                        <span className="price-period-v2">/user/mo</span>
                       </div>
                     </div>
-                  </div>
-                  <ul className="plan-features redesigned-features">
-                    {plan.features.map((feature, featureIdx) => {
-                      const featureKey = `${planIdx}-${featureIdx}`;
-                      const isExpanded = expandedFeature === featureKey;
-                      const featureName = typeof feature === 'string' ? feature : feature.name;
-                      const featureDesc = typeof feature === 'string' ? '' : feature.description;
-                      
-                      return (
-                        <li key={featureIdx} className="plan-feature redesigned-feature">
-                          <div className="feature-main">
-                            <span className="feature-check">✔</span>
-                            <span className="feature-text">{featureName}</span>
-                            {featureDesc && (
-                              <button
-                                className="feature-info-btn"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setExpandedFeature(isExpanded ? null : featureKey);
-                                }}
-                                aria-label={`Learn more about ${featureName}`}
-                              >
-                                <span className="info-icon">ℹ</span>
-                              </button>
-                            )}
-                          </div>
-                          {isExpanded && featureDesc && (
-                            <div className="feature-details">
-                              <p>{featureDesc}</p>
-                              <button
-                                className="feature-close-btn"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setExpandedFeature(null);
-                                }}
-                              >
-                                Close
-                              </button>
+
+                    <div className="discount-container-compact-v2">
+                      <button 
+                        className="discount-toggle-v2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setExpandedFeature(expandedFeature === `discount-${planIdx}` ? null : `discount-${planIdx}`);
+                        }}
+                      >
+                        <span className="discount-label-v2">💰 Volume Discounts</span>
+                        <span className={`toggle-icon-v2 ${expandedFeature === `discount-${planIdx}` ? 'expanded' : ''}`}>▼</span>
+                      </button>
+                      {expandedFeature === `discount-${planIdx}` && (
+                        <div className="discount-list-v2">
+                          {plan.discounts.map((discount, i) => (
+                            <div className="discount-item-v2" key={i}>
+                              <span>{discount.users}+ users</span>
+                              <span className="discount-value-v2">{discount.percent}% off</span>
                             </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="plan-features-compact-v2">
+                      <ul className="features-list-compact-v2">
+                        {displayFeatures.map((feature, featureIdx) => {
+                          const featureKey = `${planIdx}-${featureIdx}`;
+                          const isFeatureExpanded = expandedFeature === featureKey;
+                          const featureName = typeof feature === 'string' ? feature : feature.name;
+                          const featureDesc = typeof feature === 'string' ? '' : feature.description;
+                          
+                          return (
+                            <li key={featureIdx} className="feature-item-compact-v2">
+                              <div className="feature-main-compact-v2">
+                                <span className="check-icon-v2">✓</span>
+                                <span className="feature-text-v2">{featureName}</span>
+                                {featureDesc && (
+                                  <button
+                                    className="feature-info-btn-v2"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setExpandedFeature(isFeatureExpanded ? null : featureKey);
+                                    }}
+                                    aria-label={`Learn more about ${featureName}`}
+                                  >
+                                    ℹ
+                                  </button>
+                                )}
+                              </div>
+                              {isFeatureExpanded && featureDesc && (
+                                <div className="feature-details-v2">
+                                  <p>{featureDesc}</p>
+                                </div>
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      {plan.features.length > 4 && (
+                        <button 
+                          className="features-toggle-v2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedFeature(isExpanded ? null : `plan-${planIdx}`);
+                          }}
+                        >
+                          {isExpanded ? (
+                            <>Show Less <span className="toggle-arrow-v2">↑</span></>
+                          ) : (
+                            <>+{plan.features.length - 4} More Features <span className="toggle-arrow-v2">↓</span></>
                           )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <div className="plan-footer">
-                    <button 
-                      className="plan-cta-btn"
-                      onClick={() => navigate('/login')}
-                    >
-                      Get Started
-                    </button>
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="plan-footer-compact-v2">
+                      <button 
+                        className="plan-cta-btn-compact-v2"
+                        onClick={() => navigate('/login')}
+                      >
+                        Get Started →
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -2508,8 +2554,8 @@ This inquiry was submitted through the WatchPoint website.`;
               Meet <span className="title-highlight">CloudBamboo Digital</span>
             </h2>
             <p className="about-modern-subtitle">
-              A product studio crafting bold, enterprise-grade software from Assam, India. 
-              We build tools that companies depend on every single day.
+              A product studio crafting thoughtful software from Assam, India. 
+              We build tools that help businesses work better every day.
             </p>
           </div>
 
@@ -2519,32 +2565,48 @@ This inquiry was submitted through the WatchPoint website.`;
               <div className="story-year">EST. 2025</div>
               <h3 className="story-title">Our Story</h3>
               <p className="story-text">
-                <strong>CloudBamboo Digital LLP</strong> was founded with a singular vision: 
-                to create software that doesn't just work—it excels. We're a Limited Liability Partnership 
-                based in Kharamakha, Mazbat, Assam, India, building products that combine industrial 
-                strength with artful design.
+                <strong>CloudBamboo Digital LLP</strong> was born from a simple vision: to build quality 
+                software from Assam, India. We're a young team focused on creating practical solutions 
+                that solve real problems—combining modern technology with thoughtful design.
               </p>
               <p className="story-text">
-                Our flagship product, WatchPoint, represents everything we stand for: 
-                relentless polish, security discipline, and software that feels bold while behaving flawlessly.
+                We believe great software comes from passion, precision, and purpose. Our flagship product, WatchPoint, 
+                embodies this philosophy: careful attention to detail, strong security, and an experience that feels 
+                intuitive. We're here to grow and learn—one product at a time.
               </p>
             </div>
             <div className="story-visual">
               <div className="story-card">
                 <div className="card-glow"></div>
-                <div className="card-icon">🏢</div>
+                <div className="card-icon-wrapper">
+                  <svg className="card-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 21h18M3 7v14M21 7v14M5 7h14M5 21V7M19 21V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 11h2M9 15h2M13 11h2M13 15h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
                 <div className="card-label">Limited Liability Partnership</div>
                 <div className="card-value">Incorporated 2025</div>
               </div>
               <div className="story-card">
                 <div className="card-glow"></div>
-                <div className="card-icon">📍</div>
+                <div className="card-icon-wrapper">
+                  <svg className="card-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                </div>
                 <div className="card-label">Headquarters</div>
                 <div className="card-value">Assam, India</div>
               </div>
               <div className="story-card">
                 <div className="card-glow"></div>
-                <div className="card-icon">🚀</div>
+                <div className="card-icon-wrapper">
+                  <svg className="card-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 22V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
                 <div className="card-label">Mission</div>
                 <div className="card-value">Enterprise Excellence</div>
               </div>
@@ -2558,7 +2620,7 @@ This inquiry was submitted through the WatchPoint website.`;
               <div className="service-card">
                 <div className="service-icon">💼</div>
                 <h4>Product Development</h4>
-                <p>We build enterprise-grade SaaS products that scale with your business needs.</p>
+                <p>We build SaaS products designed to scale with your business needs.</p>
               </div>
               <div className="service-card">
                 <div className="service-icon">🎨</div>
@@ -2568,12 +2630,12 @@ This inquiry was submitted through the WatchPoint website.`;
               <div className="service-card">
                 <div className="service-icon">🔒</div>
                 <h4>Security First</h4>
-                <p>Enterprise-grade security protocols built into every line of code.</p>
+                <p>Strong security protocols built into every line of code.</p>
               </div>
               <div className="service-card">
                 <div className="service-icon">⚡</div>
                 <h4>Performance</h4>
-                <p>Lightning-fast, reliable systems with 99.9% uptime guarantee.</p>
+                <p>Fast, reliable systems built with uptime as a priority.</p>
               </div>
             </div>
           </div>
@@ -2614,7 +2676,7 @@ This inquiry was submitted through the WatchPoint website.`;
           </div>
 
           {/* Stats */}
-          <div className="about-stats-section scroll-reveal">
+          {/* <div className="about-stats-section scroll-reveal">
             <div className="stat-box">
               <div className="stat-icon">🎯</div>
               <div className="stat-value">100%</div>
@@ -2635,7 +2697,7 @@ This inquiry was submitted through the WatchPoint website.`;
               <div className="stat-value">Global</div>
               <div className="stat-label">Client Reach</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

@@ -2267,383 +2267,223 @@ body.modal-open {
   display: none;
 }
 
-/* Navigation Login Button */
+/* Navigation Login Button - Clean Minimal Design */
 .nav-login-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.75rem 2.5rem;
-  margin-left: 1rem;
-  min-width: 160px;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  color: #667eea;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 
-              0 2px 6px rgba(0, 0, 0, 0.05),
-              inset 0 1px 0 rgba(255, 255, 255, 1);
-  overflow: hidden;
-  border: 2px solid rgba(102, 126, 234, 0.2);
-}
-
-.nav-login-btn .login-icon {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.3s ease;
-  z-index: 1;
-}
-
-.nav-login-btn span {
-  z-index: 1;
-  position: relative;
-}
-
-.nav-login-btn .login-btn-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.3) 50%, 
-    transparent 100%);
-  transition: left 0.6s ease;
-}
-
-.nav-login-btn:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3), 
-              0 4px 12px rgba(102, 126, 234, 0.2),
-              inset 0 1px 0 rgba(255, 255, 255, 1),
-              0 0 0 3px rgba(102, 126, 234, 0.1);
-  color: #667eea;
-  border-color: rgba(102, 126, 234, 0.4);
-}
-
-.nav-login-btn:hover .login-icon {
-  transform: translateX(3px);
-}
-
-.nav-login-btn:hover .login-btn-shine {
-  left: 100%;
-}
-
-.nav-login-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 1);
-}
-
-/* Mobile Navigation Login Button */
-.mobile-nav-login-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  padding: 1.15rem 2.5rem;
-  margin-top: 1.5rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  color: #667eea;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  border-radius: 14px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 
-              0 3px 10px rgba(0, 0, 0, 0.05),
-              inset 0 1px 0 rgba(255, 255, 255, 1);
-  overflow: hidden;
-  border: 2px solid rgba(102, 126, 234, 0.2);
-  width: 100%;
-  max-width: 300px;
-}
-
-.mobile-nav-login-btn .login-icon {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-}
-
-.mobile-nav-login-btn span {
-  z-index: 1;
-  position: relative;
-}
-
-.mobile-nav-login-btn .login-btn-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.3) 50%, 
-    transparent 100%);
-  transition: left 0.6s ease;
-}
-
-.mobile-nav-login-btn:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3), 
-              0 5px 15px rgba(102, 126, 234, 0.2),
-              inset 0 1px 0 rgba(255, 255, 255, 1),
-              0 0 0 3px rgba(102, 126, 234, 0.1);
-  color: #667eea;
-  border-color: rgba(102, 126, 234, 0.4);
-}
-
-.mobile-nav-login-btn:hover .login-icon {
-  transform: translateX(3px);
-}
-
-.mobile-nav-login-btn:hover .login-btn-shine {
-  left: 100%;
-}
-
-.mobile-nav-login-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2), 
-              inset 0 1px 0 rgba(255, 255, 255, 1);
-}
-
-/* Navigation Download SOS Button */
-.nav-download-sos-btn {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.65rem 1.75rem;
-  margin-left: 0.5rem;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #ff4757 100%);
-  background-size: 200% 200%;
+  padding: 0.6rem 1.4rem;
+  margin-left: 0.75rem;
+  background: transparent;
   color: #ffffff;
   font-size: 0.9rem;
-  font-weight: 700;
-  border-radius: 12px;
+  font-weight: 500;
+  border-radius: 8px;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5), 
-              0 0 0 0 rgba(255, 107, 107, 0.5);
-  overflow: hidden;
-  animation: sosGradientShift 3s ease infinite, sosPulse 2s ease-in-out infinite;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+}
+
+.nav-login-btn .login-icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.nav-login-btn span {
+  position: relative;
+}
+
+.nav-login-btn .login-btn-shine {
+  display: none;
+}
+
+.nav-login-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+.nav-login-btn:hover .login-icon {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.nav-login-btn:active {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(0.98);
+}
+
+/* Mobile Navigation Login Button - Clean Minimal Design */
+.mobile-nav-login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.8rem;
+  margin-top: 1.5rem;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 280px;
+}
+
+.mobile-nav-login-btn .login-icon {
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-login-btn span {
+  position: relative;
+}
+
+.mobile-nav-login-btn .login-btn-shine {
+  display: none;
+}
+
+.mobile-nav-login-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.mobile-nav-login-btn:hover .login-icon {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.mobile-nav-login-btn:active {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(0.98);
+}
+
+/* Navigation Download SOS Button - Clean Professional Design */
+.nav-download-sos-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  margin-left: 0.5rem;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
   white-space: nowrap;
-  min-width: 160px;
-}
-
-@keyframes sosGradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes sosPulse {
-  0%, 100% {
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5), 
-                0 0 0 0 rgba(255, 107, 107, 0.5);
-  }
-  50% {
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5), 
-                0 0 0 8px rgba(255, 107, 107, 0);
-  }
 }
 
 .nav-download-sos-btn .sos-icon {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
+  width: 15px;
+  height: 15px;
+  transition: transform 0.2s ease;
 }
 
 .nav-download-sos-btn .sos-text {
-  z-index: 1;
-  position: relative;
   display: flex;
   align-items: center;
   gap: 0.4rem;
 }
 
 .nav-download-sos-btn .sos-main {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .nav-download-sos-btn .sos-pulse {
-  display: inline-block;
-  animation: sosEmojiPulse 1.5s ease-in-out infinite;
+  font-size: 0.85rem;
+  animation: sosEmojiPulse 2s ease-in-out infinite;
 }
 
 @keyframes sosEmojiPulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 
 .nav-download-sos-btn .sos-btn-glow {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.4) 50%, 
-    transparent 100%);
-  transition: left 0.6s ease;
+  display: none;
 }
 
 .nav-download-sos-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 30px rgba(255, 107, 107, 0.6), 
-              0 0 0 4px rgba(255, 107, 107, 0.2);
-  color: #ffffff;
-  animation: sosGradientShift 1.5s ease infinite, sosPulse 1s ease-in-out infinite;
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
 .nav-download-sos-btn:hover .sos-icon {
-  transform: translateY(3px);
-}
-
-.nav-download-sos-btn:hover .sos-btn-glow {
-  left: 100%;
+  transform: translateY(2px);
 }
 
 .nav-download-sos-btn:active {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.5);
+  transform: scale(0.98);
+  box-shadow: none;
 }
 
-.nav-download-sos-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.nav-download-sos-btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-/* Mobile Navigation Download SOS Button */
+/* Mobile Navigation Download SOS Button - Clean Professional Design */
 .mobile-nav-download-sos-btn {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.85rem 2rem;
+  padding: 0.9rem 1.8rem;
   margin-top: 1rem;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #ff4757 100%);
-  background-size: 200% 200%;
+  background: #dc2626;
   color: #ffffff;
-  font-size: 1.05rem;
-  font-weight: 700;
-  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5), 
-              0 0 0 0 rgba(255, 107, 107, 0.5);
-  overflow: hidden;
-  animation: sosGradientShift 3s ease infinite, sosPulse 2s ease-in-out infinite;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
   width: 100%;
   max-width: 280px;
 }
 
 .mobile-nav-download-sos-btn .sos-icon {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
+  transition: transform 0.2s ease;
 }
 
 .mobile-nav-download-sos-btn .sos-text {
-  z-index: 1;
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .mobile-nav-download-sos-btn .sos-main {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .mobile-nav-download-sos-btn .sos-pulse {
-  display: inline-block;
-  animation: sosEmojiPulse 1.5s ease-in-out infinite;
+  font-size: 0.95rem;
+  animation: sosEmojiPulse 2s ease-in-out infinite;
 }
 
 .mobile-nav-download-sos-btn .sos-btn-glow {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.4) 50%, 
-    transparent 100%);
-  transition: left 0.6s ease;
+  display: none;
 }
 
 .mobile-nav-download-sos-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 35px rgba(255, 107, 107, 0.6), 
-              0 0 0 4px rgba(255, 107, 107, 0.2);
-  color: #ffffff;
-  animation: sosGradientShift 1.5s ease infinite, sosPulse 1s ease-in-out infinite;
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
 .mobile-nav-download-sos-btn:hover .sos-icon {
-  transform: translateY(3px);
-}
-
-.mobile-nav-download-sos-btn:hover .sos-btn-glow {
-  left: 100%;
+  transform: translateY(2px);
 }
 
 .mobile-nav-download-sos-btn:active {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+  transform: scale(0.98);
+  box-shadow: none;
 }
 
-.mobile-nav-download-sos-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.mobile-nav-download-sos-btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
 
 /* Header Actions */
 .header-actions {
@@ -7181,56 +7021,101 @@ body.modal-open {
 
 .story-card {
   position: relative;
-  padding: 3rem 2rem;
-  background: linear-gradient(145deg, rgba(20, 20, 35, 0.6) 0%, rgba(15, 15, 25, 0.8) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 1.5rem;
-  transition: all 0.3s ease;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(145deg, rgba(20, 20, 35, 0.8) 0%, rgba(15, 15, 25, 0.95) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 1.25rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   text-align: center;
+  backdrop-filter: blur(10px);
 }
 
 .story-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
 }
 
 .card-glow {
   position: absolute;
   inset: -50%;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .story-card:hover .card-glow {
   opacity: 1;
 }
 
-.card-icon {
-  font-size: 4.5rem;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4));
-  transition: all 0.3s ease;
+.card-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
+  border-radius: 1rem;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.story-card:hover .card-icon {
-  transform: scale(1.1);
-  filter: drop-shadow(0 6px 20px rgba(139, 92, 246, 0.6));
+.card-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4) 0%, rgba(99, 102, 241, 0.4) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.story-card:hover .card-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+}
+
+.story-card:hover .card-icon-wrapper::before {
+  opacity: 1;
+}
+
+.card-icon-svg {
+  width: 40px;
+  height: 40px;
+  color: #a78bfa;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.5));
+}
+
+.story-card:hover .card-icon-svg {
+  color: #c4b5fd;
+  transform: scale(1.15);
+  filter: drop-shadow(0 6px 20px rgba(139, 92, 246, 0.8));
 }
 
 .card-label {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-weight: 500;
 }
 
 .card-value {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .about-services-section {
@@ -10418,6 +10303,7 @@ body.modal-open {
   padding: 5rem 0;
   background: linear-gradient(135deg, rgba(7, 12, 24, 0.98) 0%, rgba(11, 19, 36, 0.98) 100%);
   overflow: hidden;
+  max-width: 100vw;
 }
 
 .watchpoint-features::before {
@@ -10490,10 +10376,35 @@ body.modal-open {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
+  max-width: 100%;
+}
+
+/* Flip card container */
+.pillar-card-container {
+  perspective: 1000px;
+  height: 100%;
+  min-height: 400px;
+}
+
+.pillar-card-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.pillar-card-container:hover .pillar-card-flipper {
+  transform: rotateY(180deg);
 }
 
 .pillar-card {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 2rem;
   border-radius: 1.5rem;
   background: linear-gradient(135deg, rgba(7, 12, 24, 0.9), rgba(11, 19, 36, 0.95));
@@ -10501,6 +10412,30 @@ body.modal-open {
   overflow: hidden;
   color: #f4f8ff;
   z-index: 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.pillar-card-front {
+  z-index: 2;
+}
+
+.pillar-card-back {
+  transform: rotateY(180deg);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pillar-card-back-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(7, 12, 24, 0.95), rgba(11, 19, 36, 0.98));
 }
 
 .pillar-card::after {
@@ -10523,6 +10458,29 @@ body.modal-open {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
+}
+
+/* Pillar card icon styling */
+.pillar-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(0, 255, 136, 0.1));
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 14px;
+  color: #00d9ff;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.pillar-card-front:hover .pillar-icon {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+  border-color: rgba(0, 217, 255, 0.5);
 }
 
 .pillar-card p {

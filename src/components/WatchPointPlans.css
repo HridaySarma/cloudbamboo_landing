@@ -2314,6 +2314,360 @@
   }
 }
 
+/* ============================================
+   COMPACT PLANS DESIGN
+   ============================================ */
+
+.plans-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.plan-card-compact {
+  background: linear-gradient(145deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plan-card-compact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--plan-accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.plan-card-compact:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card-compact:hover::before {
+  opacity: 1;
+}
+
+.plan-card-compact.featured {
+  border-color: rgba(255, 107, 107, 0.3);
+  background: linear-gradient(145deg, rgba(30, 30, 55, 0.98) 0%, rgba(40, 40, 70, 0.98) 100%);
+}
+
+.plan-card-compact.featured::before {
+  opacity: 1;
+}
+
+.featured-badge-compact {
+  position: absolute;
+  top: 12px;
+  right: -30px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 35px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+/* Plan Header Compact */
+.plan-header-compact {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.plan-icon-compact {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--plan-accent) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.plan-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-name-compact {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.plan-tagline-compact {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Pricing Compact */
+.plan-pricing-compact {
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.price-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.currency-compact {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--plan-accent);
+}
+
+.amount-compact {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.period-compact {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 2px;
+}
+
+/* Volume Discounts Compact */
+.volume-discounts-compact {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.discount-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.discount-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.discount-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-icon {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+  color: var(--plan-accent);
+}
+
+.toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.discount-list {
+  padding: 0 1rem 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.discount-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.discount-value {
+  color: var(--plan-accent);
+  font-weight: 700;
+}
+
+/* Features Compact */
+.plan-features-compact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.features-list-compact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-item-compact {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.check-icon {
+  color: var(--plan-accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.features-toggle {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: var(--plan-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.features-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.toggle-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.features-toggle:hover .toggle-arrow {
+  transform: translateY(2px);
+}
+
+/* CTA Compact */
+.plan-cta-compact {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--plan-accent) 0%, color-mix(in srgb, var(--plan-accent) 80%, black) 100%);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-cta-compact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.plan-cta-compact:hover::before {
+  left: 100%;
+}
+
+.plan-cta-compact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Compact */
+@media (max-width: 768px) {
+  .plans-grid-compact {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 1.25rem;
+  }
+
+  .plan-card-compact {
+    padding: 1.25rem;
+  }
+
+  .amount-compact {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-header-compact {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .plan-info {
+    text-align: center;
+  }
+}
+
 @media (max-width: 768px) {
   .modern-plans-section {
     padding: 3rem 0;
@@ -2349,5 +2703,434 @@
 
   .plans-description-modern {
     font-size: 1rem;
+  }
+}
+
+
+/* ============================================
+   COMPACT V2 PLANS DESIGN - MUCH SMALLER
+   ============================================ */
+
+.plans-grid-compact-v2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+}
+
+@media (min-width: 1024px) {
+  .plans-grid-compact-v2 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.plan-card-compact-v2 {
+  background: linear-gradient(145deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.plan-card-compact-v2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--plan-color);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.plan-card-compact-v2:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card-compact-v2:hover::before {
+  opacity: 1;
+}
+
+.plan-card-compact-v2.recommended {
+  border-color: rgba(255, 107, 107, 0.3);
+  background: linear-gradient(145deg, rgba(30, 30, 55, 0.98) 0%, rgba(40, 40, 70, 0.98) 100%);
+}
+
+.plan-card-compact-v2.recommended::before {
+  opacity: 1;
+}
+
+.featured-badge-v2 {
+  position: absolute;
+  top: 20px;
+  right: -28px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 40px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* Plan Header Compact V2 */
+.plan-header-compact-v2 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.plan-icon-compact-v2 {
+  font-size: 1.75rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.plan-card-compact-v2:hover .plan-icon-compact-v2 {
+  transform: scale(1.05) rotate(5deg);
+}
+
+.plan-info-compact-v2 {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-name-compact-v2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.plan-tagline-compact-v2 {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.3;
+  display: block;
+}
+
+/* Pricing Compact V2 */
+.price-container-compact-v2 {
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.price-display-compact-v2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.price-currency-v2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--plan-color);
+}
+
+.price-amount-v2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: transform 0.3s ease;
+}
+
+.plan-card-compact-v2:hover .price-amount-v2 {
+  transform: scale(1.05);
+}
+
+.price-period-v2 {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 2px;
+}
+
+/* Volume Discounts Compact V2 */
+.discount-container-compact-v2 {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.discount-toggle-v2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.discount-toggle-v2:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.discount-label-v2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-icon-v2 {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+  color: var(--plan-color);
+}
+
+.toggle-icon-v2.expanded {
+  transform: rotate(180deg);
+}
+
+.discount-list-v2 {
+  padding: 0 1rem 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: slideDownV2 0.3s ease;
+}
+
+@keyframes slideDownV2 {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.discount-item-v2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.discount-value-v2 {
+  color: var(--plan-color);
+  font-weight: 700;
+}
+
+/* Features Compact V2 */
+.plan-features-compact-v2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.features-list-compact-v2 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-item-compact-v2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-main-compact-v2 {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.check-icon-v2 {
+  color: var(--plan-color);
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-text-v2 {
+  flex: 1;
+}
+
+.feature-info-btn-v2 {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--plan-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.feature-info-btn-v2:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.feature-details-v2 {
+  margin-top: 6px;
+  margin-left: 28px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 2px solid var(--plan-color);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  animation: slideDownV2 0.2s ease;
+}
+
+.feature-details-v2 p {
+  margin: 0;
+}
+
+.features-toggle-v2 {
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: var(--plan-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.features-toggle-v2:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.toggle-arrow-v2 {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.features-toggle-v2:hover .toggle-arrow-v2 {
+  transform: translateY(2px);
+}
+
+/* CTA Compact V2 */
+.plan-footer-compact-v2 {
+  margin-top: auto;
+}
+
+.plan-cta-btn-compact-v2 {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--plan-color) 0%, color-mix(in srgb, var(--plan-color) 80%, black) 100%);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.plan-cta-btn-compact-v2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.plan-cta-btn-compact-v2:hover::before {
+  left: 100%;
+}
+
+.plan-cta-btn-compact-v2:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Compact V2 */
+@media (max-width: 768px) {
+  .plans-grid-compact-v2 {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 1.25rem;
+  }
+
+  .plan-card-compact-v2 {
+    padding: 1.25rem;
+  }
+
+  .price-amount-v2 {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-header-compact-v2 {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .plan-info-compact-v2 {
+    text-align: center;
   }
 }

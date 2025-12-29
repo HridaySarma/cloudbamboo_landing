@@ -6,6 +6,54 @@
 	overflow: hidden;
 }
 
+/* Full Section Reveal Background */
+.watchpoint-sos-section::before {
+	content: '';
+	position: absolute;
+	top: -10%;
+	left: -10%;
+	right: -10%;
+	bottom: -10%;
+	background: 
+		radial-gradient(ellipse 120% 80% at 20% 30%, rgba(0, 217, 255, 0.2) 0%, transparent 70%),
+		radial-gradient(ellipse 100% 70% at 80% 70%, rgba(139, 92, 246, 0.18) 0%, transparent 70%);
+	pointer-events: none;
+	z-index: 0;
+	animation: sectionRevealPulse 8s ease-in-out infinite;
+}
+
+.watchpoint-sos-section::after {
+	content: '';
+	position: absolute;
+	top: -5%;
+	left: -5%;
+	right: -5%;
+	bottom: -5%;
+	background: 
+		radial-gradient(circle at 10% 20%, rgba(0, 217, 255, 0.25) 0%, transparent 45%),
+		radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+		radial-gradient(circle at 50% 50%, rgba(255, 193, 7, 0.15) 0%, transparent 60%);
+	pointer-events: none;
+	z-index: 0;
+	animation: sectionRevealShift 12s ease-in-out infinite alternate;
+}
+
+@keyframes sectionRevealPulse {
+	0%, 100% { opacity: 0.8; transform: scale(1); }
+	50% { opacity: 1; transform: scale(1.03); }
+}
+
+@keyframes sectionRevealShift {
+	0% { 
+		background-position: 0% 0%, 100% 100%, 50% 50%;
+		opacity: 0.7;
+	}
+	100% { 
+		background-position: 10% 10%, 90% 90%, 50% 50%;
+		opacity: 1;
+	}
+}
+
 /* Animated Background Elements */
 .sos-bg-elements {
 	position: absolute;
@@ -18,6 +66,32 @@
 	z-index: 1;
 }
 
+/* Simplified background glow - reduced GPU load */
+.sos-bg-elements::before {
+	content: '';
+	position: absolute;
+	top: -30%;
+	left: -30%;
+	right: -30%;
+	bottom: -30%;
+	background: 
+		radial-gradient(ellipse 140% 100% at 30% 20%, rgba(0, 217, 255, 0.2) 0%, transparent 65%),
+		radial-gradient(ellipse 120% 140% at 70% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 65%);
+	/* Removed heavy animation */
+}
+
+.sos-bg-elements::after {
+	content: '';
+	position: absolute;
+	top: -10%;
+	left: -10%;
+	right: -10%;
+	bottom: -10%;
+	background: 
+		linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, transparent 50%, rgba(139, 92, 246, 0.05) 100%);
+	/* Removed heavy animation */
+}
+
 .grid-overlay {
 	position: absolute;
 	top: 0;
@@ -28,19 +102,15 @@
 		linear-gradient(rgba(0, 217, 255, 0.03) 1px, transparent 1px),
 		linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px);
 	background-size: 50px 50px;
-	animation: gridMove 20s linear infinite;
+	/* Removed gridMove animation - was causing constant repaints */
 }
 
-@keyframes gridMove {
-	0% { transform: translate(0, 0); }
-	100% { transform: translate(50px, 50px); }
-}
-
+/* Simplified pulse ring animation */
 .pulse-ring {
 	position: absolute;
 	border-radius: 50%;
 	border: 1px solid rgba(0, 217, 255, 0.2);
-	animation: pulseExpand 4s ease-out infinite;
+	/* Removed heavy animation - was causing constant repaints */
 }
 
 .pulse-ring-1 {
@@ -89,7 +159,7 @@
 	font-weight: 700;
 	color: #ffc107;
 	letter-spacing: 0.1em;
-	margin-bottom: 1rem;
+	margin-bottom: 1.5rem;
 	position: relative;
 	animation: badgeGlow 2s ease-in-out infinite;
 }
@@ -142,7 +212,7 @@
 }
 
 .sos-section-header .section-title {
-	font-size: 3.5rem;
+	font-size: 2.5rem;
 	font-weight: 800;
 	background: linear-gradient(135deg, #ffffff 0%, #00d9ff 40%, #00ff88 60%, #ffffff 100%) !important;
 	-webkit-background-clip: text !important;
@@ -150,7 +220,7 @@
 	background-clip: text !important;
 	background-size: 300% 300%;
 	animation: titleShimmer 5s ease infinite;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 	line-height: 1.2;
 	position: relative;
 	z-index: 2;
@@ -161,9 +231,9 @@
 
 .sos-section-header .section-subtitle {
 	color: rgba(255, 255, 255, 0.85) !important;
-	font-size: 1.25rem;
-	line-height: 1.8;
-	max-width: 700px;
+	font-size: 1rem;
+	line-height: 1.7;
+	max-width: 650px;
 	margin: 0 auto;
 }
 
@@ -642,98 +712,6 @@
 	font-weight: 500;
 }
 
-/* Video Showcase Section */
-.video-showcase {
-	max-width: 1000px;
-	margin: 0 auto 4rem;
-	text-align: center;
-}
-
-.video-header {
-	margin-bottom: 2rem;
-}
-
-.video-badge {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding: 0.5rem 1rem;
-	background: rgba(239, 68, 68, 0.1);
-	border: 1px solid rgba(239, 68, 68, 0.3);
-	border-radius: 50px;
-	font-size: 0.75rem;
-	font-weight: 700;
-	color: #ef4444;
-	letter-spacing: 0.1em;
-	margin-bottom: 1rem;
-}
-
-.video-live-dot {
-	width: 8px;
-	height: 8px;
-	background: #ef4444;
-	border-radius: 50%;
-	animation: livePulse 1s ease-in-out infinite;
-}
-
-.video-title {
-	font-size: 2rem;
-	font-weight: 700;
-	color: #ffffff;
-	margin: 0 0 0.75rem 0;
-}
-
-.video-subtitle {
-	font-size: 1rem;
-	color: rgba(255, 255, 255, 0.7);
-	margin: 0;
-}
-
-.video-container {
-	position: relative;
-	border-radius: 1.5rem;
-	overflow: hidden;
-	background: rgba(10, 15, 26, 0.9);
-	border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.video-glow {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: 
-		radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-		radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 40%);
-	pointer-events: none;
-	z-index: 1;
-}
-
-.demo-video {
-	width: 100%;
-	display: block;
-	border-radius: 1.5rem 1.5rem 0 0;
-}
-
-.video-features {
-	display: flex;
-	justify-content: center;
-	gap: 2rem;
-	padding: 1.25rem;
-	background: rgba(0, 0, 0, 0.4);
-	border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.video-feature {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	font-size: 0.85rem;
-	font-weight: 600;
-	color: rgba(255, 255, 255, 0.8);
-}
-
 /* Evidence Section */
 .evidence-section {
 	display: grid;
@@ -967,11 +945,6 @@
 		gap: 1rem;
 		text-align: center;
 	}
-	
-	.video-features {
-		flex-direction: column;
-		gap: 0.75rem;
-	}
 
 	.key-point-content {
 		flex-direction: column;
@@ -1021,10 +994,6 @@
 		padding: 0.4rem 1rem;
 	}
 	
-	.video-title {
-		font-size: 1.5rem;
-	}
-	
 	.feature-card {
 		padding: 0.75rem;
 	}
@@ -1037,9 +1006,9 @@
 
 /* B2C Pricing Section - Modern Design */
 .pricing-section {
-	max-width: 1600px;
-	margin: 6rem auto 5rem;
-	padding: 0 4rem;
+	max-width: 1400px;
+	margin: 4rem auto 3rem;
+	padding: 0 3rem;
 	position: relative;
 }
 
@@ -1081,7 +1050,7 @@
 
 .pricing-header {
 	text-align: center;
-	margin-bottom: 4rem;
+	margin-bottom: 2.5rem;
 	position: relative;
 }
 
@@ -1100,6 +1069,43 @@
 	margin-bottom: 1.5rem;
 	position: relative;
 	overflow: hidden;
+}
+
+/* Bulk Discounts Banner */
+.bulk-discounts-banner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 1.5rem;
+	padding: 1rem 2rem;
+	background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 107, 0, 0.08));
+	border: 1px solid rgba(255, 193, 7, 0.25);
+	border-radius: 50px;
+	flex-wrap: wrap;
+}
+
+.bulk-discounts-banner .discount-icon {
+	font-size: 1.25rem;
+}
+
+.bulk-discounts-banner .discount-text {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: #ffc107;
+	letter-spacing: 0.03em;
+}
+
+.bulk-discounts-banner .discount-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.4rem 0.9rem;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 20px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
 }
 
 .badge-glow {
@@ -1129,10 +1135,10 @@
 }
 
 .pricing-title {
-	font-size: 3.5rem;
+	font-size: 2.5rem;
 	font-weight: 900;
 	color: #ffffff;
-	margin: 0 0 1.5rem 0;
+	margin: 0 0 1rem 0;
 	line-height: 1.1;
 }
 
@@ -1144,7 +1150,7 @@
 }
 
 .pricing-subtitle {
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: rgba(255, 255, 255, 0.7);
 	margin: 0;
 	max-width: 600px;
@@ -1155,20 +1161,21 @@
 .pricing-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 3rem;
-	column-gap: 3rem;
-	row-gap: 3rem;
-	margin-bottom: 4rem;
-	padding: 0 2rem;
+	gap: 2rem;
+	column-gap: 2rem;
+	row-gap: 2rem;
+	margin-bottom: 3rem;
+	padding: 0 1rem;
+	align-items: start;
 }
 
 .pricing-section .pricing-card,
 .pricing-grid .pricing-card {
 	background: linear-gradient(145deg, rgba(10, 15, 30, 0.95), rgba(5, 10, 25, 0.98)) !important;
 	border: 1px solid rgba(255, 255, 255, 0.08) !important;
-	border-radius: 2rem;
+	border-radius: 1.5rem;
 	padding: 0;
-	margin: 0.5rem;
+	margin: 0.25rem;
 	transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
@@ -1176,7 +1183,7 @@
 	display: flex;
 	flex-direction: column;
 	color: #ffffff !important;
-	min-height: 600px;
+	min-height: auto;
 }
 
 .card-glow {
@@ -1248,10 +1255,10 @@
 	transform: translateX(-50%);
 	background: linear-gradient(135deg, #ffc107, #ff9800);
 	color: #030508;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
 	font-weight: 800;
-	padding: 0.75rem 2rem;
-	border-radius: 0 0 20px 20px;
+	padding: 0.5rem 1.5rem;
+	border-radius: 0 0 16px 16px;
 	letter-spacing: 0.08em;
 	display: flex;
 	align-items: center;
@@ -1262,6 +1269,11 @@
 		0 4px 15px rgba(255, 193, 7, 0.4),
 		0 8px 25px rgba(255, 193, 7, 0.2);
 	border-top: none;
+}
+
+/* Add top padding to featured card header to avoid badge overlap */
+.featured .plan-header.clickable {
+	padding-top: 4rem;
 }
 
 .badge-star {
@@ -1275,20 +1287,212 @@
 
 .plan-header {
 	text-align: center;
-	padding: 3rem 2.5rem 2.5rem;
+	padding: 2rem 2rem 1.5rem;
 	position: relative;
+}
+
+/* Expandable Card Styles */
+.expandable-card .plan-header.clickable {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	cursor: pointer;
+	padding: 2.5rem 2rem 1.5rem;
+	transition: background 0.3s ease;
+	gap: 1rem;
+}
+
+.expandable-card .plan-header.clickable:hover {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+/* New header layout */
+.expandable-card .plan-header-top {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	width: 100%;
+	position: relative;
+}
+
+.expandable-card .plan-icon-badge {
+	font-size: 1.1rem;
+	width: 44px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.05);
+	border: 2px solid rgba(255, 255, 255, 0.15);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
+
+.expandable-card:hover .plan-icon-badge {
+	transform: scale(1.1);
+}
+
+.expandable-card .plan-icon-badge.simple-badge {
+	background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.08));
+	border-color: rgba(0, 217, 255, 0.5);
+	box-shadow: 0 4px 15px rgba(0, 217, 255, 0.25);
+	color: #00d9ff;
+}
+
+.expandable-card .plan-icon-badge.critical-badge {
+	background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.08));
+	border-color: rgba(255, 193, 7, 0.5);
+	box-shadow: 0 4px 15px rgba(255, 193, 7, 0.25);
+	color: #ffc107;
+}
+
+.expandable-card .plan-icon-badge.super-badge {
+	background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.08));
+	border-color: rgba(139, 92, 246, 0.5);
+	box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
+	color: #a855f7;
+}
+
+.expandable-card .plan-header-top .plan-name {
+	margin: 0;
+	font-size: 1.25rem;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+}
+
+.expandable-card .plan-header-top .expand-icon {
+	position: absolute;
+	right: 0;
+	color: rgba(255, 255, 255, 0.5);
+	transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.expandable-card:hover .plan-header-top .expand-icon {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.expandable-card .plan-price-row {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 0.15rem;
+}
+
+.expandable-card .plan-price-row .currency {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.expandable-card .plan-price-row .amount {
+	font-size: 3rem;
+	font-weight: 900;
+	line-height: 1;
+}
+
+.expandable-card .plan-price-row .period {
+	font-size: 1rem;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 500;
+}
+
+.expandable-card.simple-plan .plan-price-row .amount {
+	background: linear-gradient(135deg, #ffffff, #00d9ff);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.expandable-card.critical-plan .plan-price-row .amount {
+	background: linear-gradient(135deg, #ffffff, #ffc107);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.expandable-card.super-plan .plan-price-row .amount {
+	background: linear-gradient(135deg, #ffffff, #a855f7);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* Legacy styles - keep for backwards compatibility */
+.expandable-card .plan-header-left {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.expandable-card .plan-header-left .plan-icon {
+	margin-bottom: 0;
+}
+
+.expandable-card .plan-header-left .plan-name {
+	margin: 0;
+}
+
+.expandable-card .plan-header-right {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.expandable-card .plan-header-right .plan-price {
+	margin: 0;
+	text-align: right;
+}
+
+.expandable-card .expand-icon {
+	color: rgba(255, 255, 255, 0.6);
+	transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.expandable-card:hover .expand-icon {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.expandable-card .plan-expandable-content {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+	padding: 0 2rem;
+}
+
+.expandable-card.expanded .plan-expandable-content {
+	max-height: 800px;
+	padding: 0 2rem 2rem;
+}
+
+.pricing-grid.expandable .pricing-card {
+	min-height: auto;
+}
+
+.pricing-grid.expandable .pricing-card.featured {
+	transform: none;
+}
+
+.pricing-grid.expandable .pricing-card:hover {
+	transform: translateY(-5px);
+}
+
+.pricing-grid.expandable .pricing-card.featured:hover {
+	transform: translateY(-5px);
 }
 
 .plan-icon-wrapper {
 	position: relative;
 	display: inline-block;
-	margin-bottom: 1.5rem;
+	margin-bottom: 1rem;
 }
 
 /* Plan Icon as emoji */
 .plan-icon {
-	font-size: 2.5rem;
-	margin-bottom: 1rem;
+	font-size: 2rem;
+	margin-bottom: 0.75rem;
 }
 
 /* Plan Icon as wrapper (alternative) */
@@ -1352,10 +1556,10 @@
 
 .pricing-section .plan-name,
 .pricing-grid .plan-name {
-	font-size: 1.4rem;
+	font-size: 1.1rem;
 	font-weight: 800;
 	color: #ffffff !important;
-	margin: 0 0 1.5rem 0;
+	margin: 0 0 1rem 0;
 	letter-spacing: 0.05em;
 }
 
@@ -1376,13 +1580,13 @@
 }
 
 .currency {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: 600;
 	color: rgba(255, 255, 255, 0.8);
 }
 
 .amount {
-	font-size: 3.5rem;
+	font-size: 4.5rem;
 	font-weight: 900;
 	background: linear-gradient(135deg, #ffffff, #00d9ff);
 	-webkit-background-clip: text;
@@ -1406,7 +1610,7 @@
 }
 
 .period {
-	font-size: 1rem;
+	font-size: 1.1rem;
 	color: rgba(255, 255, 255, 0.5);
 	font-weight: 500;
 }
@@ -2266,6 +2470,90 @@
 .benefit-item svg {
 	color: #00ff88;
 	flex-shrink: 0;
+}
+
+/* SOS CTA Section */
+.sos-cta-section {
+	max-width: 1100px;
+	margin: 4rem auto 0;
+}
+
+.sos-cta-card {
+	background: linear-gradient(145deg, rgba(220, 38, 38, 0.15), rgba(239, 68, 68, 0.08));
+	border: 1px solid rgba(239, 68, 68, 0.3);
+	border-radius: 1.5rem;
+	padding: 2.5rem 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.sos-cta-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
+}
+
+.sos-cta-content h3 {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: #ffffff;
+	margin: 0 0 0.5rem 0;
+}
+
+.sos-cta-content p {
+	font-size: 1rem;
+	color: rgba(255, 255, 255, 0.7);
+	margin: 0;
+}
+
+.sos-cta-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 1rem 2rem;
+	background: linear-gradient(135deg, #dc2626, #b91c1c);
+	border: none;
+	border-radius: 12px;
+	color: #ffffff;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.sos-cta-btn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 15px 40px rgba(220, 38, 38, 0.4);
+}
+
+.sos-cta-btn svg {
+	transition: transform 0.3s ease;
+}
+
+.sos-cta-btn:hover svg {
+	transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+	.sos-cta-card {
+		flex-direction: column;
+		text-align: center;
+		padding: 2rem;
+	}
+
+	.sos-cta-content h3 {
+		font-size: 1.5rem;
+	}
 }
 
 /* B2B Pricing Section */
